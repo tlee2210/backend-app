@@ -15,7 +15,7 @@ namespace backend_app.Services.dashboard
         }
         public async Task<Courses> AddCourses(Courses courses)
         {
-            var course = await GetOneCourse(courses.Id);
+            var course = await db.Courses.SingleOrDefaultAsync(c => c.Id == courses.Id);
             if (course == null)
             {
                 courses.Slug = GenerateSlug(courses.Name);
