@@ -15,7 +15,7 @@ namespace backend_app.Services.dashboard
         }
         public async Task<Courses> AddCourses(Courses courses)
         {
-            var course = await GetOneCourse(courses.Id);
+            var course = await db.Courses.SingleOrDefaultAsync(c => c.Id == courses.Id);
             if (course == null)
             {
                 courses.Slug = GenerateSlug(courses.Name);
@@ -29,13 +29,10 @@ namespace backend_app.Services.dashboard
         {
             string str = phrase.ToLowerInvariant();
 
-            // invalid chars           
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
-            // convert multiple spaces into one space   
             str = Regex.Replace(str, @"\s+", " ").Trim();
-            // cut and trim 
             str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
-            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+            str = Regex.Replace(str, @"\s", "-");   
 
             return str;
         }
