@@ -15,6 +15,7 @@ namespace backend_app.Models
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<Courses> Courses { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -81,6 +82,16 @@ namespace backend_app.Models
                     new Faculty{Id = 1, Code = "C01", Title = "IT", Slug="IT", Description="123", EntryScore=100, Skill_learn = "ABC", Opportunities = "DEF", Course_id = 1},
                     new Faculty{Id = 2, Code = "C02", Title = "Philosophy", Slug="Philosophy", Description="123", EntryScore=100, Skill_learn = "XYZ", Opportunities = "123", Course_id = 1},
                     new Faculty{Id = 3, Code = "C03", Title = "Advanced Math", Slug="Advanced-Math", Description="123", EntryScore=100, Skill_learn = "Math", Opportunities = "456", Course_id = 2}
+                });
+            });
+            modelBuilder.Entity<Department>(c =>
+            {
+                c.HasKey(x => x.Id);
+                c.HasData(new Department[]
+                {
+                    new Department{Id = 1, Code = "ABC", Subject = "ADB", Credit_Hour = 2, Subject_Type = "AAA", Description = "123123"},
+                    new Department{Id = 2, Code = "DEF", Subject = "DEF", Credit_Hour = 2, Subject_Type = "BBB", Description = "23424"},
+                    new Department{Id = 3, Code = "XYA", Subject = "XYA", Credit_Hour = 1, Subject_Type = "C", Description = "1"}
                 });
             });
         }

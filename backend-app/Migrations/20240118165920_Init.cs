@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend_app.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,6 +91,23 @@ namespace backend_app.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Departments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Credit_Hour = table.Column<int>(type: "int", nullable: false),
+                    Subject_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Feedbacks",
                 columns: table => new
                 {
@@ -163,7 +180,7 @@ namespace backend_app.Migrations
             migrationBuilder.InsertData(
                 table: "AdminAccounts",
                 columns: new[] { "Id", "Email", "Name", "Password", "Role" },
-                values: new object[] { 1, "Tlee2210@gmail.com", "Tlee", "$2a$11$HqUXqf6rzrEmvC2LpX7yfe03wpMuTUElCNIdBno85rkdHxfokemKq", "Admin" });
+                values: new object[] { 1, "Tlee2210@gmail.com", "Tlee", "$2a$11$NCRcJw7DvZjf1wLsde/V2ObKJmzDPgmDVnOTVkKTosGBKiqKmPqBi", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "ContactUs",
@@ -177,6 +194,16 @@ namespace backend_app.Migrations
                 {
                     { 1, "2022-2026", "K22", null },
                     { 2, "2023-2027", "K23", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Departments",
+                columns: new[] { "Id", "Code", "Credit_Hour", "Description", "Subject", "Subject_Type" },
+                values: new object[,]
+                {
+                    { 1, "ABC", 2, "123123", "ADB", "AAA" },
+                    { 2, "DEF", 2, "23424", "DEF", "BBB" },
+                    { 3, "XYA", 1, "1", "XYA", "C" }
                 });
 
             migrationBuilder.InsertData(
@@ -228,6 +255,9 @@ namespace backend_app.Migrations
 
             migrationBuilder.DropTable(
                 name: "ContactUs");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Faculties");
