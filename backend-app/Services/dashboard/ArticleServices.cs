@@ -14,6 +14,7 @@ namespace backend_app.Services.dashboard
         private readonly DatabaseContext db;
 
         private readonly IWebHostEnvironment HostEnvironment;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ArticleServices(DatabaseContext db, IWebHostEnvironment HostEnvironment, IHttpContextAccessor httpContextAccessor)
