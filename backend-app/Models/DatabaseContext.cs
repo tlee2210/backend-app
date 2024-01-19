@@ -16,6 +16,7 @@ namespace backend_app.Models
         public DbSet<Courses> Courses { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Facilities> Facilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -93,6 +94,16 @@ namespace backend_app.Models
                     new Department{Id = 2, Code = "DEF", Subject = "DEF", Description = "23424"},
                     new Department{Id = 3, Code = "XYA", Subject = "XYA", Description = "1"}
                 });
+            });
+            modelBuilder.Entity<Facilities>(f =>
+            {
+                f.HasKey(f => f.Id);
+                f.HasData(new Facilities[]
+                {
+                     new Facilities {Id=1, Title="Canteen", Description="123",Image="123"},
+                });
+
+
             });
         }
     }

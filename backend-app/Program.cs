@@ -43,6 +43,7 @@ builder.Services.AddScoped<IContactUs, ContactUsServices>();
 builder.Services.AddScoped<ICourses, CoursesService>();
 builder.Services.AddScoped<IFaculty, FacultyService>();
 builder.Services.AddScoped<IDepartment, DepartmentServices>();
+builder.Services.AddScoped<IFacilitie, FacilitieService>();
 
 //home
 builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
