@@ -64,6 +64,7 @@ namespace backend_app.Services.dashboard
             {
                 db.Departments.Remove(depart);
                 await db.SaveChangesAsync();
+                return depart;
             }
             return null;
         }
