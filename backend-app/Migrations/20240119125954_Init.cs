@@ -98,8 +98,6 @@ namespace backend_app.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Credit_Hour = table.Column<int>(type: "int", nullable: false),
-                    Subject_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -180,7 +178,7 @@ namespace backend_app.Migrations
             migrationBuilder.InsertData(
                 table: "AdminAccounts",
                 columns: new[] { "Id", "Email", "Name", "Password", "Role" },
-                values: new object[] { 1, "Tlee2210@gmail.com", "Tlee", "$2a$11$NCRcJw7DvZjf1wLsde/V2ObKJmzDPgmDVnOTVkKTosGBKiqKmPqBi", "Admin" });
+                values: new object[] { 1, "Tlee2210@gmail.com", "Tlee", "$2a$11$dAA5LmcYN./6pktVqgAUOuv63Bb/WjNP4U2rvq0/A5yKvW6x1fZ/u", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "ContactUs",
@@ -198,12 +196,12 @@ namespace backend_app.Migrations
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "Code", "Credit_Hour", "Description", "Subject", "Subject_Type" },
+                columns: new[] { "Id", "Code", "Description", "Subject" },
                 values: new object[,]
                 {
-                    { 1, "ABC", 2, "123123", "ADB", "AAA" },
-                    { 2, "DEF", 2, "23424", "DEF", "BBB" },
-                    { 3, "XYA", 1, "1", "XYA", "C" }
+                    { 1, "ABC", "123123", "ADB" },
+                    { 2, "DEF", "23424", "DEF" },
+                    { 3, "XYA", "1", "XYA" }
                 });
 
             migrationBuilder.InsertData(

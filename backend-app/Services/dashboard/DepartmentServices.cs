@@ -23,6 +23,40 @@ namespace backend_app.Services.dashboard
             return null;
         }
 
+        public async Task<bool> checkCode(Department department)
+        {
+            if (department != null)
+            {
+                if (department.Id != null)
+                {
+                    return await db.Departments.AnyAsync(a => a.Code == department.Code && a.Id != department.Id);
+                }
+                else
+                {
+                    return await db.Departments.AnyAsync(a => a.Code == department.Code);
+                }
+            }
+
+            return false;
+        }
+
+        public async Task<bool> checkSubject(Department department)
+        {
+            if (department != null)
+            {
+                if (department.Id != null)
+                {
+                    return await db.Departments.AnyAsync(a => a.Subject == department.Subject && a.Id != department.Id);
+                }
+                else
+                {
+                    return await db.Departments.AnyAsync(a => a.Subject == department.Subject);
+                }
+            }
+
+            return false;
+        }
+
         public async Task<Department> DeleteDepartment(int id)
         {
             var depart = await GetOneDepartment(id);

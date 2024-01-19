@@ -190,18 +190,11 @@ namespace backend_app.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Credit_Hour")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject_Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -214,28 +207,22 @@ namespace backend_app.Migrations
                         {
                             Id = 1,
                             Code = "ABC",
-                            Credit_Hour = 2,
                             Description = "123123",
-                            Subject = "ADB",
-                            Subject_Type = "AAA"
+                            Subject = "ADB"
                         },
                         new
                         {
                             Id = 2,
                             Code = "DEF",
-                            Credit_Hour = 2,
                             Description = "23424",
-                            Subject = "DEF",
-                            Subject_Type = "BBB"
+                            Subject = "DEF"
                         },
                         new
                         {
                             Id = 3,
                             Code = "XYA",
-                            Credit_Hour = 1,
                             Description = "1",
-                            Subject = "XYA",
-                            Subject_Type = "C"
+                            Subject = "XYA"
                         });
                 });
 
@@ -391,7 +378,7 @@ namespace backend_app.Migrations
                             Id = 1,
                             Email = "Tlee2210@gmail.com",
                             Name = "Tlee",
-                            Password = "$2a$11$NCRcJw7DvZjf1wLsde/V2ObKJmzDPgmDVnOTVkKTosGBKiqKmPqBi",
+                            Password = "$2a$11$dAA5LmcYN./6pktVqgAUOuv63Bb/WjNP4U2rvq0/A5yKvW6x1fZ/u",
                             Role = "Admin"
                         });
                 });

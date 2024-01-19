@@ -9,5 +9,7 @@ namespace backend_app.IRepository.dashboard
         Task<Department> AddDepartment(Department department);
         Task<Department> UpdateDepartment(Department department);
         Task<Department> DeleteDepartment(int id);
+        Task<bool> checkCode(Department department);
+        Task<bool> checkSubject(Department department);
     }
 }

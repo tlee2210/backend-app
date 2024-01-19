@@ -89,9 +89,9 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new Department[]
                 {
-                    new Department{Id = 1, Code = "ABC", Subject = "ADB", Credit_Hour = 2, Subject_Type = "AAA", Description = "123123"},
-                    new Department{Id = 2, Code = "DEF", Subject = "DEF", Credit_Hour = 2, Subject_Type = "BBB", Description = "23424"},
-                    new Department{Id = 3, Code = "XYA", Subject = "XYA", Credit_Hour = 1, Subject_Type = "C", Description = "1"}
+                    new Department{Id = 1, Code = "ABC", Subject = "ADB", Description = "123123"},
+                    new Department{Id = 2, Code = "DEF", Subject = "DEF", Description = "23424"},
+                    new Department{Id = 3, Code = "XYA", Subject = "XYA", Description = "1"}
                 });
             });
         }
