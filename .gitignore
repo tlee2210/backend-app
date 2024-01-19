@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /backend-app/appsettings.json
+/backend-app/appsettings.Development.json
+/backend-app/Migrations/20240119134813_InitialCreate.cs
+/backend-app/Migrations/DatabaseContextModelSnapshot.cs

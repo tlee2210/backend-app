@@ -1,12 +1,15 @@
-﻿using backend_app.Models;
+﻿using backend_app.DTO;
+using backend_app.Models;
 
 namespace backend_app.IRepository.dashboard
 {
     public interface IFacilitie
     {
-        Task<bool> AddFaciliti(Facilities faci);
-        Task<bool> UpdateFaciliti(Facilities faci);
         Task<IEnumerable<Facilities>> GetAll();
         Task<bool> DeleteFaciliti(int Id);
+        Task<Facilities> store(FacilitieImage facilitieImage);
+        Task<Facilities> UpdateFacilitie(FacilitieImage facilitieImage);
+        Task<bool> checktitle(string title);
+        Task<bool> checkUpdate(string title, int id);
     }
 }

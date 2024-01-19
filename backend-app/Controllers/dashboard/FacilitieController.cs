@@ -1,4 +1,5 @@
-﻿using backend_app.IRepository.dashboard;
+﻿using backend_app.DTO;
+using backend_app.IRepository.dashboard;
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,47 +13,13 @@ namespace backend_app.Controllers.dashboard
         private readonly IFacilitie _facilitieRepo;
         public FacilitieController(IFacilitie facilitieRepo)
         {
-            _facilitieRepo = facilitieRepo;
+           this._facilitieRepo = facilitieRepo;
         }
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
             return Ok(await _facilitieRepo.GetAll());
 
-        }
-        [HttpPost]
-        public async Task<ActionResult> PostFacilitie(Facilities faci)
-        {
-            try
-            {
-                var result = await _facilitieRepo.AddFaciliti(faci);
-                if (result)
-                {
-                    return Ok("Add Faci successfully");
-                }
-                return BadRequest("add faci fail");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpPut]
-        public async Task<ActionResult> PutFacilitie(Facilities faci)
-        {
-            try
-            {
-                var result = await _facilitieRepo.UpdateFaciliti(faci);
-                if (result)
-                {
-                    return Ok("Update success");
-                }
-                return BadRequest("Update fail");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
         [HttpDelete("{Id}")]
         public async Task<ActionResult> DeleteFacilitie(int Id)
@@ -69,8 +36,48 @@ namespace backend_app.Controllers.dashboard
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+                
             }
         }
+        [HttpPost]
+        [Route("Create")]
+        public async Task<ActionResult<Facilities>> store([FromForm] FacilitieImage facilitieImage)
+        {
+            if (await _facilitieRepo.checktitle(facilitieImage.Title))
+            {
+                return BadRequest("An facilitie with the same title already exists.");
+            }
+
+            var result = await _facilitieRepo.store(facilitieImage);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "New Facilitie Added Successfully"
+                });
+            }
+            return BadRequest("false");
+        }
+        [HttpPost]
+        [Route("update")]
+        public async Task<ActionResult> UpdateFacilitie([FromForm] FacilitieImage facilitieImage)
+        {
+            if (await _facilitieRepo.checkUpdate(facilitieImage.Title, facilitieImage.Id))
+            {
+                return BadRequest("An Facilitie with the same title already exists.");
+            }
+
+            var result = await _facilitieRepo.UpdateFacilitie(facilitieImage);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "The facilitie has been updated successfully"
+                });
+            }
+            return BadRequest("An error occurred while updating the facilitie");
+        }
     }
+  
 }
 
