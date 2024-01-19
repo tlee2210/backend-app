@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /backend-app/appsettings.Development.json
 /backend-app/Migrations/20240119134813_InitialCreate.cs
 /backend-app/Migrations/DatabaseContextModelSnapshot.cs
+/backend-app/Migrations
+
