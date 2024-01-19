@@ -80,6 +80,11 @@ namespace backend_app.Controllers.dashboard
                 {
                     message = "An Department with the same code already exists."
 
+
+
+
+
+
                 });
             }
             if (await service.checkSubject(department))
