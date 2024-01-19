@@ -16,7 +16,7 @@ namespace backend_app.Controllers.dashboard
             this.service = services;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/edit")]
         public async Task<Department> GetOneDepartment(int id)
         {
             return await service.GetOneDepartment(id);
@@ -58,15 +58,52 @@ namespace backend_app.Controllers.dashboard
         }
 
         [HttpDelete("{id}")]
-        public async Task<Department> DeleteCourse(int id)
+        public async Task<ActionResult> DeleteCourse(int id)
         {
-            return await service.DeleteDepartment(id);
+            var result = await service.DeleteDepartment(id);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "Department Deleted Successfully", data = result.Id
+                });
+            }
+            return BadRequest("Delete fail");
         }
 
-        [HttpPut]
-        public async Task<Department> PutCourse(Department courses)
+        [HttpPost("update")]
+        public async Task<ActionResult<Department>> PutCourse(Department department)
         {
-            return await service.UpdateDepartment(courses);
+            if (await service.checkCode(department))
+            {
+                return BadRequest(new
+                {
+                    message = "An Department with the same code already exists."
+
+
+
+
+
+
+                });
+            }
+            if (await service.checkSubject(department))
+            {
+                return BadRequest(new
+                {
+                    message = "An Department with the same subject already exists."
+                });
+            }
+            var result = await service.UpdateDepartment(department);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "Department Update Successfully",
+                    data = result
+                });
+            }
+            return BadRequest("Update fail");
         }
     }
 }

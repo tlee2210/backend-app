@@ -17,6 +17,7 @@ namespace backend_app.Models
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Facilities> Facilities { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -102,8 +103,14 @@ namespace backend_app.Models
                 {
                      new Facilities {Id=1, Title="Canteen", Description="123",Image="123"},
                 });
-
-
+            });
+            modelBuilder.Entity<Staff>(c =>
+            {
+                c.HasKey(x => x.Id);
+                c.HasData(new Staff[]
+                {
+                    new Staff{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", Address = "HCM", Gender = true, Experience = "aaa", FileAvatar = "bbb", Password = "sad0", Qualification = "asdaws", Role = "tea"}
+                });
             });
         }
     }
