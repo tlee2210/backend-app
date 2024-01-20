@@ -16,6 +16,7 @@ namespace backend_app.Controllers.dashboard
            this._facilitieRepo = facilitieRepo;
         }
         [HttpGet]
+        [Route("getlist")]
         public async Task<ActionResult> GetAll()
         {
             return Ok(await _facilitieRepo.GetAll());
@@ -41,23 +42,33 @@ namespace backend_app.Controllers.dashboard
         }
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult<Facilities>> store([FromForm] FacilitieImage facilitieImage)
+        public async Task<ActionResult<Facilities>> store([FromForm] FacilitieImage facilityImage)
         {
-            if (await _facilitieRepo.checktitle(facilitieImage.Title))
+            if (await _facilitieRepo.checktitle(facilityImage.Title))
             {
-                return BadRequest("An facilitie with the same title already exists.");
+                return BadRequest("A facility with the same title already exists.");
             }
 
-            var result = await _facilitieRepo.store(facilitieImage);
-            if (result != null)
+            try
             {
-                return Ok(new
+                var result = await _facilitieRepo.store(facilityImage);
+                if (result != null)
                 {
-                    message = "New Facilitie Added Successfully"
-                });
+                    return Ok(new
+                    {
+                        message = "New facility added successfully."
+                    });
+                }
             }
-            return BadRequest("false");
+            catch (Exception ex)
+            {
+                // Log the exception details here
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding the new facility.");
+            }
+
+            return BadRequest("Unable to add the new facility.");
         }
+
         [HttpPost]
         [Route("update")]
         public async Task<ActionResult> UpdateFacilitie([FromForm] FacilitieImage facilitieImage)
