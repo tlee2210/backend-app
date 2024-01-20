@@ -14,7 +14,7 @@ namespace backend_app.Models
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<Courses> Courses { get; set; }
-        public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Faculty> Faculty { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Facilities> Facilities { get; set; }
         public DbSet<Staff> Staffs { get; set; }

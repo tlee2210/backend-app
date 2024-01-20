@@ -31,7 +31,7 @@ namespace backend_app.Services.dashboard
             if (faculti == null)
             {
                 faculty.Slug = GenerateSlug(faculty.Title);
-                db.Faculties.Add(faculty);
+                db.Faculty.Add(faculty);
                 await db.SaveChangesAsync();
                 return faculty;
             }
@@ -82,14 +82,14 @@ namespace backend_app.Services.dashboard
             {
                 return false;
             }
-            db.Faculties.Remove(faculti);
+            db.Faculty.Remove(faculti);
             await db.SaveChangesAsync();
             return true;
         }
 
         public async Task<IEnumerable<FacultyDTO>> GetAllFaculties()
         {
-            var faculties = await db.Faculties.Include(c => c.Courses).ToListAsync();
+            var faculties = await db.Faculty.Include(c => c.Courses).ToListAsync();
             return faculties.Select(a => new FacultyDTO
             {
                 Id = a.Id,
@@ -110,7 +110,7 @@ namespace backend_app.Services.dashboard
             {
                 try
                 {
-                    var old = await db.Faculties.FindAsync(faculty.Id);
+                    var old = await db.Faculty.FindAsync(faculty.Id);
                     old.Title = faculty.Title;
                     old.Slug = GenerateSlug(faculty.Title);
                     old.Code = faculty.Code;
@@ -136,12 +136,12 @@ namespace backend_app.Services.dashboard
         }
         public async Task<Faculty> GetOneFaculty(int id)
         {
-            return await db.Faculties.SingleOrDefaultAsync(c => c.Id == id);
+            return await db.Faculty.SingleOrDefaultAsync(c => c.Id == id);
         }
         //check title
         public async Task<Faculty> GetOnetitle(string Title)
         {
-            return await db.Faculties.FirstOrDefaultAsync(c => c.Title == Title);
+            return await db.Faculty.FirstOrDefaultAsync(c => c.Title == Title);
         }
         public async Task<bool> checkCode(Faculty faculty)
         {
@@ -149,11 +149,11 @@ namespace backend_app.Services.dashboard
             {
                 if (faculty.Id != null)
                 {
-                    return await db.Faculties.AnyAsync(a => a.Code == faculty.Code && a.Id != faculty.Id);
+                    return await db.Faculty.AnyAsync(a => a.Code == faculty.Code && a.Id != faculty.Id);
                 }
                 else
                 {
-                    return await db.Faculties.AnyAsync(a => a.Code == faculty.Code);
+                    return await db.Faculty.AnyAsync(a => a.Code == faculty.Code);
                 }
             }
 
@@ -166,11 +166,11 @@ namespace backend_app.Services.dashboard
             {
                 if (faculty.Id != null)
                 {
-                    return await db.Faculties.AnyAsync(a => a.Title == faculty.Title && a.Id != faculty.Id);
+                    return await db.Faculty.AnyAsync(a => a.Title == faculty.Title && a.Id != faculty.Id);
                 }
                 else
                 {
-                    return await db.Faculties.AnyAsync(a => a.Title == faculty.Title);
+                    return await db.Faculty.AnyAsync(a => a.Title == faculty.Title);
                 }
             }
 

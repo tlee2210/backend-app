@@ -1,7 +1,6 @@
 ﻿using backend_app.DTO;
 using backend_app.IRepository.dashboard;
 using backend_app.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,46 +9,75 @@ namespace backend_app.Services.dashboard
     public class FacilitieService : IFacilitie
     {
         private readonly DatabaseContext db;
-        private readonly IWebHostEnvironment HostEnvironment;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public FacilitieService(DatabaseContext db, IWebHostEnvironment HostEnvironment, IHttpContextAccessor httpContextAccessor)
-        {
 
+        private readonly IWebHostEnvironment HostEnvironment;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public FacilitieService(DatabaseContext db, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
+        {
             this.db = db;
-            this.HostEnvironment = HostEnvironment;
+            HostEnvironment = hostEnvironment;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<bool> DeleteFaciliti(int Id)
+        public async Task<IEnumerable<Facilities>> GetList()
         {
-            var Faci = await db.Facilities.SingleOrDefaultAsync(f => f.Id == Id);
-            if (Faci != null)
+            var request = _httpContextAccessor.HttpContext.Request;
+            return await db.Facilities.Select(x => new Facilities
             {
-                db.Facilities.Remove(Faci);
-                await db.SaveChangesAsync();
-                return true;
-            }
-            return false;
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, x.Image),
+            }).ToListAsync();
         }
 
-        public async Task<IEnumerable<Facilities>> GetAll()
-        {
-            return await db.Facilities.ToListAsync();
-        }
 
         public async Task<Facilities> store(FacilitieImage facilitieImage)
         {
-            var Facilitie = new Facilities
+            var facilities = new Facilities
             {
                 Title = facilitieImage.Title,
                 Description = facilitieImage.Desciption,
                 Image = await SaveImage(facilitieImage.Image),
             };
-            db.Facilities.Add(Facilitie);
+            db.Facilities.Add(facilities);
             await db.SaveChangesAsync();
-          
-            return Facilitie;
+            return facilities;
         }
+        public async Task<bool> checkTitle(FacilitieImage FacilitieImage)
+        {
+            if (FacilitieImage != null)
+            {
+                if (FacilitieImage.Id != null)
+                {
+                    return await db.Facilities.AnyAsync(a => a.Title == FacilitieImage.Title && a.Id != FacilitieImage.Id);
+                }
+                else
+                {
+                    return await db.Facilities.AnyAsync(a => a.Title == FacilitieImage.Title);
+                }
+            }
 
+            return false;
+        }
+        public async Task<Facilities> GetEdit(int id)
+        {
+            var facilitie = await db.Facilities.FindAsync(id);
+            if(facilitie != null)
+            {
+                var request = _httpContextAccessor.HttpContext.Request;
+                var facilitieNew = new Facilities
+                {
+                    Id = facilitie.Id,
+                    Title = facilitie.Title,
+                    Description = facilitie.Description,
+                    Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, facilitie.Image),
+                };
+                return facilitieNew;
+            }
+            return null;
+        }
         public async Task<Facilities> UpdateFacilitie(FacilitieImage facilitieImage)
         {
             using (var transaction = db.Database.BeginTransaction())
@@ -69,19 +97,33 @@ namespace backend_app.Services.dashboard
                         }
                         facilitie.Image = await SaveImage(facilitieImage.Image);
                     }
-
-                   
-
                     await db.SaveChangesAsync();
-                    transaction.Commit(); // Commit the transaction if everything is successful
+                    transaction.Commit(); 
                     return facilitie;
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback(); // Rollback the transaction if an exception occurs
-                    throw; // Re-throw the exception to handle it at a higher level
+                    transaction.Rollback(); 
+                    throw;
                 }
             }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var facilitie = await db.Facilities.FindAsync(id);
+            if (facilitie == null)
+            {
+                return false;
+            }
+            db.Facilities.Remove(facilitie);
+            await db.SaveChangesAsync();
+            var imagePath = Path.Combine(facilitie.Image);
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+            return true;
         }
         [NonAction]
         public async Task<string> SaveImage(IFormFile formFile)
@@ -90,10 +132,10 @@ namespace backend_app.Services.dashboard
             imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(formFile.FileName);
 
             // Thêm tiền tố "Image/Article/" vào imageName
-            string imageNameWithPath = "Image/Facilitie/" + imageName;
+            string imageNameWithPath = "Image/facilities/" + imageName;
 
             // Cập nhật đường dẫn lưu trữ ảnh
-            var imagePath = Path.Combine(HostEnvironment.ContentRootPath, "Image", "Facilitie", imageName);
+            var imagePath = Path.Combine(HostEnvironment.ContentRootPath, "Image", "facilities", imageName);
 
             // Tạo thư mục nếu nó chưa tồn tại
             var directoryPath = Path.GetDirectoryName(imagePath);
@@ -109,17 +151,5 @@ namespace backend_app.Services.dashboard
 
             return imageNameWithPath;
         }
-
-        public async Task<bool> checktitle(string title)
-        {
-            return await db.Facilities.AnyAsync(a => a.Title == title);
-        }
-
-        public async Task<bool> checkUpdate(string title, int id)
-        {
-            return await db.Facilities.AnyAsync(a => a.Title == title && a.Id != id);
-        }
-
-      
-    } 
+    }
 }
