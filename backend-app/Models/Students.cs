@@ -12,6 +12,7 @@
         public Gender Gender { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
+        public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? StudentFacultySemestersId { get; set; }
         public virtual StudentFacultySemesters StudentFacultySemesters { get; set; }
