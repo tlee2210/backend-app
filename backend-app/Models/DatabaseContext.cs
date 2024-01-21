@@ -146,6 +146,10 @@ namespace backend_app.Models
                     new Semester{Id = 8, AcademicYear = 4, SemesterNumber = 2},
                 });
             });
+            modelBuilder.Entity<Admission>(c =>
+            {
+                c.HasKey(x => x.Id);
+            });
         }
     }
 }
