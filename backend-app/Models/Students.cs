@@ -13,11 +13,8 @@
         public string FatherName { get; set; }
         public string MotherName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int? FacultyId { get; set; }
-        public int? CurrentSemesterId { get; set; }
-        public virtual Faculty Faculty { get; set; }
-        public virtual Semester CurrentSemester { get; set; }
-
+        public int? StudentFacultySemestersId { get; set; }
+        public virtual StudentFacultySemesters StudentFacultySemesters { get; set; }
     }
     public enum Gender
     {
