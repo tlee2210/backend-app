@@ -12,5 +12,6 @@
         public int EntryScore { get; set; }
         public int  Course_id { get; set; }
         public Courses? Courses { get; set; }
+        public virtual ICollection<Students>? Students { get; set; }
     }
 }

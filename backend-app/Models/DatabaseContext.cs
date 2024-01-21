@@ -18,6 +18,8 @@ namespace backend_app.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Facilities> Facilities { get; set; }
         public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Students> students { get; set; }
+        public DbSet<Semester> semesters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,6 +81,7 @@ namespace backend_app.Models
             {
                 c.HasKey(x => x.Id);
                 c.HasOne(a => a.Courses).WithMany(b => b.Faculty).HasForeignKey(c => c.Course_id);
+                c.HasMany(f => f.Students).WithOne(s => s.Faculty).HasForeignKey(s => s.FacultyId);
                 c.HasData(new Faculty[]
                 {
                     new Faculty{Id = 1, Code = "C01", Title = "IT", Slug="IT", Description="123", EntryScore=100, Skill_learn = "ABC", Opportunities = "DEF", Course_id = 1},
@@ -111,6 +114,27 @@ namespace backend_app.Models
                 {
                     new Staff{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", Address = "HCM", Gender = true, Experience = "aaa", FileAvatar = "bbb", Password = "sad0", Qualification = "asdaws", Role = "tea"}
                 });
+            });
+            modelBuilder.Entity<Students>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.StudentCode).IsRequired(); 
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(50);
+                entity.Property(e => e.Email).IsRequired(); 
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+                entity.HasOne(e => e.CurrentSemester).WithOne().HasForeignKey<Students>(s => s.CurrentSemesterId);
+
+                entity.HasOne(s => s.Faculty)
+                    .WithMany(f => f.Students) 
+                    .HasForeignKey(s => s.FacultyId);
+                entity.Property(e => e.Gender).HasConversion<string>();
+            });
+            modelBuilder.Entity<Semester>(s =>
+            {
+                s.HasKey(k => k.Id);
+                s.Property(e => e.StartDate).HasColumnType("date");
+                s.Property(e => e.EndDate).HasColumnType("date");
             });
         }
     }

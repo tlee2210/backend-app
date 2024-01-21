@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="DTO\dashboard\" />
+    <Folder Include="Image\" />
   </ItemGroup>
 
 </Project>
