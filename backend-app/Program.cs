@@ -46,6 +46,7 @@ builder.Services.AddScoped<IDepartment, DepartmentServices>();
 builder.Services.AddScoped<IFacilitie, FacilitieService>();
 builder.Services.AddScoped<IStaff, StaffServices>();
 builder.Services.AddScoped<IAdmission, AdmissionServices>();
+builder.Services.AddScoped<IAdmissionHome, AdmissionServicesHome>();
 
 //home
 builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
