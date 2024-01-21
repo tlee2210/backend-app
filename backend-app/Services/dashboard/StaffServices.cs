@@ -33,7 +33,7 @@ namespace backend_app.Services.dashboard
                 FirstName = staffimage.FirstName,
                 LastName = staffimage.LastName,
                 Gender = staffimage.Gender,
-                Password = staffimage.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(staffimage.Password),
                 Phone = staffimage.Phone,
                 Qualification = staffimage.Qualification,
                 Role = staffimage.Role,
@@ -76,7 +76,6 @@ namespace backend_app.Services.dashboard
                 LastName = a.LastName,
                 Gender = a.Gender,
                 Experience = a.Experience,
-                Password = a.Password,
                 Phone = a.Phone,
                 Qualification = a.Qualification,
                 Role = a.Role,
@@ -90,7 +89,7 @@ namespace backend_app.Services.dashboard
             {
                 try
                 {
-                    var staff = await db.Staffs.FindAsync(staffImage.Id);
+                    var staff = await db.Staffs.SingleOrDefaultAsync(s => s.Id == staffImage.Id);
                     staff.Address = staffImage.Address;
                     staff.Email = staffImage.Email;
                     staff.FirstName = staffImage.FirstName;
@@ -123,6 +122,30 @@ namespace backend_app.Services.dashboard
                 }
             }
         }
+        public async Task<StaffDTO> GetEdit(int id)
+        {
+            var staf = await db.Staffs.SingleOrDefaultAsync(a => a.Id == id);
+            if (staf == null)
+            {
+                return null;
+            }
+            var stafDTO = new StaffDTO 
+            {
+                Id = staf.Id,
+                Address = staf.Address,
+                Email = staf.Email,
+                Experience = staf.Experience,
+                Qualification = staf.Qualification,
+                Role = staf.Role,
+                FirstName = staf.FirstName,
+                LastName = staf.LastName,
+                Gender = staf.Gender,
+                Phone = staf.Phone
+            };
+            var request = _httpContextAccessor.HttpContext.Request;
+            stafDTO.FileAvatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar);
+            return stafDTO;
+        }
 
         [NonAction]
         public async Task<string> SaveImage(IFormFile formFile)
@@ -150,5 +173,7 @@ namespace backend_app.Services.dashboard
 
             return imageNameWithPath;
         }
+
+        
     }
 }

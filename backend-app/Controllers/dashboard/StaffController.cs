@@ -64,5 +64,10 @@ namespace backend_app.Controllers.dashboard
             }
             return BadRequest("false");
         }
+        [HttpGet("{id}/GetEdit")]
+        public async Task<StaffDTO> GetOne(int id)
+        {
+            return await service.GetEdit(id);
+        }
     }
 }
