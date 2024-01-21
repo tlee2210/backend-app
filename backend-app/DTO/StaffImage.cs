@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using backend_app.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend_app.DTO
 {
@@ -9,7 +10,7 @@ namespace backend_app.DTO
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
-        public bool Gender { get; set; }
+        public Gender Gender { get; set; }
         public string Phone { get; set; }
         [NotMapped]
         public IFormFile? FileAvatar { get; set; }
