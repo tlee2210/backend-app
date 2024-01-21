@@ -115,14 +115,9 @@ namespace backend_app.Models
                 sfs.HasKey(x => x.Id);
 
                 sfs.HasOne(s => s.Student).WithOne(sfs => sfs.StudentFacultySemesters).HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+                sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
+                sfs.HasOne(f => f.Semester).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
 
-                sfs.HasOne(f => f.Faculty)
-                   .WithMany(faculty => faculty.StudentFacultySemesters)
-                   .HasForeignKey(s => s.FacultyId);
-
-                sfs.HasOne(s => s.Semester)
-                   .WithMany(semester => semester.StudentFacultySemesters)
-                   .HasForeignKey(s => s.SemesterId);
             });
 
             modelBuilder.Entity<Students>(entity =>
@@ -139,6 +134,17 @@ namespace backend_app.Models
             modelBuilder.Entity<Semester>(s =>
             {
                 s.HasKey(k => k.Id);
+                s.HasData(new Semester[]
+                {
+                    new Semester{Id = 1, AcademicYear = 1, SemesterNumber = 1},
+                    new Semester{Id = 2, AcademicYear = 1, SemesterNumber = 2},
+                    new Semester{Id = 3, AcademicYear = 2, SemesterNumber = 1},
+                    new Semester{Id = 4, AcademicYear = 2, SemesterNumber = 2},
+                    new Semester{Id = 5, AcademicYear = 3, SemesterNumber = 1},
+                    new Semester{Id = 6, AcademicYear = 3, SemesterNumber = 2},
+                    new Semester{Id = 7, AcademicYear = 4, SemesterNumber = 1},
+                    new Semester{Id = 8, AcademicYear = 4, SemesterNumber = 2},
+                });
             });
         }
     }
