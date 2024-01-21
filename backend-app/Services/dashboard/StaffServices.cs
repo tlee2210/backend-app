@@ -36,7 +36,7 @@ namespace backend_app.Services.dashboard
                 Password = BCrypt.Net.BCrypt.HashPassword(staffimage.Password),
                 Phone = staffimage.Phone,
                 Qualification = staffimage.Qualification,
-                Role = staffimage.Role,
+                Role = "Teacher",
                 FileAvatar = await SaveImage(staffimage.FileAvatar),
             };
             db.Staffs.Add(staffimg);
@@ -44,24 +44,21 @@ namespace backend_app.Services.dashboard
             return staffimg;
         }
 
-        public async Task<bool> DeleteStaff(int id)
+        public async Task<int?> DeleteStaff(int id)
         {
             var staf = await db.Staffs.SingleOrDefaultAsync(d => d.Id == id);
-            if (staf == null)
-            {
-                return false;
-            }
             if (staf != null)
             {
+                var imagePath = Path.Combine(staf.FileAvatar);
+                if (File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
+                }
                 db.Staffs.Remove(staf);
                 await db.SaveChangesAsync();
+                return staf.Id;
             }
-            var imagePath = Path.Combine(staf.FileAvatar);
-            if (File.Exists(imagePath))
-            {
-                File.Delete(imagePath);
-            }
-            return true;
+            return null;
         }
 
         public async Task<IEnumerable<StaffDTO>> GetAllStaffs()
@@ -78,7 +75,6 @@ namespace backend_app.Services.dashboard
                 Experience = a.Experience,
                 Phone = a.Phone,
                 Qualification = a.Qualification,
-                Role = a.Role,
                 FileAvatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.FileAvatar)
             }).ToListAsync();
         }
@@ -99,7 +95,6 @@ namespace backend_app.Services.dashboard
                     staff.Password = staffImage.Password;
                     staff.Phone = staffImage.Phone;
                     staff.Qualification = staffImage.Qualification;
-                    staff.Role = staffImage.Role;
 
                     if (staffImage.FileAvatar != null)
                     {
@@ -136,7 +131,6 @@ namespace backend_app.Services.dashboard
                 Email = staf.Email,
                 Experience = staf.Experience,
                 Qualification = staf.Qualification,
-                Role = staf.Role,
                 FirstName = staf.FirstName,
                 LastName = staf.LastName,
                 Gender = staf.Gender,

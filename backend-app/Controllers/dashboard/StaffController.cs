@@ -31,24 +31,24 @@ namespace backend_app.Controllers.dashboard
             {
                 return Ok(new
                 {
-                    message = "New Article Added Successfully"
+                    message = "New staff member has been successfully added."
                 });
             }
-            return BadRequest("false");
+            return BadRequest("Unable to add new staff member. Please check the input information again.");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteStaff(int id)
+        [HttpDelete("{id}/delete")]
+        public async Task<ActionResult> DeleteStaff(int id)
         {
             var result = await service.DeleteStaff(id);
             if (result != null)
             {
                 return Ok(new
                 {
-                    message = "New Article Added Successfully"
+                    message = "Staff member has been deleted successfully.", data = result
                 });
             }
-            return BadRequest("false");
+            return BadRequest("Unable to delete the staff member. Please try again.");
         }
 
         [HttpPost("Update")]

@@ -16,7 +16,6 @@ namespace backend_app.DTO
         public IFormFile? FileAvatar { get; set; }
         public string Qualification { get; set; }
         public string Experience { get; set; }
-        public string Role { get; set; }
         public string Password { get; set; }
     }
 }

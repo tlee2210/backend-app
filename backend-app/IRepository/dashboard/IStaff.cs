@@ -9,6 +9,6 @@ namespace backend_app.IRepository.dashboard
         Task<StaffDTO> GetEdit(int id);
         Task<Staff> AddStaff(StaffImage staffimage);
         Task<Staff> UpdateStaff(StaffImage staffImage);
-        Task<bool> DeleteStaff(int id);
+        Task<int?> DeleteStaff(int id);
     }
 }

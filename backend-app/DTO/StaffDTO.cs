@@ -14,6 +14,5 @@ namespace backend_app.DTO
         public string FileAvatar { get; set; }
         public string Qualification { get; set; }
         public string Experience { get; set; }
-        public string Role { get; set; }
     }
 }
