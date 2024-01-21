@@ -1,13 +1,13 @@
-﻿using backend_app.Models;
+﻿using backend_app.DTO;
+using backend_app.Models;
 
 namespace backend_app.IRepository.dashboard
 {
     public interface IStaff
     {
-        Task<IEnumerable<Staff>> GetAllStaffs();
-        Task<Staff> GetOneStaff(int id);
-        Task<Staff> AddStaff(Staff staff);
-        Task<Staff> UpdateStaff(Staff staff);
-        Task<Staff> DeleteStaff(int id);
+        Task<IEnumerable<StaffDTO>> GetAllStaffs();
+        Task<Staff> AddStaff(StaffImage staffimage);
+        Task<Staff> UpdateStaff(StaffImage staffImage);
+        Task<bool> DeleteStaff(int id);
     }
 }

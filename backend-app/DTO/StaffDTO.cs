@@ -1,6 +1,6 @@
-﻿namespace backend_app.Models
+﻿namespace backend_app.DTO
 {
-    public class Staff
+    public class StaffDTO
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }

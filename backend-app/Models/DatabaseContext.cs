@@ -110,10 +110,6 @@ namespace backend_app.Models
             modelBuilder.Entity<Staff>(c =>
             {
                 c.HasKey(x => x.Id);
-                c.HasData(new Staff[]
-                {
-                    new Staff{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", Address = "HCM", Gender = true, Experience = "aaa", FileAvatar = "bbb", Password = "sad0", Qualification = "asdaws", Role = "tea"}
-                });
             });
             modelBuilder.Entity<Students>(entity =>
             {

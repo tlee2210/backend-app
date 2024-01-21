@@ -1,11 +1,12 @@
-﻿using backend_app.IRepository.dashboard;
+﻿using backend_app.DTO;
+using backend_app.IRepository.dashboard;
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_app.Controllers.dashboard
 {
-    [Route("api/[controller]")]
+    [Route("api/dashboard/staff")]
     [ApiController]
     public class StaffController : ControllerBase
     {
@@ -15,34 +16,53 @@ namespace backend_app.Controllers.dashboard
             this.service = service;
         }
 
-        [HttpGet("{id}")]
-        public async Task<Staff> GetOneStaff(int id)
-        {
-            return await service.GetOneStaff(id);
-        }
-
         [HttpGet("GetList")]
-        public async Task<IEnumerable<Staff>> GetList()
+        public async Task<IEnumerable<StaffDTO>> GetList()
         {
             return await service.GetAllStaffs();
         }
 
         [HttpPost]
-        public async Task<Staff> PostCourse(Staff staff)
+        [Route("Create")]
+        public async Task<ActionResult<Staff>> PostCourse([FromForm] StaffImage staff)
         {
-            return await service.AddStaff(staff);
+            var result = await service.AddStaff(staff);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "New Article Added Successfully"
+                });
+            }
+            return BadRequest("false");
         }
 
         [HttpDelete("{id}")]
-        public async Task<Staff> DeleteStaff(int id)
+        public async Task<ActionResult<bool>> DeleteStaff(int id)
         {
-            return await service.DeleteStaff(id);
+            var result = await service.DeleteStaff(id);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "New Article Added Successfully"
+                });
+            }
+            return BadRequest("false");
         }
 
-        [HttpPut]
-        public async Task<Staff> PutStaff(Staff staff)
+        [HttpPost("Update")]
+        public async Task<ActionResult<Staff>> PutStaff([FromForm] StaffImage staffImage)
         {
-            return await service.UpdateStaff(staff);
+            var result = service.UpdateStaff(staffImage);
+            if (result != null)
+            {
+                return Ok(new
+                {
+                    message = "New Article Added Successfully"
+                });
+            }
+            return BadRequest("false");
         }
     }
 }

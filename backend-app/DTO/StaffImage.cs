@@ -1,6 +1,8 @@
-﻿namespace backend_app.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace backend_app.DTO
 {
-    public class Staff
+    public class StaffImage
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }
@@ -9,7 +11,8 @@
         public string Address { get; set; }
         public bool Gender { get; set; }
         public string Phone { get; set; }
-        public string FileAvatar { get; set; }
+        [NotMapped]
+        public IFormFile? FileAvatar { get; set; }
         public string Qualification { get; set; }
         public string Experience { get; set; }
         public string Role { get; set; }
