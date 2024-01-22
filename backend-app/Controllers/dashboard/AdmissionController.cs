@@ -22,9 +22,9 @@ namespace backend_app.Controllers.dashboard
         }
 
         [HttpGet("GetAllProccess")]
-        public async Task<IEnumerable<Admission>> GetAllProccess()
+        public async Task<IEnumerable<Admission>> GetAllProcess()
         {
-            return await service.GetAllProccess();
+            return await service.GetAllProcess();
         }
 
         [HttpGet("GetAllAccept")]
@@ -59,6 +59,7 @@ namespace backend_app.Controllers.dashboard
             var ad = await service.AcceptAdmission(id);
             if (ad != null)
             {
+                await service.SendMail(id);
                 return Ok(new
                 {
                     message = "New Admission Update Successfully"
@@ -80,5 +81,16 @@ namespace backend_app.Controllers.dashboard
             }
             return BadRequest("false");
         }
+
+        /*[HttpPost("SendMail")]
+        public async Task<ActionResult<Admission>> SendFeedback(Admission admission)
+        {
+            var result = await service.SendMail(admission);
+            if (result != null)
+            {
+                return Ok(new { message = "Confirmation email was sent successfully", data = result });
+            }
+            return BadRequest("Send mail failed");
+        }*/
     }
 }
