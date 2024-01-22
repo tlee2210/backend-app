@@ -18,7 +18,7 @@ namespace backend_app.Controllers.dashboard
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ActionResult<Students>> PostStudents(Students student)
+        public async Task<ActionResult<Students>> PostStudents([FromForm] StudentImage student)
         {
             var result = await service.AddStudent(student);
             if (result != null)
@@ -37,6 +37,14 @@ namespace backend_app.Controllers.dashboard
             return await service.GetAllStudents();
         }
 
+        [HttpGet]
+        [Route("GetCreate")]
+        public async Task<ActionResult<IEnumerable<SelectOption>>> GetCreate()
+        {
+            var result = await service.GetCreate();
+            return Ok(result);
+        }
+
         [HttpDelete("{id}/delete")]
         public async Task<ActionResult> DeleteStudent(int id)
         {
@@ -53,14 +61,14 @@ namespace backend_app.Controllers.dashboard
         }
 
         [HttpPost("Update")]
-        public async Task<ActionResult<Students>> PutStudent(Students student)
+        public async Task<ActionResult<Students>> PutStudent([FromForm] StudentImage student)
         {
             var result = service.UpdateStudent(student);
             if (result != null)
             {
                 return Ok(new
                 {
-                    message = "New Student Added Successfully"
+                    message = "New Student Updated Successfully"
                 });
             }
             return BadRequest("false");

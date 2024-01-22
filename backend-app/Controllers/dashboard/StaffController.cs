@@ -59,6 +59,7 @@ namespace backend_app.Controllers.dashboard
                 var updatedStaff = await service.UpdateStaff(staffImage);
                 if (updatedStaff != null)
                 {
+<<<<<<< Updated upstream
                     return Ok(new
                     {
                         message = "Staff record updated successfully"
@@ -70,6 +71,10 @@ namespace backend_app.Controllers.dashboard
             {
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, "An error occurred while updating the staff record");
+=======
+                    message = "New Staff Updated Successfully"
+                });
+>>>>>>> Stashed changes
             }
         }
         [HttpGet("{id}/GetEdit")]

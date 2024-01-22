@@ -1,6 +1,9 @@
-﻿namespace backend_app.Models
+﻿using backend_app.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace backend_app.DTO
 {
-    public class Students
+    public class StudentImage
     {
         public int? Id { get; set; }
         public string StudentCode { get; set; }
@@ -12,16 +15,10 @@
         public Gender Gender { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
-        public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Avatar { get; set; }
-        public int? StudentFacultySemestersId { get; set; }
-        public virtual StudentFacultySemesters? StudentFacultySemesters { get; set; }
+        [NotMapped]
+        public IFormFile? Avatar { get; set; }
+        public string? Password { get; set; }
+        public int? FacultyId { get; set; }
     }
-    public enum Gender
-    {
-        Male,
-        Female,
-    }
-
 }
