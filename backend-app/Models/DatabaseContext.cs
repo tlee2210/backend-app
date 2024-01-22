@@ -18,7 +18,7 @@ namespace backend_app.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Facilities> Facilities { get; set; }
         public DbSet<Staff> Staffs { get; set; }
-        public DbSet<Students> students { get; set; }
+        public DbSet<Students> Students { get; set; }
         public DbSet<Semester> semesters { get; set; }
         public DbSet<Admission> Admissions { get; set; }
 

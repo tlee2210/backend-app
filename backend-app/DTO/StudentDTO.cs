@@ -1,8 +1,10 @@
-﻿namespace backend_app.Models
+﻿using backend_app.Models;
+
+namespace backend_app.DTO
 {
-    public class Students
+    public class StudentDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string StudentCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,15 +14,8 @@
         public Gender Gender { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
-        public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? StudentFacultySemestersId { get; set; }
-        public virtual StudentFacultySemesters? StudentFacultySemesters { get; set; }
+        public virtual StudentFacultySemesters StudentFacultySemesters { get; set; }
     }
-    public enum Gender
-    {
-        Male,
-        Female,
-    }
-
 }
