@@ -86,34 +86,41 @@ namespace backend_app.Services.dashboard
                 try
                 {
                     var staff = await db.Staffs.SingleOrDefaultAsync(s => s.Id == staffImage.Id);
+                    if (staff == null)
+                    {
+                        return null;
+                    }
+
                     staff.Address = staffImage.Address;
                     staff.Email = staffImage.Email;
                     staff.FirstName = staffImage.FirstName;
                     staff.LastName = staffImage.LastName;
                     staff.Gender = staffImage.Gender;
                     staff.Experience = staffImage.Experience;
-                    staff.Password = staffImage.Password;
                     staff.Phone = staffImage.Phone;
                     staff.Qualification = staffImage.Qualification;
 
                     if (staffImage.FileAvatar != null)
                     {
-                        var imagePath = Path.Combine(staff.FileAvatar);
-                        if (File.Exists(imagePath))
+                        if (!string.IsNullOrEmpty(staff.FileAvatar))
                         {
-                            File.Delete(imagePath);
+                            var imagePath = Path.Combine(staff.FileAvatar);
+                            if (File.Exists(imagePath))
+                            {
+                                File.Delete(imagePath);
+                            }
                         }
                         staff.FileAvatar = await SaveImage(staffImage.FileAvatar);
                     }
 
                     await db.SaveChangesAsync();
-                    transaction.Commit(); // Commit the transaction if everything is successful
+                    transaction.Commit();
                     return staff;
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback(); // Rollback the transaction if an exception occurs
-                    throw; // Re-throw the exception to handle it at a higher level
+                    transaction.Rollback();
+                    throw; 
                 }
             }
         }

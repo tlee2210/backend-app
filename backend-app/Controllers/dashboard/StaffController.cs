@@ -54,15 +54,23 @@ namespace backend_app.Controllers.dashboard
         [HttpPost("Update")]
         public async Task<ActionResult<Staff>> PutStaff([FromForm] StaffImage staffImage)
         {
-            var result = service.UpdateStaff(staffImage);
-            if (result != null)
+            try
             {
-                return Ok(new
+                var updatedStaff = await service.UpdateStaff(staffImage);
+                if (updatedStaff != null)
                 {
-                    message = "New Article Added Successfully"
-                });
+                    return Ok(new
+                    {
+                        message = "Staff record updated successfully"
+                    });
+                }
+                return NotFound("Staff not found");
             }
-            return BadRequest("false");
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "An error occurred while updating the staff record");
+            }
         }
         [HttpGet("{id}/GetEdit")]
         public async Task<StaffDTO> GetOne(int id)
