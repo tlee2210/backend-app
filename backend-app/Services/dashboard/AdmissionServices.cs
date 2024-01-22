@@ -34,9 +34,14 @@ namespace backend_app.Services.dashboard
             return null;
         }
 
-        public async Task<IEnumerable<Admission>> GetAllAdmissions()
+        public async Task<IEnumerable<Admission>> GetAllProccess()
         {
-            return await db.Admissions.ToListAsync();
+            return await db.Admissions.Where(a => a.Status == "Proccess").ToListAsync();
+        }
+
+        public async Task<IEnumerable<Admission>> GetAllAccept()
+        {
+            return await db.Admissions.Where(a => a.Status == "Accept").ToListAsync();
         }
 
         public async Task<Admission> GetOneAdmission(int id)
@@ -54,6 +59,11 @@ namespace backend_app.Services.dashboard
                 return ad;
             }
             return null;
+        }
+
+        public async Task<IEnumerable<Admission>> GetAllReject()
+        {
+            return await db.Admissions.Where(a => a.Status == "Reject").ToListAsync();
         }
     }
 }

@@ -21,10 +21,22 @@ namespace backend_app.Controllers.dashboard
             return await service.GetOneAdmission(id);
         }
 
-        [HttpGet("GetList")]
-        public async Task<IEnumerable<Admission>> GetList()
+        [HttpGet("GetAllProccess")]
+        public async Task<IEnumerable<Admission>> GetAllProccess()
         {
-            return await service.GetAllAdmissions();
+            return await service.GetAllProccess();
+        }
+
+        [HttpGet("GetAllAccept")]
+        public async Task<IEnumerable<Admission>> GetAllAccept()
+        {
+            return await service.GetAllAccept();
+        }
+
+        [HttpGet("GetAllReject")]
+        public async Task<IEnumerable<Admission>> GetAllReject()
+        {
+            return await service.GetAllReject();
         }
 
         [HttpDelete("{id}")]
@@ -41,7 +53,7 @@ namespace backend_app.Controllers.dashboard
             return BadRequest("false");
         }
 
-        [HttpPut("AcceptAdmission")]
+        [HttpPost("{id}/accept")]
         public async Task<ActionResult<Admission>> AcceptAdmission(int id)
         {
             var ad = await service.AcceptAdmission(id);
@@ -55,7 +67,7 @@ namespace backend_app.Controllers.dashboard
             return BadRequest("false");
         }
 
-        [HttpPut("RejectAdmission")]
+        [HttpPost("{id}/reject")]
         public async Task<ActionResult<Admission>> RejectAdmission(int id)
         {
             var ad = await service.RejectAdmission(id);
