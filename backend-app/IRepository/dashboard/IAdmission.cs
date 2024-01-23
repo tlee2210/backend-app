@@ -9,6 +9,7 @@ namespace backend_app.IRepository.dashboard
         Task<IEnumerable<Admission>> GetAllAccept();
         Task<IEnumerable<Admission>> GetAllReject();
         Task<Admission> GetOneAdmission(int id);
+        Task<Admission> GetEdit(int id);
         Task<Admission> AcceptAdmission(int id);
         Task<Admission> RejectAdmission(int id);
         Task<Admission> DeleteAdmission(int id);

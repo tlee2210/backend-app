@@ -18,7 +18,7 @@ namespace backend_app.Controllers.dashboard
         [HttpGet("{id}")]
         public async Task<Admission> GetOneAdmission(int id)
         {
-            return await service.GetOneAdmission(id);
+            return await service.GetEdit(id);
         }
 
         [HttpGet("GetAllProccess")]
@@ -62,10 +62,13 @@ namespace backend_app.Controllers.dashboard
                 await service.SendMail(id);
                 return Ok(new
                 {
-                    message = "New Admission Update Successfully"
+                    message = "Admission accepted successfully and notification email sent."
                 });
             }
-            return BadRequest("false");
+            return BadRequest(new
+            {
+                message = "Admission acceptance failed or admission not found."
+            });
         }
 
         [HttpPost("{id}/reject")]
@@ -76,10 +79,14 @@ namespace backend_app.Controllers.dashboard
             {
                 return Ok(new
                 {
-                    message = "New Admission Update Successfully"
+                    message = "Admission Reject successfully"
                 });
+               
             }
-            return BadRequest("false");
+            return BadRequest(new
+            {
+                message = "Admission Reject failed or admission not found."
+            });
         }
 
         /*[HttpPost("SendMail")]

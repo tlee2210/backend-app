@@ -7,5 +7,13 @@
         public DateTime YearStart { get; set; }
         public DateTime YearEnd { get; set; }
         public bool IsCurrentYear { get; set; } = false;
+        public SessionStatus Status { get; set; }
     }
+    public enum SessionStatus
+    {
+        Active,
+        Inactive,
+        Completed,
+    }
+
 }

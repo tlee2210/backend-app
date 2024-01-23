@@ -14,13 +14,6 @@ namespace backend_app.Controllers.dashboard
         {
             this.service = services;
         }
-
-        [HttpGet("{id}/edit")]
-        public async Task<Session> GetOneSession(int id)
-        {
-            return await service.GetOneSession(id);
-        }
-
         [HttpGet("GetList")]
         public async Task<IEnumerable<Session>> GetList()
         {
@@ -36,7 +29,8 @@ namespace backend_app.Controllers.dashboard
             {
                 return Ok(new
                 {
-                    message = "New Session Added Successfully"
+                    message = "New Session Added Successfully",
+                    data= result
                 });
             }
             return BadRequest(new { message = "Failed to create a new session: exceeded the allowed number of sessions" });
@@ -57,19 +51,22 @@ namespace backend_app.Controllers.dashboard
             return BadRequest("Delete fail");
         }
 
-        [HttpPost("update")]
-        public async Task<ActionResult<Department>> PutSession(Session session)
+        [HttpGet("UpdateSessions")]
+        public async Task<ActionResult<Department>> UpdateSessions()
         {
-            var result = await service.UpdateSession(session);
-            if (result != null)
+            try
             {
+                var updatedSessions = await service.UpdateSessionsStatusAndCurrentYear();
                 return Ok(new
                 {
-                    message = "Session Update Successfully",
-                    data = result
+                    message = "Sessions updated successfully",
+                    data = updatedSessions
                 });
             }
-            return BadRequest("Update fail");
+            catch (Exception ex)
+            {
+                return BadRequest($"Update failed: {ex.Message}");
+            }
         }
     }
 }

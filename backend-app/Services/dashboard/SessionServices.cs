@@ -43,9 +43,6 @@ namespace backend_app.Services.dashboard
             return session;
         }
 
-
-
-
         public async Task<Session> DeleteSession(int id)
         {
             var se = await GetOneSession(id);
@@ -68,11 +65,38 @@ namespace backend_app.Services.dashboard
             return await db.Sessions.SingleOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<Session> UpdateSession(Session session)
+        public async Task<IEnumerable<Session>> UpdateSessionsStatusAndCurrentYear()
         {
-            db.Entry(session).State = EntityState.Modified;
+            var sessions = await db.Sessions.ToListAsync();
+            var currentYear = DateTime.Now.Year;
+
+            sessions.ForEach(session => session.IsCurrentYear = false);
+
+            foreach (var session in sessions)
+            {
+                if (currentYear >= session.YearStart.Year && currentYear <= session.YearEnd.Year)
+                {
+                    session.Status = SessionStatus.Active;
+                    if (currentYear == session.YearStart.Year)
+                    {
+                        session.IsCurrentYear = true;
+                    }
+                }
+                else if (currentYear > session.YearEnd.Year)
+                {
+                    session.Status = SessionStatus.Completed;
+                }
+                else
+                {
+                    session.Status = SessionStatus.Inactive;
+                }
+
+                db.Entry(session).State = EntityState.Modified;
+            }
+
             await db.SaveChangesAsync();
-            return session;
+            return sessions;
         }
+
     }
 }

@@ -58,6 +58,10 @@ namespace backend_app.Services.dashboard
         {
             return await db.Admissions.SingleOrDefaultAsync(x => x.Id == id);
         }
+        public async Task<Admission> GetEdit(int id)
+        {
+            return await db.Admissions.Include(c => c.Faculty).SingleOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task<Admission> RejectAdmission(int id)
         {

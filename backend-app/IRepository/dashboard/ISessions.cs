@@ -7,7 +7,7 @@ namespace backend_app.IRepository.dashboard
         Task<IEnumerable<Session>> GetAllSessions();
         Task<Session> GetOneSession(int id);
         Task<Session> AddSession();
-        Task<Session> UpdateSession(Session session);
+        Task<IEnumerable<Session>> UpdateSessionsStatusAndCurrentYear();
         Task<Session> DeleteSession(int id);
     }
 }
