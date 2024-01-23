@@ -11,17 +11,40 @@ namespace backend_app.Services.dashboard
         {
             this.db = db;
         }
-        public async Task<Session> AddSession(Session session)
+        public async Task<Session> AddSession()
         {
-            var se = await GetOneSession(session.Id);
-            if (se == null)
+            var currentYear = DateTime.Now.Year;
+            var maxYearLimit = currentYear + 4;
+
+            Session session = null;
+
+            for (int year = currentYear; year <= maxYearLimit; year++)
             {
-                db.Sessions.Add(session);
-                await db.SaveChangesAsync();
-                return session;
+                var yearCode = year % 100;
+                var code = $"{yearCode:00}UniStu";
+
+                var existingSession = await db.Sessions.FirstOrDefaultAsync(s => s.Code == code);
+                if (existingSession == null)
+                {
+                    session = new Session
+                    {
+                        Code = code,
+                        YearStart = new DateTime(year, 8, 1),
+                        YearEnd = new DateTime(year + 4, 7, 31),
+                    };
+
+                    db.Sessions.Add(session);
+                    await db.SaveChangesAsync();
+
+                    break; 
+                }
             }
-            return null;
+
+            return session;
         }
+
+
+
 
         public async Task<Session> DeleteSession(int id)
         {

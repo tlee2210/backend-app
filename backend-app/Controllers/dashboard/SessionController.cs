@@ -27,11 +27,11 @@ namespace backend_app.Controllers.dashboard
             return await service.GetAllSessions();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("create")]
-        public async Task<ActionResult> PostSession(Session session)
+        public async Task<ActionResult> createSession()
         {
-            var result = await service.AddSession(session);
+            var result = await service.AddSession();
             if (result != null)
             {
                 return Ok(new
@@ -39,7 +39,7 @@ namespace backend_app.Controllers.dashboard
                     message = "New Session Added Successfully"
                 });
             }
-            return BadRequest("false");
+            return BadRequest(new { message = "Failed to create a new session: exceeded the allowed number of sessions" });
         }
 
         [HttpDelete("{id}")]
