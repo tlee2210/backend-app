@@ -22,6 +22,7 @@ namespace backend_app.Models
         public DbSet<Semester> semesters { get; set; }
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<StaffAccount> StaffAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -167,6 +168,14 @@ namespace backend_app.Models
                      new Session{Id = 3, Code = "23UniStu", YearStart = new DateTime(2023, 8, 1), YearEnd = new DateTime(2026, 7, 31)},
                      new Session{Id = 4, Code = "24UniStu", YearStart = new DateTime(2024, 8, 1), YearEnd = new DateTime(2027, 7, 31), IsCurrentYear = true},
                      new Session{Id = 5, Code = "25UniStu", YearStart = new DateTime(2025, 8, 1), YearEnd = new DateTime(2028, 7, 31)},
+                });
+            });
+            modelBuilder.Entity<StaffAccount>(c =>
+            {
+                c.HasKey(x => x.Id);
+                c.HasData(new StaffAccount[]
+                {
+                    new StaffAccount{Id=1, FirstName = "quan", LastName = "nguyen", Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), Role="Teacher"}
                 });
             });
         }

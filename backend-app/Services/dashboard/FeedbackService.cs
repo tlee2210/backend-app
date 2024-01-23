@@ -28,9 +28,15 @@ namespace backend_app.Services.dashboard
             }
             return null;
         }
-        public async Task<IEnumerable<Feedback>> GetListFeedback()
+
+        public async Task<IEnumerable<Feedback>> GetListProcess()
         {
-            return await db.Feedbacks.ToListAsync();
+            return await db.Feedbacks.Where(f => f.Status == "Processed").ToListAsync();
+        }
+
+        public async Task<IEnumerable<Feedback>> GetListUnprocess()
+        {
+            return await db.Feedbacks.Where(f => f.Status == "Unprocessed").ToListAsync();
         }
         public async Task<Feedback> UpdateFeedback(Feedback feedback)
         {

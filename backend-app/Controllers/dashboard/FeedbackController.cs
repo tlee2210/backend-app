@@ -22,11 +22,18 @@ namespace backend_app.Controllers.dashboard
             return await service.GetFeedback(id);
         }
 
-        [HttpGet("GetList")]
-        public async Task<IEnumerable<Feedback>> GetList()
+        [HttpGet("GetListProcess")]
+        public async Task<IEnumerable<Feedback>> GetListProcess()
         {
-            return await service.GetListFeedback();
+            return await service.GetListProcess();
         }
+
+        [HttpGet("GetListUnprocess")]
+        public async Task<IEnumerable<Feedback>> GetListUnprocess()
+        {
+            return await service.GetListUnprocess();
+        }
+
         [HttpPut]
         public async Task<Feedback> UpdateFeedback(Feedback feedback)
         {
