@@ -13,38 +13,66 @@ namespace backend_app.Services.home
     {
         private readonly DatabaseContext db;
         private IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public StaffLoginServices(DatabaseContext db, IConfiguration configuration)
+        public StaffLoginServices(DatabaseContext db, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
-            this.db = db;
-            _configuration = configuration;
+            this.db=db;
+            _configuration=configuration;
+            _httpContextAccessor=httpContextAccessor;
         }
-        private async Task<StaffAccount> Authentication(EmailLogin staffLogin)
+
+        private async Task<Staff> Authentication(EmailLogin staffLogin)
         {
             var listUser = await db.StaffAccounts.ToListAsync();
             if (listUser != null && listUser.Any())
             {
-                var currenUser = listUser.FirstOrDefault(
-                  x => x.Email.ToLower() == staffLogin.Email.ToLower() &&
-                  BCrypt.Net.BCrypt.Verify(staffLogin.Password, x.Password));
+                var currenUser = await db.Staffs.SingleOrDefaultAsync(
+                  x => x.Email.ToLower() == staffLogin.Email.ToLower());
+                bool pass = BCrypt.Net.BCrypt.Verify(staffLogin.Password, currenUser.Password);
 
-                return currenUser;
+                if(pass)
+                {
+                    return currenUser;
+                }
+                /*var user = new StaffDTO
+                {
+                    Id = currenUser.Id,
+                    Address = currenUser.Address,
+                    Email = currenUser.Email,
+                    Experience = currenUser.Experience,
+                    FileAvatar = currenUser.FileAvatar,
+                    FirstName = currenUser.FirstName,   
+                    LastName = currenUser.LastName,
+                    Gender = currenUser.Gender,
+                    Phone = currenUser.Phone,
+                    Qualification = currenUser.Qualification
+                };*/
+                return null;
             }
             return null;
 
         }
-        private string GenerateToken(StaffAccount staff)
+        private string GenerateToken(Staff staff)
         {
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
             var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
+            /*var staff = db.Staffs.FirstOrDefault(s => s.Id == staf.Id);*/
+            var request = _httpContextAccessor.HttpContext.Request;
 
             var claims = new[]
             {
                 new Claim("Id", staff.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, staff.Email),
-                new Claim(ClaimTypes.Name, staff.FirstName),
-                new Claim(ClaimTypes.Name, staff.LastName),
+                new Claim("FirstName", staff.FirstName),
+                new Claim("LastName", staff.LastName),
                 new Claim(ClaimTypes.Role, staff.Role),
+                new Claim("Address", staff.Address),
+                new Claim("Experience", staff.Experience),
+                new Claim(ClaimTypes.Gender, string.Format("{0}", staff.Gender)),
+                new Claim("Qualification", staff.Qualification),
+                new Claim(ClaimTypes.MobilePhone, staff.Phone),
+                new Claim(ClaimTypes.Uri, string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staff.FileAvatar))
             };
 
             var token = new JwtSecurityToken(
@@ -61,13 +89,22 @@ namespace backend_app.Services.home
             var user_ = await Authentication(staffLogin);
             if (user_ != null)
             {
-                var auth = new StaffAccountDTO
+                var staf = await db.Staffs.SingleOrDefaultAsync(s => s.Id == user_.Id);
+                var request = _httpContextAccessor.HttpContext.Request;
+
+                var auth = new Staff
                 {
-                    Id = user_.Id,
-                    Email = user_.Email,
-                    FirstName = user_.FirstName,
-                    LastName = user_.LastName,
-                    Role = user_.Role
+                    Id = staf.Id,
+                    Email = staf.Email,
+                    FirstName = staf.FirstName,
+                    LastName = staf.LastName,
+                    Role = staf.Role,
+                    Address = staf.Address,
+                    Phone = staf.Phone,
+                    Experience = staf.Experience,
+                    Gender = staf.Gender,   
+                    Qualification = staf.Qualification,
+                    FileAvatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar)
                 };
                 var token = GenerateToken(user_);
                 return new StaffLoginResult { Token = token, staff = auth };

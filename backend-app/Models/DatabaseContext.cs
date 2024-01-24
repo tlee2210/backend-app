@@ -34,7 +34,8 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new adminAccount[]
                 {
-                    new adminAccount{Id=1, Name = "Tlee", Email = "Tlee2210@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("tlee123"), Role="Admin"}
+                    new adminAccount{Id=1, Name = "Tlee", Email = "Tlee2210@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("tlee123"), Role="Admin"},
+                    new adminAccount{Id=2, Name = "quan", Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), Role="Admin"}
                 });
             });
             modelBuilder.Entity<Category>(c =>
