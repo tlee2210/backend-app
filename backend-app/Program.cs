@@ -50,6 +50,7 @@ builder.Services.AddScoped<IAdmissionHome, AdmissionServicesHome>();
 builder.Services.AddScoped<IStudent, StudentServices>();
 builder.Services.AddScoped<ISessions, SessionServices>();
 builder.Services.AddScoped<IStaffLogin, StaffLoginServices>();
+builder.Services.AddScoped<IStudentLogin, StudentLoginServices>();
 
 //home
 builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();

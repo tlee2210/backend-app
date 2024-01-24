@@ -9,19 +9,19 @@ using System.Text;
 
 namespace backend_app.Services.home
 {
-    public class StaffLoginServices : IStaffLogin
+    public class StudentLoginServices : IStudentLogin
     {
         private readonly DatabaseContext db;
         private IConfiguration _configuration;
 
-        public StaffLoginServices(DatabaseContext db, IConfiguration configuration)
+        public StudentLoginServices(DatabaseContext db, IConfiguration configuration)
         {
             this.db = db;
             _configuration = configuration;
         }
-        private async Task<StaffAccount> Authentication(EmailLogin staffLogin)
+        private async Task<StudentAccount> Authentication(EmailLogin staffLogin)
         {
-            var listUser = await db.StaffAccounts.ToListAsync();
+            var listUser = await db.StudentAccounts.ToListAsync();
             if (listUser != null && listUser.Any())
             {
                 var currenUser = listUser.FirstOrDefault(
@@ -33,18 +33,16 @@ namespace backend_app.Services.home
             return null;
 
         }
-        private string GenerateToken(StaffAccount staff)
+        private string GenerateToken(StudentAccount student)
         {
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
             var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim("Id", staff.Id.ToString()),
-                new Claim(ClaimTypes.NameIdentifier, staff.Email),
-                new Claim(ClaimTypes.Name, staff.FirstName),
-                new Claim(ClaimTypes.Name, staff.LastName),
-                new Claim(ClaimTypes.Role, staff.Role),
+                new Claim("Id", student.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, student.Email),
+                new Claim(ClaimTypes.Anonymous, student.StudentCode)
             };
 
             var token = new JwtSecurityToken(
@@ -56,21 +54,19 @@ namespace backend_app.Services.home
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public async Task<StaffLoginResult> Login(EmailLogin staffLogin)
+        public async Task<StudentLoginResult> Login(EmailLogin studentLogin)
         {
-            var user_ = await Authentication(staffLogin);
+            var user_ = await Authentication(studentLogin);
             if (user_ != null)
             {
-                var auth = new StaffAccountDTO
+                var auth = new StudentAccountDTO
                 {
                     Id = user_.Id,
                     Email = user_.Email,
-                    FirstName = user_.FirstName,
-                    LastName = user_.LastName,
-                    Role = user_.Role
+                    StudentCode = user_.StudentCode
                 };
                 var token = GenerateToken(user_);
-                return new StaffLoginResult { Token = token, staff = auth };
+                return new StudentLoginResult { Token = token, student = auth };
             }
             return null;
         }

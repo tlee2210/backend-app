@@ -24,6 +24,7 @@ namespace backend_app.Models
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<StaffAccount> StaffAccounts { get; set; }
+        public DbSet<StudentAccount> StudentAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -177,6 +178,14 @@ namespace backend_app.Models
                 c.HasData(new StaffAccount[]
                 {
                     new StaffAccount{Id=1, FirstName = "quan", LastName = "nguyen", Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), Role="Teacher"}
+                });
+            });
+            modelBuilder.Entity<StudentAccount>(c =>
+            {
+                c.HasKey(x => x.Id);
+                c.HasData(new StudentAccount[]
+                {
+                    new StudentAccount{Id=1, Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), StudentCode = "S01"}
                 });
             });
         }
