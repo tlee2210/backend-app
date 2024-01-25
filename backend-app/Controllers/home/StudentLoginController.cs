@@ -28,7 +28,8 @@ namespace backend_app.Controllers.home
                 {
                     return Ok(result);
                 }
-                return BadRequest("Login failed");
+                return BadRequest(new { message = "Login failed: The provided credentials are incorrect or the user does not exist." });
+
             }
             catch (Exception ex)
             {

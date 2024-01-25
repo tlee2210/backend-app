@@ -65,7 +65,7 @@ namespace backend_app.Services.home
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public async Task<StudentLoginResult> Login(EmailLogin studentLogin)
+        public async Task<LoginResult> Login(EmailLogin studentLogin)
         {
             var user_ = await Authentication(studentLogin);
             if (user_ != null)
@@ -73,23 +73,16 @@ namespace backend_app.Services.home
                 var student = await db.Students.SingleOrDefaultAsync(s => s.Id == user_.Id);
                 var request = _httpContextAccessor.HttpContext.Request;
 
-                var auth = new Students
+                var auth = new Account
                 {
                     Id = student.Id,
                     Email = student.Email,
-                    StudentCode = student.StudentCode,
-                    FirstName = student.FirstName,
-                    LastName = student.LastName,
-                    FatherName = student.FatherName,
-                    MotherName = student.MotherName,
-                    DateOfBirth = student.DateOfBirth,
-                    Gender = student.Gender,
-                    Address = student.Address,
-                    Phone = student.Phone,
+                    Name = student.FirstName,
+                    Role = "Student",
                     Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, student.Avatar)
                 };
                 var token = GenerateToken(user_);
-                return new StudentLoginResult { Token = token, student = auth };
+                return new LoginResult { Token = token, user = auth };
             }
             return null;
         }

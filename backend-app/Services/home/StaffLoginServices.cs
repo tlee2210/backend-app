@@ -66,7 +66,7 @@ namespace backend_app.Services.home
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public async Task<StaffLoginResult> Login(EmailLogin staffLogin)
+        public async Task<LoginResult> Login(EmailLogin staffLogin)
         {
             var user_ = await Authentication(staffLogin);
             if (user_ != null)
@@ -83,7 +83,7 @@ namespace backend_app.Services.home
                     Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar)
                 };
                 var token = GenerateToken(user_);
-                return new StaffLoginResult { Token = token, user = auth };
+                return new LoginResult { Token = token, user = auth };
             }
             return null;
         }

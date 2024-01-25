@@ -4,6 +4,6 @@ namespace backend_app.IRepository.home
 {
     public interface IStudentLogin
     {
-        Task<StudentLoginResult> Login(EmailLogin studentLogin);
+        Task<LoginResult> Login(EmailLogin studentLogin);
     }
 }
