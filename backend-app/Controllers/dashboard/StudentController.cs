@@ -28,7 +28,10 @@ namespace backend_app.Controllers.dashboard
                     message = "New student has been successfully added."
                 });
             }
-            return BadRequest("Unable to add new student. Please check the input information again.");
+            return BadRequest(new
+            {
+                message = "Unable to add new student. Please check the input information again."
+            });
         }
 
         [HttpGet("GetList")]
@@ -61,20 +64,21 @@ namespace backend_app.Controllers.dashboard
         }
 
         [HttpPost("Update")]
-        public async Task<ActionResult<Students>> PutStudent([FromForm] StudentImage student)
+        public async Task<ActionResult<Students>> UpdateStudent([FromForm] StudentImage student)
         {
             var result = service.UpdateStudent(student);
             if (result != null)
             {
                 return Ok(new
                 {
-                    message = "New Student Updated Successfully"
+                    message = "New Student Updated Successfully",
+                    data = result
                 });
             }
             return BadRequest("false");
         }
         [HttpGet("{id}/GetEdit")]
-        public async Task<StudentDTO> GetOne(int id)
+        public async Task<GetEditSelectOption<StudentDTO>> GetEdit(int id)
         {
             return await service.GetEdit(id);
         }

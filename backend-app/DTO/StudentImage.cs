@@ -6,7 +6,6 @@ namespace backend_app.DTO
     public class StudentImage
     {
         public int? Id { get; set; }
-        public string StudentCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -19,6 +18,6 @@ namespace backend_app.DTO
         [NotMapped]
         public IFormFile? Avatar { get; set; }
         public string? Password { get; set; }
-        public int? FacultyId { get; set; }
+        public int FacultyId { get; set; }
     }
 }

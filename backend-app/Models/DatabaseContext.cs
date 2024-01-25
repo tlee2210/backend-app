@@ -23,6 +23,7 @@ namespace backend_app.Models
         public DbSet<Semester> semesters { get; set; }
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<StudentFacultySemesters> StudentFacultySemesters { get; set; }
         public DbSet<StaffAccount> StaffAccounts { get; set; }
         public DbSet<StudentAccount> StudentAccounts { get; set; }
 
@@ -116,16 +117,28 @@ namespace backend_app.Models
             {
                 c.HasKey(x => x.Id);
             });
+            modelBuilder.Entity<Session>(c =>
+            {
+                c.HasKey(x => x.Id);
+                c.HasData(new Session[]
+                {
+                     new Session{Id = 1, Code = "21UniStu", YearStart = new DateTime(2021, 8, 1), YearEnd = new DateTime(2024, 7, 31), Status = SessionStatus.Completed,IsCurrentYear = true,},
+                     new Session{Id = 2, Code = "22UniStu", YearStart = new DateTime(2022, 8, 1), YearEnd = new DateTime(2025, 7, 31), Status = SessionStatus.Active},
+                     new Session{Id = 3, Code = "23UniStu", YearStart = new DateTime(2023, 8, 1), YearEnd = new DateTime(2026, 7, 31), Status = SessionStatus.Active},
+                     new Session{Id = 4, Code = "24UniStu", YearStart = new DateTime(2024, 8, 1), YearEnd = new DateTime(2027, 7, 31), IsCurrentYear = true, Status = SessionStatus.Active},
+                     new Session{Id = 5, Code = "25UniStu", YearStart = new DateTime(2025, 8, 1), YearEnd = new DateTime(2028, 7, 31), Status = SessionStatus.Inactive},
+                });
+            });
             modelBuilder.Entity<StudentFacultySemesters>(sfs =>
             {
                 sfs.HasKey(x => x.Id);
 
-                sfs.HasOne(s => s.Student).WithOne(sfs => sfs.StudentFacultySemesters).HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+               // sfs.HasOne(s => s.Student).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
                 sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
                 sfs.HasOne(f => f.Semester).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
+                sfs.HasOne(f => f.Session).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SessionId);
 
             });
-
             modelBuilder.Entity<Students>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -134,6 +147,8 @@ namespace backend_app.Models
                 entity.Property(e => e.LastName).HasMaxLength(50);
                 entity.Property(e => e.Email).IsRequired(); 
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
+                entity.HasOne(s => s.StudentFacultySemesters).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+
 
                 entity.Property(e => e.Gender).HasConversion<string>();
             });
@@ -159,18 +174,6 @@ namespace backend_app.Models
                 {
                     new Admission{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", FatherName = "ABC", MotherName = "DEF", DOB = new DateTime(2004, 08, 25), Address = "HCM", Gender = true, HighSchool = "FPT", EnrollmentNumber = "C123", GPA = 5.0, Status = "Process", FacultyId = 1},
                     new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345", FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2", Gender = false, HighSchool = "FPT2", EnrollmentNumber = "C345", GPA = 4.0, Status = "Process", FacultyId = 2}
-                });
-            });
-            modelBuilder.Entity<Session>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new Session[]
-                {
-                     new Session{Id = 1, Code = "21UniStu", YearStart = new DateTime(2021, 8, 1), YearEnd = new DateTime(2024, 7, 31), Status = SessionStatus.Completed,IsCurrentYear = true,},
-                     new Session{Id = 2, Code = "22UniStu", YearStart = new DateTime(2022, 8, 1), YearEnd = new DateTime(2025, 7, 31), Status = SessionStatus.Active},
-                     new Session{Id = 3, Code = "23UniStu", YearStart = new DateTime(2023, 8, 1), YearEnd = new DateTime(2026, 7, 31), Status = SessionStatus.Active},
-                     new Session{Id = 4, Code = "24UniStu", YearStart = new DateTime(2024, 8, 1), YearEnd = new DateTime(2027, 7, 31), IsCurrentYear = true, Status = SessionStatus.Active}, 
-                     new Session{Id = 5, Code = "25UniStu", YearStart = new DateTime(2025, 8, 1), YearEnd = new DateTime(2028, 7, 31), Status = SessionStatus.Inactive},
                 });
             });
             modelBuilder.Entity<StaffAccount>(c =>

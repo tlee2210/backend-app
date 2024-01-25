@@ -16,7 +16,6 @@ namespace backend_app.DTO
         public string MotherName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Avatar { get; set; }
-        public int? StudentFacultySemestersId { get; set; }
         public virtual StudentFacultySemesters? StudentFacultySemesters { get; set; }
     }
 }

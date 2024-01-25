@@ -2,7 +2,7 @@
 {
     public class Students
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string StudentCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -15,7 +15,6 @@
         public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Avatar { get; set; }
-        public int? StudentFacultySemestersId { get; set; }
         public virtual StudentFacultySemesters? StudentFacultySemesters { get; set; }
     }
     public enum Gender
