@@ -130,7 +130,11 @@ namespace backend_app.Services.dashboard
         {
             var stu = await db.Students
                 .Include(a => a.StudentFacultySemesters)
+                .ThenInclude(sfs => sfs.Session)
+                .Include(a => a.StudentFacultySemesters)
                 .ThenInclude(sfs => sfs.Faculty)
+                .Include(a => a.StudentFacultySemesters)
+                .ThenInclude(sfs => sfs.Semester)
                 .SingleOrDefaultAsync(a => a.Id == id);
             if (stu == null)
             {

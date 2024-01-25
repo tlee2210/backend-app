@@ -132,9 +132,12 @@ namespace backend_app.Models
                 sfs.HasKey(x => x.Id);
 
                // sfs.HasOne(s => s.Student).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
-                sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
-                sfs.HasOne(f => f.Semester).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
-                sfs.HasOne(f => f.Session).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SessionId);
+                //sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
+                //sfs.HasOne(f => f.Semester).WithMany(a => a.).HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
+                //sfs.HasOne(f => f.Session).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SessionId);
+                sfs.HasOne(f => f.Session).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SessionId);
+                sfs.HasOne(f => f.Semester).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SemesterId);
+                sfs.HasOne(f => f.Faculty).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.FacultyId);
 
             });
             modelBuilder.Entity<Students>(entity =>

@@ -1,4 +1,6 @@
-﻿namespace backend_app.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend_app.Models
 {
     public class Faculty
     {
@@ -12,5 +14,7 @@
         public int EntryScore { get; set; }
         public int  Course_id { get; set; }
         public Courses? Courses { get; set; }
+        [JsonIgnore]
+        public ICollection<StudentFacultySemesters> StudentFacultySemesters { get; set; }
     }
 }

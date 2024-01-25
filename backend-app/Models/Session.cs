@@ -1,4 +1,6 @@
-﻿namespace backend_app.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend_app.Models
 {
     public class Session
     {
@@ -8,6 +10,8 @@
         public DateTime YearEnd { get; set; }
         public bool IsCurrentYear { get; set; } = false;
         public SessionStatus Status { get; set; }
+        [JsonIgnore]
+        public ICollection<StudentFacultySemesters> StudentFacultySemesters { get; set; }
     }
     public enum SessionStatus
     {
