@@ -1,4 +1,6 @@
-﻿namespace backend_app.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend_app.Models
 {
     public class Staff
     {
@@ -13,6 +15,7 @@
         public string Qualification { get; set; }
         public string Experience { get; set; }
         public string Role { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
     }
 }
