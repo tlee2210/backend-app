@@ -5,6 +5,6 @@ namespace backend_app.DTO
     public class StudentLoginResult
     {
         public string Token { get; set; }
-        public StudentAccountDTO student { get; set; }
+        public Students student { get; set; }
     }
 }

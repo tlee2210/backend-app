@@ -13,36 +13,52 @@ namespace backend_app.Services.home
     {
         private readonly DatabaseContext db;
         private IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public StudentLoginServices(DatabaseContext db, IConfiguration configuration)
+        public StudentLoginServices(DatabaseContext db, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
-            this.db = db;
-            _configuration = configuration;
+            this.db=db;
+            _configuration=configuration;
+            _httpContextAccessor=httpContextAccessor;
         }
-        private async Task<StudentAccount> Authentication(EmailLogin staffLogin)
+
+        private async Task<Students> Authentication(EmailLogin studentLogin)
         {
             var listUser = await db.StudentAccounts.ToListAsync();
             if (listUser != null && listUser.Any())
             {
-                var currenUser = listUser.FirstOrDefault(
-                  x => x.Email.ToLower() == staffLogin.Email.ToLower() &&
-                  BCrypt.Net.BCrypt.Verify(staffLogin.Password, x.Password));
-
-                return currenUser;
+                var currenUser = await db.Students.SingleOrDefaultAsync(
+                  x => x.Email.ToLower() == studentLogin.Email.ToLower());
+                bool pass = BCrypt.Net.BCrypt.Verify(studentLogin.Password, currenUser.Password);
+                if (pass)
+                {
+                    return currenUser;
+                }
+                return null;
             }
             return null;
 
         }
-        private string GenerateToken(StudentAccount student)
+        private string GenerateToken(Students student)
         {
             var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
             var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
+            var request = _httpContextAccessor.HttpContext.Request;
 
             var claims = new[]
             {
                 new Claim("Id", student.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, student.Email),
-                new Claim(ClaimTypes.Anonymous, student.StudentCode)
+                new Claim("StudentCode", student.StudentCode),
+                new Claim("FatherName", student.FatherName),
+                new Claim("MotherName", student.MotherName),
+                new Claim("FirstName", student.FirstName),
+                new Claim("LastName", student.LastName),
+                new Claim(ClaimTypes.DateOfBirth, string.Format("{0}", student.DateOfBirth)),
+                new Claim(ClaimTypes.Uri, string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, student.Avatar)),
+                new Claim(ClaimTypes.Gender, string.Format("{0}", student.Gender)),
+                new Claim("Address", student.Address),
+                new Claim(ClaimTypes.MobilePhone, student.Phone)
             };
 
             var token = new JwtSecurityToken(
@@ -59,11 +75,23 @@ namespace backend_app.Services.home
             var user_ = await Authentication(studentLogin);
             if (user_ != null)
             {
-                var auth = new StudentAccountDTO
+                var student = await db.Students.SingleOrDefaultAsync(s => s.Id == user_.Id);
+                var request = _httpContextAccessor.HttpContext.Request;
+
+                var auth = new Students
                 {
-                    Id = user_.Id,
-                    Email = user_.Email,
-                    StudentCode = user_.StudentCode
+                    Id = student.Id,
+                    Email = student.Email,
+                    StudentCode = student.StudentCode,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    FatherName = student.FatherName,
+                    MotherName = student.MotherName,
+                    DateOfBirth = student.DateOfBirth,
+                    Gender = student.Gender,
+                    Address = student.Address,
+                    Phone = student.Phone,
+                    Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, student.Avatar)
                 };
                 var token = GenerateToken(user_);
                 return new StudentLoginResult { Token = token, student = auth };
