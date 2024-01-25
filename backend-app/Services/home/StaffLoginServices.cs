@@ -24,31 +24,13 @@ namespace backend_app.Services.home
 
         private async Task<Staff> Authentication(EmailLogin staffLogin)
         {
-            var listUser = await db.StaffAccounts.ToListAsync();
+            var listUser = await db.Staffs.ToListAsync();
             if (listUser != null && listUser.Any())
             {
-                var currenUser = await db.Staffs.SingleOrDefaultAsync(
-                  x => x.Email.ToLower() == staffLogin.Email.ToLower());
-                bool pass = BCrypt.Net.BCrypt.Verify(staffLogin.Password, currenUser.Password);
-
-                if(pass)
-                {
-                    return currenUser;
-                }
-                /*var user = new StaffDTO
-                {
-                    Id = currenUser.Id,
-                    Address = currenUser.Address,
-                    Email = currenUser.Email,
-                    Experience = currenUser.Experience,
-                    FileAvatar = currenUser.FileAvatar,
-                    FirstName = currenUser.FirstName,   
-                    LastName = currenUser.LastName,
-                    Gender = currenUser.Gender,
-                    Phone = currenUser.Phone,
-                    Qualification = currenUser.Qualification
-                };*/
-                return null;
+                var currenUser = listUser.FirstOrDefault(
+                  x => x.Email.ToLower() == staffLogin.Email.ToLower() && BCrypt.Net.BCrypt.Verify(staffLogin.Password, x.Password));
+                
+                return currenUser;
             }
             return null;
 

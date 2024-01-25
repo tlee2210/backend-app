@@ -24,17 +24,12 @@ namespace backend_app.Services.home
 
         private async Task<Students> Authentication(EmailLogin studentLogin)
         {
-            var listUser = await db.StudentAccounts.ToListAsync();
+            var listUser = await db.Students.ToListAsync();
             if (listUser != null && listUser.Any())
             {
-                var currenUser = await db.Students.SingleOrDefaultAsync(
-                  x => x.Email.ToLower() == studentLogin.Email.ToLower());
-                bool pass = BCrypt.Net.BCrypt.Verify(studentLogin.Password, currenUser.Password);
-                if (pass)
-                {
-                    return currenUser;
-                }
-                return null;
+                var currenUser = listUser.FirstOrDefault(
+                  x => x.Email.ToLower() == studentLogin.Email.ToLower() && BCrypt.Net.BCrypt.Verify(studentLogin.Password, x.Password));
+                return currenUser;
             }
             return null;
 

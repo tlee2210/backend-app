@@ -24,8 +24,6 @@ namespace backend_app.Models
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<StudentFacultySemesters> StudentFacultySemesters { get; set; }
-        public DbSet<StaffAccount> StaffAccounts { get; set; }
-        public DbSet<StudentAccount> StudentAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -174,22 +172,6 @@ namespace backend_app.Models
                 {
                     new Admission{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", FatherName = "ABC", MotherName = "DEF", DOB = new DateTime(2004, 08, 25), Address = "HCM", Gender = true, HighSchool = "FPT", EnrollmentNumber = "C123", GPA = 5.0, Status = "Process", FacultyId = 1},
                     new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345", FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2", Gender = false, HighSchool = "FPT2", EnrollmentNumber = "C345", GPA = 4.0, Status = "Process", FacultyId = 2}
-                });
-            });
-            modelBuilder.Entity<StaffAccount>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new StaffAccount[]
-                {
-                    new StaffAccount{Id=1, FirstName = "quan", LastName = "nguyen", Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), Role="Teacher"}
-                });
-            });
-            modelBuilder.Entity<StudentAccount>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new StudentAccount[]
-                {
-                    new StudentAccount{Id=1, Email = "quan@gmail.com", Password = BCrypt.Net.BCrypt.HashPassword("123"), StudentCode = "S01"}
                 });
             });
         }
