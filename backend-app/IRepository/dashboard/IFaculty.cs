@@ -14,5 +14,6 @@ namespace backend_app.IRepository.dashboard
         Task<bool> DeleteFaculties(int id);
         Task<bool> checkCode(Faculty faculty);
         Task<bool> checkTitle(Faculty faculty);
+        Task<IEnumerable<Faculty>> SearchFaculty(string title);
     }
 }

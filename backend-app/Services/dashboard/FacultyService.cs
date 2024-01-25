@@ -176,5 +176,11 @@ namespace backend_app.Services.dashboard
 
             return false;
         }
+
+        public async Task<IEnumerable<Faculty>> SearchFaculty(string title)
+        {
+            var listFaculty = await db.Faculty.Where(c => c.Title.Contains(title)).ToListAsync();
+            return listFaculty;
+        }
     }
 }

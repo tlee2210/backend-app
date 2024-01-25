@@ -97,5 +97,20 @@ namespace backend_app.Controllers.dashboard
             }
             return BadRequest("An error occurred while updating the Faculty");
         }
+
+        [HttpGet("Search/{title}")]
+        public async Task<IActionResult> Search(string title)
+        {
+            var _result = await service.SearchFaculty(title);
+            if (_result != null)
+            {
+                return Ok(new
+                {
+                    message = "Search successfully",
+                    result = _result
+                });
+            }
+            return BadRequest("Not found");
+        }
     }
 }
