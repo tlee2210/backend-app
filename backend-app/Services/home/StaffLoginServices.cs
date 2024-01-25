@@ -17,19 +17,19 @@ namespace backend_app.Services.home
 
         public StaffLoginServices(DatabaseContext db, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
-            this.db=db;
-            _configuration=configuration;
-            _httpContextAccessor=httpContextAccessor;
+            this.db = db;
+            _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        private async Task<Staff> Authentication(UserLogin user)
+        private async Task<Staff> Authentication(EmailLogin staffLogin)
         {
             var listUser = await db.Staffs.ToListAsync();
             if (listUser != null && listUser.Any())
             {
                 var currenUser = listUser.FirstOrDefault(
-                  x => x.Email.ToLower() == user.Email.ToLower() && BCrypt.Net.BCrypt.Verify(user.Password, x.Password));
-                
+                  x => x.Email.ToLower() == staffLogin.Email.ToLower() && BCrypt.Net.BCrypt.Verify(staffLogin.Password, x.Password));
+
                 return currenUser;
             }
             return null;
@@ -66,9 +66,9 @@ namespace backend_app.Services.home
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public async Task<LoginResult> Login(UserLogin userLogin)
+        public async Task<StaffLoginResult> Login(EmailLogin staffLogin)
         {
-            var user_ = await Authentication(userLogin);
+            var user_ = await Authentication(staffLogin);
             if (user_ != null)
             {
                 var staf = await db.Staffs.SingleOrDefaultAsync(s => s.Id == user_.Id);
@@ -83,7 +83,7 @@ namespace backend_app.Services.home
                     Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar)
                 };
                 var token = GenerateToken(user_);
-                return new LoginResult { Token = token, user = auth };
+                return new StaffLoginResult { Token = token, user = auth };
             }
             return null;
         }

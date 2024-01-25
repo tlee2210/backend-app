@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend_app.Controllers.home
 {
-    [Route("api/[controller]")]
+    [Route("api/home/stafflogin")]
     [ApiController]
     public class StaffLoginController : ControllerBase
     {
@@ -15,21 +15,21 @@ namespace backend_app.Controllers.home
 
         public StaffLoginController(IStaffLogin service, IConfiguration configuration)
         {
-            this.service=service;
-            _configuration=configuration;
+            this.service = service;
+            _configuration = configuration;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLogin userLogin)
+        public async Task<IActionResult> Login(EmailLogin staffLogin)
         {
             try
             {
-                var result = await service.Login(userLogin);
+                var result = await service.Login(staffLogin);
                 if (result != null)
                 {
                     return Ok(result);
                 }
-                return BadRequest("Login failed");
+                return BadRequest(new { message = "Login failed: The provided credentials are incorrect or the user does not exist." });
             }
             catch (Exception ex)
             {
