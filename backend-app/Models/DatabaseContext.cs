@@ -116,6 +116,7 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new Staff[]
                 {
+                    new Staff {Id = 2, FirstName = "Chuong", LastName = "Chuong", Email = "namechuong19@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0974671412", FileAvatar = "aa", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("chuong123"), Role="Admin"},
                     new Staff {Id = 1, FirstName = "Tlee", LastName = "Tlee", Email = "thienle255@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0905028073", FileAvatar = "aa", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("tlee123"), Role="Admin"}
                 });
             });
