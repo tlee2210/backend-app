@@ -15,6 +15,6 @@ namespace backend_app.Models
         public int  Course_id { get; set; }
         public Courses? Courses { get; set; }
         [JsonIgnore]
-        public ICollection<StudentFacultySemesters> StudentFacultySemesters { get; set; }
+        public ICollection<StudentFacultySemesters>? StudentFacultySemesters { get; set; }
     }
 }
