@@ -20,11 +20,11 @@ namespace backend_app.Controllers.home
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(EmailLogin staffLogin)
+        public async Task<IActionResult> Login(UserLogin userLogin)
         {
             try
             {
-                var result = await service.Login(staffLogin);
+                var result = await service.Login(userLogin);
                 if (result != null)
                 {
                     return Ok(result);

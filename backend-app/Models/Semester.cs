@@ -9,6 +9,6 @@ namespace backend_app.Models
         public int SemesterNumber { get; set; } 
         public int AcademicYear { get; set; }
         [JsonIgnore]
-        public ICollection<StudentFacultySemesters> StudentFacultySemesters { get; set; }
+        public ICollection<StudentFacultySemesters>? StudentFacultySemesters { get; set; }
     }
 }

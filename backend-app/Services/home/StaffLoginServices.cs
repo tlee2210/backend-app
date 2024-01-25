@@ -22,13 +22,13 @@ namespace backend_app.Services.home
             _httpContextAccessor=httpContextAccessor;
         }
 
-        private async Task<Staff> Authentication(EmailLogin staffLogin)
+        private async Task<Staff> Authentication(UserLogin user)
         {
             var listUser = await db.Staffs.ToListAsync();
             if (listUser != null && listUser.Any())
             {
                 var currenUser = listUser.FirstOrDefault(
-                  x => x.Email.ToLower() == staffLogin.Email.ToLower() && BCrypt.Net.BCrypt.Verify(staffLogin.Password, x.Password));
+                  x => x.Email.ToLower() == user.Email.ToLower() && BCrypt.Net.BCrypt.Verify(user.Password, x.Password));
                 
                 return currenUser;
             }
@@ -66,30 +66,24 @@ namespace backend_app.Services.home
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        public async Task<StaffLoginResult> Login(EmailLogin staffLogin)
+        public async Task<LoginResult> Login(UserLogin userLogin)
         {
-            var user_ = await Authentication(staffLogin);
+            var user_ = await Authentication(userLogin);
             if (user_ != null)
             {
                 var staf = await db.Staffs.SingleOrDefaultAsync(s => s.Id == user_.Id);
                 var request = _httpContextAccessor.HttpContext.Request;
 
-                var auth = new Staff
+                var auth = new Account
                 {
                     Id = staf.Id,
                     Email = staf.Email,
-                    FirstName = staf.FirstName,
-                    LastName = staf.LastName,
+                    Name = staf.FirstName,
                     Role = staf.Role,
-                    Address = staf.Address,
-                    Phone = staf.Phone,
-                    Experience = staf.Experience,
-                    Gender = staf.Gender,   
-                    Qualification = staf.Qualification,
-                    FileAvatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar)
+                    Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, staf.FileAvatar)
                 };
                 var token = GenerateToken(user_);
-                return new StaffLoginResult { Token = token, staff = auth };
+                return new LoginResult { Token = token, user = auth };
             }
             return null;
         }

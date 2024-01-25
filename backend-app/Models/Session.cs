@@ -11,7 +11,7 @@ namespace backend_app.Models
         public bool IsCurrentYear { get; set; } = false;
         public SessionStatus Status { get; set; }
         [JsonIgnore]
-        public ICollection<StudentFacultySemesters> StudentFacultySemesters { get; set; }
+        public ICollection<StudentFacultySemesters>? StudentFacultySemesters { get; set; }
     }
     public enum SessionStatus
     {
