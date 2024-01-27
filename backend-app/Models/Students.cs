@@ -1,4 +1,6 @@
-﻿namespace backend_app.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend_app.Models
 {
     public class Students
     {
@@ -12,6 +14,7 @@
         public Gender Gender { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }
+        [JsonIgnore]
         public string Password { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Avatar { get; set; }

@@ -36,7 +36,8 @@ builder.Services.AddDbContext<DatabaseContext>(op => op.UseSqlServer(builder.Con
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 //dashboard
 builder.Services.AddScoped<IFeedbackServices, FeedbackService>();
-builder.Services.AddScoped<IAdminLogin, AdminLoginServices>();
+builder.Services.AddScoped<IProfileStudent, ProfileStudentServices>();
+builder.Services.AddScoped<IProfileStaff, ProfileStaffService>();
 builder.Services.AddScoped<ICategory, CategoryServices>();
 builder.Services.AddScoped<IArticle, ArticleServices>();
 builder.Services.AddScoped<IContactUs, ContactUsServices>();
