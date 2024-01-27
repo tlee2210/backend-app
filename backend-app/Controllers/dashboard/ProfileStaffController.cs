@@ -30,5 +30,16 @@ namespace backend_app.Controllers.dashboard
             }
             return NotFound();
         }
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO changePassword)
+        {
+            var result = await service.ChangePassword(User, changePassword);
+            if (result)
+            {
+                return Ok(new { message = "Password has been successfully changed." });
+            }
+            return BadRequest(new { message = "Unable to change password. Please check the old password." });
+        }
     }
 }

@@ -107,7 +107,7 @@ namespace backend_app.Models
                 c.HasData(new Staff[]
                 {
                     new Staff {Id = 2, FirstName = "Chuong", LastName = "Chuong", Email = "namechuong19@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0974671412", FileAvatar = "Image/Staff/1.png", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("chuong123"), Role="Admin"},
-                    new Staff {Id = 1, FirstName = "Tlee", LastName = "Tlee", Email = "thienle255@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0905028073", FileAvatar = "Image/Staff/1.png", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("tlee123"), Role="Admin"}
+                    new Staff {Id = 1, FirstName = "Tlee", LastName = "Tlee", Email = "thienle255@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0905028073", FileAvatar = "Image/Staff/1.png", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("Tlee2210"), Role="Admin"}
                 });
             });
             modelBuilder.Entity<Session>(c =>
@@ -121,32 +121,6 @@ namespace backend_app.Models
                      new Session{Id = 4, Code = "24UniStu", YearStart = new DateTime(2024, 8, 1), YearEnd = new DateTime(2027, 7, 31), IsCurrentYear = true, Status = SessionStatus.Active},
                      new Session{Id = 5, Code = "25UniStu", YearStart = new DateTime(2025, 8, 1), YearEnd = new DateTime(2028, 7, 31), Status = SessionStatus.Inactive},
                 });
-            });
-            modelBuilder.Entity<StudentFacultySemesters>(sfs =>
-            {
-                sfs.HasKey(x => x.Id);
-
-               // sfs.HasOne(s => s.Student).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
-                //sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
-                //sfs.HasOne(f => f.Semester).WithMany(a => a.).HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
-                //sfs.HasOne(f => f.Session).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SessionId);
-                sfs.HasOne(f => f.Session).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SessionId);
-                sfs.HasOne(f => f.Semester).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SemesterId);
-                sfs.HasOne(f => f.Faculty).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.FacultyId);
-
-            });
-            modelBuilder.Entity<Students>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.StudentCode).IsRequired(); 
-                entity.Property(e => e.FirstName).HasMaxLength(50);
-                entity.Property(e => e.LastName).HasMaxLength(50);
-                entity.Property(e => e.Email).IsRequired(); 
-                entity.Property(e => e.DateOfBirth).HasColumnType("date");
-                entity.HasOne(s => s.StudentFacultySemesters).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
-
-
-                entity.Property(e => e.Gender).HasConversion<string>();
             });
             modelBuilder.Entity<Semester>(s =>
             {
@@ -162,6 +136,59 @@ namespace backend_app.Models
                     new Semester{Id = 7, AcademicYear = 4, SemesterNumber = 1},
                     new Semester{Id = 8, AcademicYear = 4, SemesterNumber = 2},
                 });
+            });
+            modelBuilder.Entity<Students>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.StudentCode).IsRequired();
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(50);
+                entity.Property(e => e.Email).IsRequired();
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.Property(e => e.DateOfBirth).HasColumnType("date");
+                entity.HasOne(s => s.StudentFacultySemesters).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+                entity.Property(e => e.Gender).HasConversion<string>();
+                entity.HasData(new Students[]
+                {
+                    new Students {
+                        Id = 1,
+                        StudentCode = "Student584199",
+                        FirstName = "Tlee",
+                        LastName = "Say hi",
+                        Email = "thienle255@gmail.com",
+                        Phone = "0905028073",
+                        Address = "391 Nam Ky Khoi Nghia,Quan 3",
+                        Gender = 0,
+                        FatherName = "Connor",
+                        MotherName = "Alvin",
+                        Avatar = "Image/Staff/1.png",
+                        DateOfBirth = new DateTime(2006, 01, 17),
+                        Password = BCrypt.Net.BCrypt.HashPassword("T123456") }
+                });
+            });
+            modelBuilder.Entity<StudentFacultySemesters>(sfs =>
+            {
+                sfs.HasKey(x => x.Id);
+
+               // sfs.HasOne(s => s.Student).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+                //sfs.HasOne(f => f.Faculty).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.FacultyId);
+                //sfs.HasOne(f => f.Semester).WithMany(a => a.).HasForeignKey<StudentFacultySemesters>(s => s.SemesterId);
+                //sfs.HasOne(f => f.Session).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.SessionId);
+                sfs.HasOne(f => f.Session).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SessionId);
+                sfs.HasOne(f => f.Semester).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SemesterId);
+                sfs.HasOne(f => f.Faculty).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.FacultyId);
+                sfs.HasData(new StudentFacultySemesters[]
+                {
+                    new StudentFacultySemesters 
+                    { 
+                        Id = 1,
+                        StudentId =  1,
+                        FacultyId = 1,
+                        SemesterId = 1,
+                        SessionId = 1,
+                    }
+                });
+
             });
             modelBuilder.Entity<Admission>(c =>
             {

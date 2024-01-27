@@ -1,4 +1,5 @@
-﻿using backend_app.IRepository.home;
+﻿using backend_app.DTO;
+using backend_app.IRepository.home;
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,16 @@ namespace backend_app.Controllers.home
             }
             return NotFound();
         }
-
-
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO changePassword)
+        {
+            var result = await service.ChangePassword(User, changePassword);
+            if (result)
+            {
+                return Ok(new { message = "Password has been successfully changed." });
+            }
+            return BadRequest(new { message = "Unable to change password. Please check the old password." });
+        }
     }
 }

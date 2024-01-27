@@ -1,4 +1,5 @@
-﻿using backend_app.IRepository.home;
+﻿using backend_app.DTO;
+using backend_app.IRepository.home;
 using backend_app.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -46,6 +47,41 @@ namespace backend_app.Services.home
                 return studentWithDetails;
             }
             return null;
+        }
+        public async Task<bool> ChangePassword(ClaimsPrincipal user, ChangePasswordDTO changePassword)
+        {
+            var identity = user.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+                var IdClaim = userClaims.FirstOrDefault(o => o.Type == "Id")?.Value;
+
+                if (IdClaim == null)
+                {
+                    return false;
+                }
+
+                var Id = int.Parse(IdClaim);
+
+                var Student = await db.Students.FindAsync(Id);
+
+                if (Student != null)
+                {
+                    if (changePassword.NewPassword != changePassword.ConfirmPassword)
+                    {
+                        return false;
+                    }
+
+                    if (BCrypt.Net.BCrypt.Verify(changePassword.OldPassword, Student.Password))
+                    {
+                        Student.Password = BCrypt.Net.BCrypt.HashPassword(changePassword.NewPassword);
+                        db.Students.Update(Student);
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
     }

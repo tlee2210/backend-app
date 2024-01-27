@@ -17,5 +17,6 @@ namespace backend_app.Models
         public string Role { get; set; }
         [JsonIgnore]
         public string Password { get; set; }
+        //public bool IsTokenValid { get; set; } = true;
     }
 }
