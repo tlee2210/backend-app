@@ -1,6 +1,7 @@
 ﻿using backend_app.DTO;
 using backend_app.IRepository.dashboard;
 using backend_app.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -9,10 +10,16 @@ namespace backend_app.Services.dashboard
     public class FacultyService : IFaculty
     {
         private readonly DatabaseContext db;
-        public FacultyService(DatabaseContext db)
+        private readonly IWebHostEnvironment HostEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public FacultyService(DatabaseContext db, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
-            this.db = db;
+            this.db=db;
+            HostEnvironment=hostEnvironment;
+            _httpContextAccessor=httpContextAccessor;
         }
+
         public async Task<IEnumerable<SelectOption>> GetCreate()
         {
             var options = await db.Courses
@@ -25,12 +32,23 @@ namespace backend_app.Services.dashboard
 
             return options;
         }
-        public async Task<Faculty> AddFaculties(Faculty faculty)
+        public async Task<Faculty> AddFaculties(FacultyImage facultyImg)
         {
-            var faculti = await GetOnetitle(faculty.Title);
+            var faculti = await GetOnetitle(facultyImg.Title);
             if (faculti == null)
             {
-                faculty.Slug = GenerateSlug(faculty.Title);
+                var faculty = new Faculty
+                {
+                    Code = facultyImg.Code,
+                    Title = facultyImg.Title,
+                    Course_id = facultyImg.Course_id,
+                    Description = facultyImg.Description,
+                    EntryScore = facultyImg.EntryScore,
+                    Image = await SaveImage(facultyImg.Image),
+                    Opportunities = facultyImg.Opportunities,
+                    Skill_learn = facultyImg.Skill_learn,
+                    Slug = GenerateSlug(facultyImg.Title),
+                };
                 db.Faculty.Add(faculty);
                 await db.SaveChangesAsync();
                 return faculty;
@@ -52,9 +70,21 @@ namespace backend_app.Services.dashboard
                    value = x.Id
                })
                .ToListAsync();
+            var faculty = new Faculty
+            {
+                Code = faculti.Code,
+                Title = faculti.Title,
+                Course_id = faculti.Course_id,
+                Description = faculti.Description,
+                EntryScore = faculti.EntryScore,
+                Opportunities = faculti.Opportunities,
+                Skill_learn = faculti.Skill_learn,
+                Slug = faculti.Title,
+                Image = faculti.Image
+            };
             var Edit = new GetEditSelectOption<Faculty>
             {
-                model = faculti,
+                model = faculty,
                 //articleDTO = articleDto,
                 SelectOption = options
             };
@@ -82,7 +112,20 @@ namespace backend_app.Services.dashboard
             {
                 return false;
             }
-            db.Faculty.Remove(faculti);
+            var faculty = new Faculty
+            {
+                Id = faculti.Id,
+                Image = faculti.Image,
+                Code = faculti.Code,
+                Title = faculti.Title,
+                Course_id = faculti.Course_id,
+                Description = faculti.Description,
+                EntryScore = faculti.EntryScore,
+                Opportunities = faculti.Opportunities,
+                Skill_learn = faculti.Skill_learn,
+                Slug = faculti.Title,
+            };
+            db.Faculty.Remove(faculty);
             await db.SaveChangesAsync();
             return true;
         }
@@ -134,9 +177,28 @@ namespace backend_app.Services.dashboard
             await db.SaveChangesAsync();
             return faculty;
         }
-        public async Task<Faculty> GetOneFaculty(int id)
+        public async Task<FacultyDTO> GetOneFaculty(int id)
         {
-            return await db.Faculty.SingleOrDefaultAsync(c => c.Id == id);
+            /*return */
+            var faculty = await db.Faculty.SingleOrDefaultAsync(c => c.Id == id);
+            if (faculty == null)
+            {
+                return null;
+            }
+            var facultyDTO = new FacultyDTO
+            {
+                Code = faculty.Code,
+                Title = faculty.Title,
+                Course_id = faculty.Course_id,
+                Description = faculty.Description,
+                EntryScore = faculty.EntryScore,
+                Opportunities = faculty.Opportunities,
+                Skill_learn = faculty.Skill_learn,
+                Slug = faculty.Title,
+            };
+            var request = _httpContextAccessor.HttpContext.Request;
+            facultyDTO.Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, faculty.Image);
+            return facultyDTO;
         }
         //check title
         public async Task<Faculty> GetOnetitle(string Title)
@@ -181,6 +243,33 @@ namespace backend_app.Services.dashboard
         {
             var listFaculty = await db.Faculty.Where(c => c.Title.Contains(title)).ToListAsync();
             return listFaculty;
+        }
+
+        [NonAction]
+        public async Task<string> SaveImage(IFormFile formFile)
+        {
+            string imageName = new string(Path.GetFileNameWithoutExtension(formFile.FileName).Take(10).ToArray()).Replace(" ", "_");
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(formFile.FileName);
+
+            // Thêm tiền tố "Image/Article/" vào imageName
+            string imageNameWithPath = "Image/Faculty/" + imageName;
+
+            // Cập nhật đường dẫn lưu trữ ảnh
+            var imagePath = Path.Combine(HostEnvironment.ContentRootPath, "Image", "Faculty", imageName);
+
+            // Tạo thư mục nếu nó chưa tồn tại
+            var directoryPath = Path.GetDirectoryName(imagePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+            {
+                await formFile.CopyToAsync(fileStream);
+            }
+
+            return imageNameWithPath;
         }
     }
 }

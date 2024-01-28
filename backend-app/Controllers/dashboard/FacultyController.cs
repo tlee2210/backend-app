@@ -35,8 +35,13 @@ namespace backend_app.Controllers.dashboard
         }
         [HttpPost]
         [Route("Store")]
-        public async Task<IActionResult> StoreFaculty(Faculty faculty)
+        public async Task<IActionResult> StoreFaculty([FromForm] FacultyImage facultyImg)
         {
+            var faculty = new Faculty
+            {
+                Code = facultyImg.Code,
+                Title = facultyImg.Title,
+            };
             if (await service.checkCode(faculty))
             {
                 return BadRequest("An Faculty with the same Code already exists.");
@@ -45,7 +50,7 @@ namespace backend_app.Controllers.dashboard
             {
                 return BadRequest("An Faculty with the same name already exists.");
             }
-            var result = await service.AddFaculties(faculty);
+            var result = await service.AddFaculties(facultyImg);
             if (result != null)
             {
                 return Ok(new { message = "New Faculty Added Successfully", data = result });

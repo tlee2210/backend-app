@@ -13,6 +13,7 @@ namespace backend_app.Models
         public string Opportunities { get; set; }
         public int EntryScore { get; set; }
         public int  Course_id { get; set; }
+        public string  Image { get; set; }
         public Courses? Courses { get; set; }
         [JsonIgnore]
         public ICollection<StudentFacultySemesters>? StudentFacultySemesters { get; set; }

@@ -99,10 +99,11 @@ namespace backend_app.Models
                         EntryScore=100, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
                         Opportunities = "Systems analyst or architect, UX analyst, Business analyst, Technical business analyst, Requirements analyst, Process consultant", 
-                        Course_id = 1
+                        Course_id = 1,
+                        Image = ""
                     },
-                    new Faculty{Id = 2, Code = "C02", Title = "Philosophy", Slug="Philosophy", Description="123", EntryScore=100, Skill_learn = "XYZ", Opportunities = "123", Course_id = 1},
-                    new Faculty{Id = 3, Code = "C03", Title = "Advanced Math", Slug="Advanced-Math", Description="123", EntryScore=100, Skill_learn = "Math", Opportunities = "456", Course_id = 2}
+                    new Faculty{Id = 2, Image = "", Code = "C02", Title = "Philosophy", Slug="Philosophy", Description="123", EntryScore=100, Skill_learn = "XYZ", Opportunities = "123", Course_id = 1},
+                    new Faculty{Id = 3, Image = "", Code = "C03", Title = "Advanced Math", Slug="Advanced-Math", Description="123", EntryScore=100, Skill_learn = "Math", Opportunities = "456", Course_id = 2}
                 });
             });
             modelBuilder.Entity<Department>(c =>
