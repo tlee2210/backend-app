@@ -103,10 +103,6 @@ namespace backend_app.Models
                         Course_id = 1,
                         Image = ""
                     },
-<<<<<<< Updated upstream
-                    new Faculty{Id = 2, Image = "", Code = "C02", Title = "Philosophy", Slug="Philosophy", Description="123", EntryScore=100, Skill_learn = "XYZ", Opportunities = "123", Course_id = 1},
-                    new Faculty{Id = 3, Image = "", Code = "C03", Title = "Advanced Math", Slug="Advanced-Math", Description="123", EntryScore=100, Skill_learn = "Math", Opportunities = "456", Course_id = 2}
-=======
                     new Faculty
                     {
                         Id = 2, 
@@ -142,7 +138,6 @@ namespace backend_app.Models
                         Opportunities = "Data scientist, Data analyst, Data infrastructure architect, Systems architect, Business intelligence developer",
                         Course_id = 2
                     }
->>>>>>> Stashed changes
                 });
             });
             modelBuilder.Entity<Department>(c =>
