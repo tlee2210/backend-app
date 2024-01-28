@@ -15,6 +15,5 @@ namespace backend_app.DTO
         [NotMapped]
         public IFormFile? Image { get; set; }
         public int Course_id { get; set; }
-        public string CoursesName { get; set; }
     }
 }

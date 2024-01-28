@@ -2,8 +2,9 @@
 {
     public class SearchParameters
     {
-        public string? Name { get; set; }
-        public string? FacultyId { get; set; }
-        public string? Session { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? SemesterId { get; set; }
+        public int? SessionId { get; set; }
+        public int? FacultyId { get; set; }
     }
 }

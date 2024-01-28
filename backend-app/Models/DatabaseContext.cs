@@ -23,6 +23,7 @@ namespace backend_app.Models
         public DbSet<Admission> Admissions { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<StudentFacultySemesters> StudentFacultySemesters { get; set; }
+        public DbSet<DepartmentSemesterSession> departmentSemesterSessions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,20 +69,90 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new Courses[]
                 {
-                    new Courses{Id = 1, Name = "Applied Innovation", Description = "Don't just graduate, innovate. The Bachelor of Applied Innovation aims to make you think like an innovator, explore bold ideas, and create unprecedented solutions."},
-                    new Courses{Id = 2, Name = "Arts, Humanities and Social Sciences", Description = "Become the innovative thinker our world needs. Explore the relationships between individuals, societies and cultures and be ready to impact the challenges faced by our rapidly evolving world today and in the future."},
-                    new Courses{Id = 3, Name = "Aviation", Description = "The thrill of taking to the skies is one of humankind’s greatest achievements. A hundred years ago we barely knew how. Now we depend on it every day."},
-                    new Courses{Id = 4, Name = "Built Environment and Architecture", Description = "Learn how to harness your spatial creativity in design and bring together the environment and architecture to create innovative spaces for us all to enjoy.6"},
-                    new Courses{Id = 5, Name = "Business", Description = "Plug straight into innovation with our tech-led business courses and degrees. With seamless industry connections, you could follow grads and land a role in a profit or purpose-based business."},
-                    new Courses{Id = 6, Name = "Design", Description = "Define the spaces we live in, the products we purchase, and the online and real-life worlds we explore. Bottle your imagination and creativity and pour it into a career in design."},
-                    new Courses{Id = 7, Name = "Engineering", Description = "Engineers have the power to change how we live — and with that power comes great responsibility."},
-                    new Courses{Id = 8, Name = "Film and Television", Description = "The fundamentals of storytelling through film are evolving, the industry is changing and so are the audiences. "},
-                    new Courses{Id = 9, Name = "Games and Animation", Description = "Open your mind to creating for the digital space and play a role bringing new stories, characters and worlds to life with a course in games and animation."},
-                    new Courses{Id = 10, Name = "Information Technology", Description = "There are two types of people in the world: those who understand binary, and those who don't. In a modern economy, you want to be one that does."},
-                    new Courses{Id = 11, Name = "Media and Communication", Description = "We live in a world that’s more connected than ever before. Understanding how that world works is essential to creating sustainable news and entertainment for modern media."},
-                    new Courses{Id = 12, Name = "Psychology", Description = "We know more about the mind than ever before, yet many of its mysteries remain unsolved and therefore, so too, do many aspects of human behaviour. "},
-                    new Courses{Id = 13, Name = "Science", Description = "Science is the pursuit of truth and understanding of our world and beyond. Science never stops evolving and you’ll never stop learning."},
-                    new Courses{Id = 14, Name = "Education", Description = "In our lives, we are surrounded by teachers, from parents to friends and neighbours, but few get the opportunity to impart daily wisdom as trained educators do."}
+                    new Courses
+                    {
+                        Id = 1, 
+                        Name = "Applied Innovation", 
+                        Description = "Don't just graduate, innovate. The Bachelor of Applied Innovation aims to make you think like an innovator, explore bold ideas, and create unprecedented solutions."
+                    },
+                    new Courses
+                    {
+                        Id = 2, 
+                        Name = "Arts, Humanities and Social Sciences", 
+                        Description = "Become the innovative thinker our world needs. Explore the relationships between individuals, societies and cultures and be ready to impact the challenges faced by our rapidly evolving world today and in the future."
+                    },
+                    new Courses
+                    {
+                        Id = 3, 
+                        Name = "Aviation", 
+                        Description = "The thrill of taking to the skies is one of humankind’s greatest achievements. A hundred years ago we barely knew how. Now we depend on it every day."
+                    },
+                    new Courses
+                    {
+                        Id = 4, 
+                        Name = "Built Environment and Architecture", 
+                        Description = "Learn how to harness your spatial creativity in design and bring together the environment and architecture to create innovative spaces for us all to enjoy.6"
+                    },
+                    new Courses
+                    {
+                        Id = 5, 
+                        Name = "Business", 
+                        Description = "Plug straight into innovation with our tech-led business courses and degrees. With seamless industry connections, you could follow grads and land a role in a profit or purpose-based business."
+                    },
+                    new Courses
+                    {
+                        Id = 6, 
+                        Name = "Design", 
+                        Description = "Define the spaces we live in, the products we purchase, and the online and real-life worlds we explore. Bottle your imagination and creativity and pour it into a career in design."
+                    },
+                    new Courses
+                    {
+                        Id = 7, 
+                        Name = "Engineering", 
+                        Description = "Engineers have the power to change how we live — and with that power comes great responsibility."
+                    },
+                    new Courses
+                    {
+                        Id = 8, 
+                        Name = "Film and Television", 
+                        Description = "The fundamentals of storytelling through film are evolving, the industry is changing and so are the audiences. "
+                    },
+                    new Courses
+                    {
+                        Id = 9, 
+                        Name = "Games and Animation", 
+                        Description = "Open your mind to creating for the digital space and play a role bringing new stories, characters and worlds to life with a course in games and animation."
+                    },
+                    new Courses
+                    {
+                        Id = 10, 
+                        Name = "Information Technology", 
+                        Description = "There are two types of people in the world: those who understand binary, and those who don't. In a modern economy, you want to be one that does."
+                    },
+                    new Courses
+                    {
+                        Id = 11,
+                        Name = "Media and Communication",
+                        Description = "We live in a world that’s more connected than ever before. Understanding how that world works is essential to creating sustainable news and entertainment for modern media."
+                    },
+                    new Courses
+                    {
+                        Id = 12, 
+                        Name = "Psychology", 
+                        Description = "We know more about the mind than ever before, yet many of its mysteries remain unsolved and therefore, so too, do many aspects of human behaviour. "
+                    },
+                    new Courses
+                    {
+                        Id = 13, 
+                        Name = "Science", 
+                        Description = "Science is the pursuit of truth and understanding of our world and beyond. Science never stops evolving and you’ll never stop learning."
+                    },
+                    new Courses
+                    {
+                        Id = 14,
+                        Name = "Education", 
+                        Description = "In our lives, we are surrounded by teachers, from parents to friends and neighbours, but few get the opportunity to impart daily wisdom as trained educators do."
+                    }
                 });
             });
             modelBuilder.Entity<Faculty>(c =>
@@ -101,35 +172,48 @@ namespace backend_app.Models
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
                         Opportunities = "Systems analyst or architect, UX analyst, Business analyst, Technical business analyst, Requirements analyst, Process consultant", 
                         Course_id = 1,
-                        Image = ""
+                        Image = "a"
                     },
                     new Faculty
                     {
                         Id = 2, 
                         Code = "3400234641", 
-                        Title = "Bachelor of Business Analytics and Analysis", 
-                        Slug="Bachelor-of-Business-Analytics-and-Analysi", 
+                        Title = "Bachelor of Information and Communication Technology", 
+                        Slug="Bachelor-of-Information-and-Communication-Technology", 
                         Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
                         EntryScore=65, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
                         Opportunities = "Business analyst, Data analyst, Information management specialist, Business solutions consultant, Business intelligence analyst, Data visualisation specialist\r\n", 
                         Course_id = 1,
+<<<<<<< Updated upstream
                         Image = ""
+=======
+                        Image="a"
+
+>>>>>>> Stashed changes
                     },
                     new Faculty
                     {
                         Id = 3, 
-                        Code = "3400234771", 
-                        Title = "Bachelor of Computer Science", 
-                        Slug="Bachelor-of-Computer-Science", 
+                        Code = "3400212651", 
+                        Title = "Bachelor of Cyber Security", 
+                        Slug="Bachelor-of-Cyber-Security", 
                         Description="Crack the code for a rewarding career at the fore of the digital revolution. With a focus on software development, this course is taught by some of the best computer minds in the business. Learn in industry standard labs and choose to specialise with a major in Artificial Intelligence, Cyber security, Data Science, Games Development, Software Development or Internet of Things.", 
+<<<<<<< Updated upstream
                         EntryScore=100, Skill_learn = "Computer software development, Problem solving, Critical thinking, Machine learning application", 
                         Opportunities = "Data scientist, Software engineer, Software architect, Systems architect, Programmer or software developer", 
                         Course_id = 2,
                         Image = ""
+=======
+                        EntryScore=100, 
+                        Skill_learn = "Cyber security testing, Cyber security strategy, Critical thinking, Problem solving, Communication skills, Teamwork", 
+                        Opportunities = "Security consultant, Network or systems administrator, Cyber security penetration tester, Information security analyst", 
+                        Course_id = 2,
+                        Image="a"
+>>>>>>> Stashed changes
                     },
                      new Faculty
-                    {
+                     {
                         Id = 4,
                         Code = "3400234771",
                         Title = "Bachelor of Computer Science",
@@ -139,8 +223,13 @@ namespace backend_app.Models
                         Skill_learn = "Computer software development, Data visualisation techniques, Machine learning application, Data-driven decision-making, Big data management",
                         Opportunities = "Data scientist, Data analyst, Data infrastructure architect, Systems architect, Business intelligence developer",
                         Course_id = 2,
+<<<<<<< Updated upstream
                         Image = ""
                     }
+=======
+                        Image="a"
+                     }
+>>>>>>> Stashed changes
                 });
             });
             modelBuilder.Entity<Department>(c =>
@@ -205,8 +294,33 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new Staff[]
                 {
-                    new Staff {Id = 2, FirstName = "Chuong", LastName = "Chuong", Email = "namechuong19@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0974671412", FileAvatar = "Image/Staff/1.png", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("chuong123"), Role="Admin"},
-                    new Staff {Id = 1, FirstName = "Tlee", LastName = "Tlee", Email = "thienle255@gmail.com", Address = "391 Nam Ky Khoi Nghia,Quan 3", Gender = 0, Phone = "0905028073", FileAvatar = "Image/Staff/1.png", Qualification = "Admin", Experience = "Admin", Password = BCrypt.Net.BCrypt.HashPassword("Tlee2210"), Role="Admin"}
+                    new Staff 
+                    {
+                        Id = 1, 
+                        FirstName = "Tlee",
+                        LastName = "Tlee", 
+                        Email = "thienle255@gmail.com",
+                        Address = "391 Nam Ky Khoi Nghia,Quan 3", 
+                        Gender = 0, Phone = "0905028073", 
+                        FileAvatar = "Image/Staff/1.png", 
+                        Qualification = "Admin", 
+                        Experience = "Admin", 
+                        Password = BCrypt.Net.BCrypt.HashPassword("Tlee2210"), 
+                        Role="Admin"},
+                    new Staff 
+                    {
+                        Id = 2, 
+                        FirstName = "Chuong", 
+                        LastName = "Chuong", 
+                        Email = "namechuong19@gmail.com", 
+                        Address = "391 Nam Ky Khoi Nghia,Quan 3", 
+                        Gender = 0, 
+                        Phone = "0974671412", 
+                        FileAvatar = "Image/Staff/1.png", 
+                        Qualification = "Admin", 
+                        Experience = "Admin", 
+                        Password = BCrypt.Net.BCrypt.HashPassword("chuong123"), 
+                        Role="Admin"}
                 });
             });
             modelBuilder.Entity<Session>(c =>

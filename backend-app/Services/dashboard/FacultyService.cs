@@ -108,8 +108,13 @@ namespace backend_app.Services.dashboard
         }
         public async Task<bool> DeleteFaculties(int id)
         {
+<<<<<<< Updated upstream
             var faculty = await db.Faculty.SingleOrDefaultAsync(f => f.Id == id);
             if (faculty != null)
+=======
+            var faculty = db.Faculty.Find(id);
+            if (faculty == null)
+>>>>>>> Stashed changes
             {
                 var imagePath = Path.Combine(faculty.Image);
                 if (File.Exists(imagePath))
@@ -120,7 +125,18 @@ namespace backend_app.Services.dashboard
                 await db.SaveChangesAsync();
                 return true;
             }
+<<<<<<< Updated upstream
             return false;
+=======
+            db.Faculty.Remove(faculty);
+            await db.SaveChangesAsync();
+            var imagePath = Path.Combine(faculty.Image);
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+            }
+            return true;
+>>>>>>> Stashed changes
         }
 
         public async Task<IEnumerable<FacultyDTO>> GetAllFaculties()
