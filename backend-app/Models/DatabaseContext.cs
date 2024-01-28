@@ -90,20 +90,59 @@ namespace backend_app.Models
                 c.HasOne(a => a.Courses).WithMany(b => b.Faculty).HasForeignKey(c => c.Course_id);
                 c.HasData(new Faculty[]
                 {
-                    new Faculty{
+                    new Faculty
+                    {
                         Id = 1, 
                         Code = "3400234641", 
                         Title = "Bachelor of Business Analytics and Analysis", 
-                        Slug="IT", 
+                        Slug="Bachelor-of-Business-Analytics-and-Analysis", 
                         Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
-                        EntryScore=100, 
+                        EntryScore=70, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
                         Opportunities = "Systems analyst or architect, UX analyst, Business analyst, Technical business analyst, Requirements analyst, Process consultant", 
                         Course_id = 1,
                         Image = ""
                     },
+<<<<<<< Updated upstream
                     new Faculty{Id = 2, Image = "", Code = "C02", Title = "Philosophy", Slug="Philosophy", Description="123", EntryScore=100, Skill_learn = "XYZ", Opportunities = "123", Course_id = 1},
                     new Faculty{Id = 3, Image = "", Code = "C03", Title = "Advanced Math", Slug="Advanced-Math", Description="123", EntryScore=100, Skill_learn = "Math", Opportunities = "456", Course_id = 2}
+=======
+                    new Faculty
+                    {
+                        Id = 2, 
+                        Code = "3400234641", 
+                        Title = "Bachelor of Business Analytics and Analysis", 
+                        Slug="Bachelor-of-Business-Analytics-and-Analysi", 
+                        Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
+                        EntryScore=65, 
+                        Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
+                        Opportunities = "Business analyst, Data analyst, Information management specialist, Business solutions consultant, Business intelligence analyst, Data visualisation specialist\r\n", 
+                        Course_id = 1
+                    },
+                    new Faculty
+                    {
+                        Id = 3, 
+                        Code = "3400234771", 
+                        Title = "Bachelor of Computer Science", 
+                        Slug="Bachelor-of-Computer-Science", 
+                        Description="Crack the code for a rewarding career at the fore of the digital revolution. With a focus on software development, this course is taught by some of the best computer minds in the business. Learn in industry standard labs and choose to specialise with a major in Artificial Intelligence, Cyber security, Data Science, Games Development, Software Development or Internet of Things.", 
+                        EntryScore=100, Skill_learn = "Computer software development, Problem solving, Critical thinking, Machine learning application", 
+                        Opportunities = "Data scientist, Software engineer, Software architect, Systems architect, Programmer or software developer", 
+                        Course_id = 2
+                    },
+                     new Faculty
+                    {
+                        Id = 4,
+                        Code = "3400234771",
+                        Title = "Bachelor of Computer Science",
+                        Slug="Bachelor-of-Computer-Science",
+                        Description="Crack the code for a rewarding career at the fore of the digital revolution. With a focus on software development, this course is taught by some of the best computer minds in the business. Learn in industry standard labs and choose to specialise with a major in Artificial Intelligence, Cyber security, Data Science, Games Development, Software Development or Internet of Things.",
+                        EntryScore=70, 
+                        Skill_learn = "Computer software development, Data visualisation techniques, Machine learning application, Data-driven decision-making, Big data management",
+                        Opportunities = "Data scientist, Data analyst, Data infrastructure architect, Systems architect, Business intelligence developer",
+                        Course_id = 2
+                    }
+>>>>>>> Stashed changes
                 });
             });
             modelBuilder.Entity<Department>(c =>
