@@ -4,6 +4,7 @@ using backend_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace backend_app.Services.dashboard
 {
@@ -107,32 +108,25 @@ namespace backend_app.Services.dashboard
         }
         public async Task<bool> DeleteFaculties(int id)
         {
-            var faculti = await GetOneFaculty(id);
-            if (faculti == null)
+            var faculty = await db.Faculty.SingleOrDefaultAsync(f => f.Id == id);
+            if (faculty != null)
             {
-                return false;
+                var imagePath = Path.Combine(faculty.Image);
+                if (File.Exists(imagePath))
+                {
+                    File.Delete(imagePath);
+                }
+                db.Faculty.Remove(faculty);
+                await db.SaveChangesAsync();
+                return true;
             }
-            var faculty = new Faculty
-            {
-                Id = faculti.Id,
-                Image = faculti.Image,
-                Code = faculti.Code,
-                Title = faculti.Title,
-                Course_id = faculti.Course_id,
-                Description = faculti.Description,
-                EntryScore = faculti.EntryScore,
-                Opportunities = faculti.Opportunities,
-                Skill_learn = faculti.Skill_learn,
-                Slug = faculti.Title,
-            };
-            db.Faculty.Remove(faculty);
-            await db.SaveChangesAsync();
-            return true;
+            return false;
         }
 
         public async Task<IEnumerable<FacultyDTO>> GetAllFaculties()
         {
             var faculties = await db.Faculty.Include(c => c.Courses).ToListAsync();
+            var request = _httpContextAccessor.HttpContext.Request;
             return faculties.Select(a => new FacultyDTO
             {
                 Id = a.Id,
@@ -144,42 +138,57 @@ namespace backend_app.Services.dashboard
                 Opportunities = a.Opportunities,
                 EntryScore = a.EntryScore,
                 Course_id = a.Course_id,
-                CoursesName = a.Courses?.Name
+                CoursesName = a.Courses?.Name,
+                Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.Image)
             });
         }
-        public async Task<Faculty> UpdateFaculty(Faculty faculty)
+        public async Task<Faculty> UpdateFaculty(FacultyImage facultyImg)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    var old = await db.Faculty.FindAsync(faculty.Id);
-                    old.Title = faculty.Title;
-                    old.Slug = GenerateSlug(faculty.Title);
-                    old.Code = faculty.Code;
-                    old.Description = faculty.Description;
-                    old.Course_id = faculty.Course_id;
-                    old.Skill_learn = faculty.Skill_learn;
-                    old.EntryScore = faculty.EntryScore;
-                    old.Opportunities = faculty.Opportunities;
+                    var faculty = await db.Faculty.SingleOrDefaultAsync(s => s.Id == facultyImg.Id);
+                    if (faculty == null)
+                    {
+                        return null;
+                    }
+
+                    faculty.Code = facultyImg.Code;
+                    faculty.Title = facultyImg.Title;
+                    faculty.Course_id = facultyImg.Course_id;
+                    faculty.Description = facultyImg.Description;
+                    faculty.EntryScore = facultyImg.EntryScore;
+                    faculty.Opportunities = facultyImg.Opportunities;
+                    faculty.Skill_learn = facultyImg.Skill_learn;
+                    faculty.Slug = GenerateSlug(facultyImg.Title);
+
+                    if (facultyImg.Image != null)
+                    {
+                        if (!string.IsNullOrEmpty(faculty.Image))
+                        {
+                            var imagePath = Path.Combine(faculty.Image);
+                            if (File.Exists(imagePath))
+                            {
+                                File.Delete(imagePath);
+                            }
+                        }
+                        faculty.Image = await SaveImage(facultyImg.Image);
+                    }
+
                     await db.SaveChangesAsync();
-                    transaction.Commit(); 
-                    return old;
+                    transaction.Commit();
+                    return faculty;
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback(); 
-                    throw; 
+                    transaction.Rollback();
+                    throw;
                 }
             }
-
-            db.Entry(faculty).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return faculty;
         }
         public async Task<FacultyDTO> GetOneFaculty(int id)
         {
-            /*return */
             var faculty = await db.Faculty.SingleOrDefaultAsync(c => c.Id == id);
             if (faculty == null)
             {
@@ -195,9 +204,10 @@ namespace backend_app.Services.dashboard
                 Opportunities = faculty.Opportunities,
                 Skill_learn = faculty.Skill_learn,
                 Slug = faculty.Title,
+                Image = faculty.Image,
             };
-            var request = _httpContextAccessor.HttpContext.Request;
-            facultyDTO.Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, faculty.Image);
+            /*var request = _httpContextAccessor.HttpContext.Request;
+            facultyDTO.Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, faculty.Image);*/
             return facultyDTO;
         }
         //check title

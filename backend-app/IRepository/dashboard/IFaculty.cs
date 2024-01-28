@@ -10,7 +10,7 @@ namespace backend_app.IRepository.dashboard
         Task<GetEditSelectOption<Faculty>> GetEditFaculty(int id);
         Task<IEnumerable<SelectOption>> GetCreate();
         Task<Faculty> AddFaculties(FacultyImage faculty);
-        Task<Faculty> UpdateFaculty(Faculty faculty);
+        Task<Faculty> UpdateFaculty(FacultyImage facultyImg);
         Task<bool> DeleteFaculties(int id);
         Task<bool> checkCode(Faculty faculty);
         Task<bool> checkTitle(Faculty faculty);

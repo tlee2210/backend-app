@@ -62,7 +62,7 @@ namespace backend_app.Controllers.dashboard
         {
             try
             {
-                bool isDeleted = await service.DeleteFaculties(id);
+                var isDeleted = await service.DeleteFaculties(id);
                 if (isDeleted)
                 {
                     return Ok(new { message = "Faculties deleted successfully.", data = id });
@@ -81,8 +81,13 @@ namespace backend_app.Controllers.dashboard
         }
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateFaculty(Faculty faculty)
+        public async Task<IActionResult> UpdateFaculty([FromForm] FacultyImage facultyImg)
         {
+            var faculty = new Faculty
+            {
+                Code = facultyImg.Code,
+                Title = facultyImg.Title,
+            };
             if (await service.checkCode(faculty))
             {
                 return BadRequest("An Faculty with the same Code already exists.");
@@ -92,7 +97,7 @@ namespace backend_app.Controllers.dashboard
                 return BadRequest("An Faculty with the same name already exists.");
             }
 
-            var result = await service.UpdateFaculty(faculty);
+            var result = await service.UpdateFaculty(facultyImg);
             if (result != null)
             {
                 return Ok(new

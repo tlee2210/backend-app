@@ -113,7 +113,8 @@ namespace backend_app.Models
                         EntryScore=65, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
                         Opportunities = "Business analyst, Data analyst, Information management specialist, Business solutions consultant, Business intelligence analyst, Data visualisation specialist\r\n", 
-                        Course_id = 1
+                        Course_id = 1,
+                        Image = ""
                     },
                     new Faculty
                     {
@@ -124,7 +125,8 @@ namespace backend_app.Models
                         Description="Crack the code for a rewarding career at the fore of the digital revolution. With a focus on software development, this course is taught by some of the best computer minds in the business. Learn in industry standard labs and choose to specialise with a major in Artificial Intelligence, Cyber security, Data Science, Games Development, Software Development or Internet of Things.", 
                         EntryScore=100, Skill_learn = "Computer software development, Problem solving, Critical thinking, Machine learning application", 
                         Opportunities = "Data scientist, Software engineer, Software architect, Systems architect, Programmer or software developer", 
-                        Course_id = 2
+                        Course_id = 2,
+                        Image = ""
                     },
                      new Faculty
                     {
@@ -136,7 +138,8 @@ namespace backend_app.Models
                         EntryScore=70, 
                         Skill_learn = "Computer software development, Data visualisation techniques, Machine learning application, Data-driven decision-making, Big data management",
                         Opportunities = "Data scientist, Data analyst, Data infrastructure architect, Systems architect, Business intelligence developer",
-                        Course_id = 2
+                        Course_id = 2,
+                        Image = ""
                     }
                 });
             });
