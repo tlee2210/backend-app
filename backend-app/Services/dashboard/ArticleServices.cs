@@ -175,13 +175,13 @@ namespace backend_app.Services.dashboard
                     }
 
                     await db.SaveChangesAsync();
-                    transaction.Commit(); // Commit the transaction if everything is successful
+                    transaction.Commit();
                     return article;
                 }
                 catch (Exception)
                 {
-                    transaction.Rollback(); // Rollback the transaction if an exception occurs
-                    throw; // Re-throw the exception to handle it at a higher level
+                    transaction.Rollback();
+                    throw;
                 }
             }
         }

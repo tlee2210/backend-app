@@ -37,25 +37,23 @@ namespace backend_app.Controllers.dashboard
         [Route("Store")]
         public async Task<IActionResult> StoreFaculty([FromForm] FacultyImage facultyImg)
         {
-            var faculty = new Faculty
+            if (await service.CheckIfCodeExists(facultyImg))
             {
-                Code = facultyImg.Code,
-                Title = facultyImg.Title,
-            };
-            if (await service.checkCode(facultyImg))
-            {
-                return BadRequest("An Faculty with the same Code already exists.");
+                return BadRequest(new { message = "An Faculty with the same Code already exists." });
+
             }
-            if (await service.checkTitle(facultyImg))
+            if (await service.CheckIfTitleExists(facultyImg))
             {
-                return BadRequest("An Faculty with the same name already exists.");
+                return BadRequest(new { message = "An Faculty with the same name already exists." });
+
             }
             var result = await service.AddFaculties(facultyImg);
             if (result != null)
             {
                 return Ok(new { message = "New Faculty Added Successfully", data = result });
             }
-            return BadRequest("The name directory already exists.");
+            return BadRequest(new { message = "The name directory already exists." });
+
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFaculties(int id)
@@ -74,7 +72,6 @@ namespace backend_app.Controllers.dashboard
             }
             catch (Exception ex)
             {
-                // Log the exception details
                 return StatusCode(500, new { message = "An error occurred while deleting the article.", error = ex.Message });
             }
 
@@ -83,31 +80,22 @@ namespace backend_app.Controllers.dashboard
         [Route("update")]
         public async Task<IActionResult> UpdateFaculty([FromForm] FacultyImage facultyImg)
         {
-            var faculty = new Faculty
+            if (await service.CheckIfCodeExists(facultyImg))
             {
-                Code = facultyImg.Code,
-                Title = facultyImg.Title,
-            };
-            if (await service.checkCode(facultyImg))
-            {
-                return BadRequest("An Faculty with the same Code already exists.");
+                return BadRequest(new { message = "A Faculty with the same Code already exists." });
             }
-            if (await service.checkTitle(facultyImg))
+            if (await service.CheckIfTitleExists(facultyImg))
             {
-                return BadRequest("An Faculty with the same name already exists.");
+                return BadRequest(new { message = "A Faculty with the same name already exists." });
             }
 
             var result = await service.UpdateFaculty(facultyImg);
             if (result != null)
             {
-                return Ok(new
-                {
-                    message = "The Faculty has been updated successfully"
-                });
+                return Ok(new { message = "The Faculty has been updated successfully" });
             }
-            return BadRequest("An error occurred while updating the Faculty");
+            return BadRequest(new { message = "An error occurred while updating the Faculty." });
         }
-
         [HttpGet("Search/{title}")]
         public async Task<IActionResult> Search(string title)
         {

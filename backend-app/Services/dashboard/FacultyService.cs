@@ -75,6 +75,7 @@ namespace backend_app.Services.dashboard
 
             var faculty = new Faculty
             {
+                Id = faculti.Id,
                 Code = faculti.Code,
                 Title = faculti.Title,
                 Course_id = faculti.Course_id,
@@ -199,6 +200,7 @@ namespace backend_app.Services.dashboard
             }
             var facultyDTO = new FacultyDTO
             {
+                Id = faculty.Id,
                 Code = faculty.Code,
                 Title = faculty.Title,
                 Course_id = faculty.Course_id,
@@ -218,37 +220,21 @@ namespace backend_app.Services.dashboard
         {
             return await db.Faculty.FirstOrDefaultAsync(c => c.Title == Title);
         }
-        public async Task<bool> checkCode(FacultyImage faculty)
+        public async Task<bool> CheckIfCodeExists(FacultyImage faculty)
         {
-            if (faculty != null)
-            {
-                if (faculty.Id != null)
-                {
-                    return await db.Faculty.AnyAsync(a => a.Code == faculty.Code && a.Id != faculty.Id);
-                }
-                else
-                {
-                    return await db.Faculty.AnyAsync(a => a.Code == faculty.Code);
-                }
-            }
+            if (faculty == null) return false;
 
-            return false;
+            return faculty.Id != null
+                ? await db.Faculty.AnyAsync(a => a.Code == faculty.Code && a.Id != faculty.Id)
+                : await db.Faculty.AnyAsync(a => a.Code == faculty.Code);
         }
-
-        public async Task<bool> checkTitle(FacultyImage faculty)
+        public async Task<bool> CheckIfTitleExists(FacultyImage faculty)
         {
-            if(faculty != null)
-            {
-                if (faculty.Id != null)
-                {
-                    return await db.Faculty.AnyAsync(a => a.Title == faculty.Title && a.Id != faculty.Id);
-                }
-                else
-                {
-                    return await db.Faculty.AnyAsync(a => a.Title == faculty.Title);
-                }
-            }
-            return false;
+            if (faculty == null) return false;
+
+            return faculty.Id != null
+                ? await db.Faculty.AnyAsync(a => a.Title == faculty.Title && a.Id != faculty.Id)
+                : await db.Faculty.AnyAsync(a => a.Title == faculty.Title);
         }
 
         public async Task<IEnumerable<Faculty>> SearchFaculty(string title)

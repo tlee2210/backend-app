@@ -17,15 +17,25 @@ namespace backend_app.Services.home
 
         public async Task<HomeDTO<Faculty, Article>> GetAll()
         {
-            var faculty = await db.Faculty.ToListAsync();
-            var article = await db.Articles.ToListAsync();
-            var home = new HomeDTO<Faculty, Article>
+            var request = _httpContextAccessor.HttpContext.Request;
+
+            var facultyList = await db.Faculty.Take(4).ToListAsync();
+            var articleList = await db.Articles.Take(4).ToListAsync();
+
+            facultyList.ForEach(faculty =>
+                faculty.Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, faculty.Image));
+
+            articleList.ForEach(article =>
+                article.image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, article.image));
+
+            var homeDTO = new HomeDTO<Faculty, Article>
             {
-                data = await db.Faculty.ToListAsync(),
-                data2 = await db.Articles.ToListAsync(),
+                data = facultyList,
+                data2 = articleList,
             };
 
-            return home;
+            return homeDTO;
         }
+
     }
 }
