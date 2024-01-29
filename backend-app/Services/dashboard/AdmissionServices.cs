@@ -94,7 +94,7 @@ namespace backend_app.Services.dashboard
 
             var builder = new BodyBuilder
             {
-                HtmlBody = "abcccc"
+                HtmlBody = "\r\nThật là một sự ngạc nhiên thú vị khi biết rằng bạn đã đạt được hạng nhất trong kỳ thi B.com năm thứ nhất của lớp. Rất nhiều lời chúc mừng cho sự thành công đáng chú ý của bạn! Tin tức tuyệt vời này đã làm tất cả chúng tôi vui mừng và chúng tôi rất tự hào về bạn.\r\n\r\nSẽ phải nỗ lực rất nhiều để học tập chăm chỉ trong năm đầu tiên nếu học đại học khi bạn có quá nhiều điều phiền nhiễu. Nơi ở mới, bạn bè mới, lớp học và nhiều hơn thế nữa. Đó hẳn là một chặng đường thực sự khó khăn với bạn nhưng bạn đã vượt qua nó rất tốt. Với kết quả xuất sắc như vậy khi bắt đầu học đại học, bạn đã sẵn sàng ghi dấu ấn trong quá trình học tập sau này của mình. Nếu bạn tiếp tục thực hiện với lòng nhiệt thành và quyết tâm như vậy thì bạn sẽ sớm chạm tới bầu trời.\r\n\r\nCha mẹ bạn chắc phải tự hào về bạn lắm. Tôi nghĩ bạn sẽ sớm sẵn sàng đảm nhận trách nhiệm của cha bạn và sẽ là tài sản cho công việc kinh doanh của ông ấy. Với trình độ chuyên môn của mình, bạn sẽ có thể phát triển công việc kinh doanh của gia đình mình rất nhiều."
             };
             email.Body = builder.ToMessageBody();
 
