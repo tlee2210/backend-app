@@ -56,6 +56,8 @@ builder.Services.AddScoped<ISemester, SemesterServices>();
 
 //home
 builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
+builder.Services.AddScoped<IHome, HomeServices>();
+builder.Services.AddScoped<ICoursesHome, CoursesHomeServices>();
 
 var allowOrigin = builder.Configuration.GetSection("AllowOrigin").Get<string[]>();
 
