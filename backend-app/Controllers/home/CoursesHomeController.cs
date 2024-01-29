@@ -22,6 +22,5 @@ namespace backend_app.Controllers.home
             return await service.GetAllCourses();
         }
 
-        [HttpGet]
     }
 }
