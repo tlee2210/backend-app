@@ -197,7 +197,7 @@ namespace backend_app.Models
                         EntryScore=100, Skill_learn = "Computer software development, Problem solving, Critical thinking, Machine learning application", 
                         Opportunities = "Data scientist, Software engineer, Software architect, Systems architect, Programmer or software developer", 
                         Course_id = 2,
-                        Image = ""
+                        Image = "a"
 
                     },
                      new Faculty
