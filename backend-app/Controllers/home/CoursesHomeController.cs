@@ -8,10 +8,10 @@ namespace backend_app.Controllers.home
 {
     [Route("api/home/courses")]
     [ApiController]
-    public class CoursesController : ControllerBase
+    public class CoursesHomeController : ControllerBase
     {
         private ICoursesHome service;
-        public CoursesController(ICoursesHome services)
+        public CoursesHomeController(ICoursesHome services)
         {
             this.service = services;
         }
@@ -21,5 +21,7 @@ namespace backend_app.Controllers.home
         {
             return await service.GetAllCourses();
         }
+
+        [HttpGet]
     }
 }
