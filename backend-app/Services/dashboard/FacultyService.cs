@@ -71,6 +71,8 @@ namespace backend_app.Services.dashboard
                    value = x.Id
                })
                .ToListAsync();
+            var request = _httpContextAccessor.HttpContext.Request;
+
             var faculty = new Faculty
             {
                 Code = faculti.Code,
@@ -81,7 +83,7 @@ namespace backend_app.Services.dashboard
                 Opportunities = faculti.Opportunities,
                 Skill_learn = faculti.Skill_learn,
                 Slug = faculti.Title,
-                Image = faculti.Image
+                Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, faculti.Image)
             };
             var Edit = new GetEditSelectOption<Faculty>
             {
@@ -216,7 +218,7 @@ namespace backend_app.Services.dashboard
         {
             return await db.Faculty.FirstOrDefaultAsync(c => c.Title == Title);
         }
-        public async Task<bool> checkCode(Faculty faculty)
+        public async Task<bool> checkCode(FacultyImage faculty)
         {
             if (faculty != null)
             {
@@ -233,7 +235,7 @@ namespace backend_app.Services.dashboard
             return false;
         }
 
-        public async Task<bool> checkTitle(Faculty faculty)
+        public async Task<bool> checkTitle(FacultyImage faculty)
         {
             if(faculty != null)
             {
@@ -246,7 +248,6 @@ namespace backend_app.Services.dashboard
                     return await db.Faculty.AnyAsync(a => a.Title == faculty.Title);
                 }
             }
-
             return false;
         }
 

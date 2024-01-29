@@ -42,11 +42,11 @@ namespace backend_app.Controllers.dashboard
                 Code = facultyImg.Code,
                 Title = facultyImg.Title,
             };
-            if (await service.checkCode(faculty))
+            if (await service.checkCode(facultyImg))
             {
                 return BadRequest("An Faculty with the same Code already exists.");
             }
-            if (await service.checkTitle(faculty))
+            if (await service.checkTitle(facultyImg))
             {
                 return BadRequest("An Faculty with the same name already exists.");
             }
@@ -88,11 +88,11 @@ namespace backend_app.Controllers.dashboard
                 Code = facultyImg.Code,
                 Title = facultyImg.Title,
             };
-            if (await service.checkCode(faculty))
+            if (await service.checkCode(facultyImg))
             {
                 return BadRequest("An Faculty with the same Code already exists.");
             }
-            if (await service.checkTitle(faculty))
+            if (await service.checkTitle(facultyImg))
             {
                 return BadRequest("An Faculty with the same name already exists.");
             }
