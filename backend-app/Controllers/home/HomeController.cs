@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend_app.Controllers.home
 {
-    [Route("api/[controller]")]
+    [Route("api/Home")]
     [ApiController]
     public class HomeController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace backend_app.Controllers.home
         }
 
         [HttpGet]
-        [Route("/GetAll")]
+        [Route("/GetHome")]
         public async Task<HomeDTO<Faculty, Article>> GetAll()
         {
             return await service.GetAll();

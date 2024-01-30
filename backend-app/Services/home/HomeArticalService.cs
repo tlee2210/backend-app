@@ -1,6 +1,8 @@
 ﻿using backend_app.DTO;
+using backend_app.IRepository.dashboard;
 using backend_app.IRepository.home;
 using backend_app.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing.Text;
 using System.Linq;
@@ -46,10 +48,46 @@ namespace backend_app.Services.home
             return detailAndRelated;
         }
 
-        public async  Task<IEnumerable<Article>> GetList()
+        public async Task<IEnumerable<ArticleDTO>> GetList()
         {
-            return await db.Articles.Include(c=>c.ArticleCategories).ToListAsync();
-          
+            var articles = await db.Articles
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .ToListAsync();
+
+            var request = _httpContextAccessor.HttpContext.Request;
+
+            return articles.Select(a => new ArticleDTO
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Content = TruncateContent(a.Content), // Use the new method here
+                image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.image),
+                PublishDate = a.PublishDate,
+                Categories = a.ArticleCategories.Select(ac => new CategoryDTO
+                {
+                    Id = ac.Category.Id,
+                    Name = ac.Category.Name
+                }).ToList()
+            }).ToList(); // Don't forget to call ToList() if you want to return a List
+        }
+
+        [NonAction]
+        private string TruncateContent(string content)
+        {
+            int indexOfSecondPeriod = IndexOfNth(content, '.', 2);
+            return indexOfSecondPeriod != -1 ? content.Substring(0, indexOfSecondPeriod + 1) : content;
+        }
+        [NonAction]
+        private int IndexOfNth(string str, char c, int n)
+        {
+            int s = -1;
+            for (int i = 0; i < n; i++)
+            {
+                s = str.IndexOf(c, s + 1);
+                if (s == -1) break;
+            }
+            return s;
         }
     }
 }

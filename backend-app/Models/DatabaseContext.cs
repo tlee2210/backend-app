@@ -380,7 +380,47 @@ namespace backend_app.Models
                 f.HasKey(f => f.Id);
                 f.HasData(new Facilities[]
                 {
-                     new Facilities {Id=1, Title="Canteen", Description="123",Image="123"},
+                    new Facilities 
+                    {
+                        Id=1,
+                        Title="Canteen",
+                        Description="The canteen serves as a vibrant social hub and offers a variety of healthy and nutritious meal options. Equipped with modern amenities and a comfortable seating arrangement, it provides a relaxing atmosphere where employees can unwind and interact during their breaks.",
+                        Image="Image/facilities/1.jpg"
+                    },
+                    new Facilities 
+                    {
+                        Id=2,
+                        Title="Business Operations",
+                        Description="The Business Operations facility is the cornerstone of our organizational structure, encompassing finance, human resources, and technical support teams. This department is dedicated to optimizing operational efficiency, driving strategic initiatives, and fostering a culture of continuous improvement. With state-of-the-art technology and a team of seasoned professionals, Business Operations ensures seamless administrative functions and supports the company's overarching goals.",
+                        Image="Image/facilities/2.jpg"
+                    },
+                    new Facilities 
+                    {
+                        Id=3,
+                        Title="Gym",
+                        Description="Our on-site gym facility promotes a healthy work-life balance by offering an array of fitness equipment, personal training sessions, and group workout classes. The gym is designed to cater to all fitness levels, encouraging employees to maintain their health and wellness, reduce stress, and increase productivity.",
+                        Image="Image/facilities/3.jpg"
+                    },
+                    new Facilities 
+                    {
+                        Id=4,
+                        Title="Conference Room",
+                        Description="The Conference Room is a state-of-the-art facility designed to foster collaboration and innovation. Equipped with high-definition video conferencing technology, surround sound systems, and ergonomic seating, it provides an ideal setting for meetings, workshops, and brainstorming sessions, enabling seamless communication and idea exchange.",
+                        Image="Image/facilities/4.jpg"
+                    },
+                    new Facilities {
+                        Id=5,
+                        Title="IT Support Center",
+                        Description="The IT Support Center is the backbone of our technology infrastructure, offering round-the-clock services to address hardware issues, software updates, and cybersecurity threats. Staffed by a team of IT experts, the center ensures that all employees have the technological resources and support needed to perform their jobs efficiently and securely.",
+                        Image="Image/facilities/5.jpg"
+
+                    },
+                    new Facilities {
+                        Id=6,
+                        Title="Parking Lot",
+                        Description="Our spacious parking lot is designed for the convenience of employees and visitors, providing ample parking space and ensuring vehicle safety. With 24/7 surveillance and dedicated staff, the parking lot offers a secure and well-organized environment for all your parking needs.",
+                        Image="Image/facilities/6.jpg"
+                    }
                 });
             });
             modelBuilder.Entity<Staff>(c =>
@@ -498,8 +538,8 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasData(new Admission[]
                 {
-                    new Admission{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", FatherName = "ABC", MotherName = "DEF", DOB = new DateTime(2004, 08, 25), Address = "HCM", Gender = true, HighSchool = "FPT", EnrollmentNumber = "C123", GPA = 5.0, Status = "Process", FacultyId = 1},
-                    new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345", FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2", Gender = false, HighSchool = "FPT2", EnrollmentNumber = "C345", GPA = 4.0, Status = "Process", FacultyId = 2}
+                    new Admission{Id = 1, FirstName = "Nguyen", LastName = "Quan", Email = "abc@gmail.com", Phone = "1213123", FatherName = "ABC", MotherName = "DEF", DOB = new DateTime(2004, 08, 25), Address = "HCM", Gender = true, HighSchool = "FPT", GPA = 5.0, Status = "Process", FacultyId = 1},
+                    new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345", FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2", Gender = false, HighSchool = "FPT2", GPA = 4.0, Status = "Process", FacultyId = 2}
                 });
             });
             modelBuilder.Entity<DepartmentSemesterSession>(dss =>

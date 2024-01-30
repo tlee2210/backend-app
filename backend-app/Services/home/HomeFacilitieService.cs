@@ -14,8 +14,6 @@ namespace backend_app.Services.home
             this.db = db;
             this._httpContextAccessor = httpContextAccessor;
         }
-
-
         public async Task<IEnumerable<Facilities>> GetList()
         {
             var request = _httpContextAccessor.HttpContext.Request;

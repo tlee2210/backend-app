@@ -14,7 +14,6 @@
         public string Address { get; set; }
         public string HighSchool { get; set; }
         public double GPA { get; set; }
-        public string EnrollmentNumber { get; set; }
         public string? Status { get; set; }
         public int FacultyId { get; set; }
         public Faculty? Faculty { get; set; }
