@@ -5,7 +5,9 @@ namespace backend_app.IRepository.home
 {
     public interface IHomeArtical
     {
-        Task<IEnumerable<ArticleDTO>> GetList();
-        Task<DetailsWithRelatedDTO<Article, ArticleDTO>> GetDetail(int id);
+        Task<HomeDTO<ArticleDTO, Category>> GetList();
+        Task<DetailsWithRelatedDTO<ArticleDTO, ArticleDTO>> GetDetail(int id);
+        Task<IEnumerable<ArticleDTO>> Search(string searchTerm);
+        Task<IEnumerable<ArticleDTO>> SearchByCategory(int categoryId);
     }
 }

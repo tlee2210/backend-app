@@ -4,6 +4,7 @@ using backend_app.IRepository.home;
 using backend_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Drawing.Text;
 using System.Linq;
 
@@ -20,18 +21,51 @@ namespace backend_app.Services.home
             this._httpContextAccessor = _httpContextAccessor;
         }
 
-        public async Task<DetailsWithRelatedDTO<Article, ArticleDTO>> GetDetail(int id)
+        public async Task<DetailsWithRelatedDTO<ArticleDTO, ArticleDTO>> GetDetail(int id)
         {
-            var articleDetail = await db.Articles.Include(a => a.ArticleCategories).ThenInclude(ac => ac.Category).SingleOrDefaultAsync(a => a.Id == id);
-            var articles = await db.Articles.Where(a => a.Id != articleDetail.Id).Include(a => a.ArticleCategories).ThenInclude(ac => ac.Category).ToListAsync();
+
             var request = _httpContextAccessor.HttpContext.Request;
-            var newListArticle = articles.Select(a => new ArticleDTO
+
+            var articleDetailEntity = await db.Articles
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .SingleOrDefaultAsync(a => a.Id == id);
+
+            if (articleDetailEntity == null)
+            {
+                return null;
+            }
+
+            var articleDetail = new ArticleDTO
+            {
+                Id = articleDetailEntity.Id,
+                Title = articleDetailEntity.Title,
+                Content = articleDetailEntity.Content,
+                image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, articleDetailEntity.image),
+                PublishDate = articleDetailEntity.PublishDate,
+                Categories = articleDetailEntity.ArticleCategories.Select(ac => new CategoryDTO
+                {
+                    Id = ac.Category.Id,
+                    Name = ac.Category.Name
+                }).ToList()
+            };
+
+            var categoryIds = articleDetailEntity.ArticleCategories.Select(ac => ac.CategoryId).ToList();
+
+            var articles = await db.Articles
+                .Where(a => a.Id != articleDetail.Id)
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .Where(a => a.ArticleCategories.Any(ac => categoryIds.Contains(ac.CategoryId)))
+                .Take(4)
+                .ToListAsync();
+
+              var newListArticle = articles.Select(a => new ArticleDTO
             {
                 Id = a.Id,
                 Title = a.Title,
-                Content = a.Content,
+                Content = TruncateContent(a.Content),
                 image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.image),
-
                 PublishDate = a.PublishDate,
                 Categories = a.ArticleCategories.Select(ac => new CategoryDTO
                 {
@@ -39,16 +73,15 @@ namespace backend_app.Services.home
                     Name = ac.Category.Name
                 }).ToList()
             }).ToList();
-            var detailAndRelated = new DetailsWithRelatedDTO<Article, ArticleDTO>
+
+            var detailAndRelated = new DetailsWithRelatedDTO<ArticleDTO, ArticleDTO>
             {
                 data = articleDetail,
                 listData = newListArticle,
-
             };
             return detailAndRelated;
         }
-
-        public async Task<IEnumerable<ArticleDTO>> GetList()
+        public async Task<HomeDTO<ArticleDTO, Category>> GetList()
         {
             var articles = await db.Articles
                 .Include(a => a.ArticleCategories)
@@ -57,11 +90,11 @@ namespace backend_app.Services.home
 
             var request = _httpContextAccessor.HttpContext.Request;
 
-            return articles.Select(a => new ArticleDTO
+            var newarticles =  articles.Select(a => new ArticleDTO
             {
                 Id = a.Id,
                 Title = a.Title,
-                Content = TruncateContent(a.Content), // Use the new method here
+                Content = TruncateContent(a.Content),
                 image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.image),
                 PublishDate = a.PublishDate,
                 Categories = a.ArticleCategories.Select(ac => new CategoryDTO
@@ -69,9 +102,64 @@ namespace backend_app.Services.home
                     Id = ac.Category.Id,
                     Name = ac.Category.Name
                 }).ToList()
-            }).ToList(); // Don't forget to call ToList() if you want to return a List
-        }
+            }).ToList();
+            var Category = await db.Categories.ToListAsync();
+            var homeDTO = new HomeDTO<ArticleDTO, Category>
+            {
+                data = newarticles,
+                data2 = Category,
+            };
 
+            return homeDTO;
+        }
+        public async Task<IEnumerable<ArticleDTO>> Search(string searchTerm)
+        {
+            var articles = await db.Articles
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .Where(a => a.Title.Contains(searchTerm))
+                .ToListAsync();
+
+            var request = _httpContextAccessor.HttpContext.Request;
+
+            return articles.Select(a => new ArticleDTO
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Content = TruncateContent(a.Content),
+                image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.image),
+                PublishDate = a.PublishDate,
+                Categories = a.ArticleCategories.Select(ac => new CategoryDTO
+                {
+                    Id = ac.Category.Id,
+                    Name = ac.Category.Name
+                }).ToList()
+            }).ToList();
+        }
+        public async Task<IEnumerable<ArticleDTO>> SearchByCategory(int categoryId)
+        {
+            var articles = await db.Articles
+                .Include(a => a.ArticleCategories)
+                .ThenInclude(ac => ac.Category)
+                .Where(a => a.ArticleCategories.Any(ac => ac.CategoryId == categoryId)) // Filtering based on CategoryId
+                .ToListAsync();
+
+            var request = _httpContextAccessor.HttpContext.Request;
+
+            return articles.Select(a => new ArticleDTO
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Content = TruncateContent(a.Content),
+                image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.image),
+                PublishDate = a.PublishDate,
+                Categories = a.ArticleCategories.Select(ac => new CategoryDTO
+                {
+                    Id = ac.Category.Id,
+                    Name = ac.Category.Name
+                }).ToList()
+            }).ToList();
+        }
         [NonAction]
         private string TruncateContent(string content)
         {

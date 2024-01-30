@@ -28,9 +28,29 @@ namespace backend_app.Controllers.home
         }
 
         [HttpGet("GetDetail/{id}")]
-        public async Task<DetailsWithRelatedDTO<Article, ArticleDTO>> GetDetail(int id)
+        public async Task<DetailsWithRelatedDTO<ArticleDTO, ArticleDTO>> GetDetail(int id)
         {
             return await homeArtical.GetDetail(id);
         }
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery] string search = "")
+        {
+            var searchResults = await homeArtical.Search(search);
+
+            return Ok(searchResults);
+        }
+        [HttpGet("SearchByCategory/{categoryId}")]
+        public async Task<IActionResult> SearchByCategory(int categoryId)
+        {
+            var searchResults = await homeArtical.SearchByCategory(categoryId);
+
+            if (searchResults == null || !searchResults.Any())
+            {
+                return NotFound($"No articles found for category ID {categoryId}.");
+            }
+
+            return Ok(searchResults);
+        }
+
     }
 }
