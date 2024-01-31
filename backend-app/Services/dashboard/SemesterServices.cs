@@ -153,6 +153,17 @@ namespace backend_app.Services.dashboard
 
             return dividedResults;
         }
+        public async Task<bool> Delete(int id)
+        {
+            var departmentSemesterSession = await db.departmentSemesterSessions.FindAsync(id);
+            if (departmentSemesterSession != null)
+            {
+                db.departmentSemesterSessions.Remove(departmentSemesterSession);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
 
     }
 }

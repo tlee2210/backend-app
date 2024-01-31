@@ -10,5 +10,6 @@ namespace backend_app.IRepository.dashboard
         Task<DepartmentSemesterSession> Store(DepartmentSemesterSession departmentSemesterSession);
         Task<bool> Exists(int facultyId, int sessionId, int departmentId);
         Task<List<List<DepartmentSemesterSession>>> DivideInto8Semesters(SearchParameters searchParameters);
+        Task<bool> Delete(int id);
     }
 }

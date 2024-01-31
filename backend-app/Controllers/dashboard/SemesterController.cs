@@ -1,6 +1,7 @@
 ﻿using backend_app.DTO;
 using backend_app.IRepository.dashboard;
 using backend_app.Models;
+using backend_app.Services.dashboard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +63,26 @@ namespace backend_app.Controllers.dashboard
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred while creating the DepartmentSemesterSession record.", error = ex.Message });
+            }
+        }
+        [HttpDelete("{id}/delete")]
+        public async Task<IActionResult> DeleteDepartmentSemesterSession(int id)
+        {
+            try
+            {
+                var deleted = await service.Delete(id);
+                if (deleted)
+                {
+                    return Ok(new { message = "DepartmentSemesterSession deleted successfully." });
+                }
+                else
+                {
+                    return NotFound(new { message = "DepartmentSemesterSession not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while deleting the DepartmentSemesterSession.", error = ex.Message });
             }
         }
 

@@ -56,17 +56,60 @@ namespace backend_app.Services.home
             return faculties;
         }
 
-        public async Task<Faculty> GetFacultyDetails(string facultySlug)
+        public async Task<FacultyDetailsDTO> GetFacultyDetails(string facultySlug)
         {
             var request = _httpContextAccessor.HttpContext.Request;
 
+            // Fetch faculty details
             var facultyDetails = await db.Faculty
                .Where(f => f.Slug == facultySlug)
                .Include(c => c.Courses)
                .FirstOrDefaultAsync();
-            facultyDetails.Image = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, facultyDetails.Image);
 
-            return facultyDetails;
+            facultyDetails.Image = $"{request.Scheme}://{request.Host}{request.PathBase}/{facultyDetails.Image}";
+
+            var currentSessionId = await db.Sessions
+                    .Where(s => s.IsCurrentYear)
+                    .Select(s => s.Id)
+                    .FirstOrDefaultAsync();
+            if(currentSessionId == null)
+            {
+                return null;
+            }
+
+            IQueryable<DepartmentSemesterSession> query = db.departmentSemesterSessions
+                .Include(d => d.Department)
+                .Include(s => s.Semester)
+                .Include(a => a.session)
+                .Where(dss => dss.FacultyId == facultyDetails.Id && dss.SessionId == currentSessionId);
+
+            var groupedResults = await query.GroupBy(dss => dss.SemesterId).ToListAsync();
+
+            var dividedResults = new List<List<DepartmentSemesterSession>>();
+
+            for (int semesterIndex = 1; semesterIndex <= 8; semesterIndex++)
+            {
+                var semesterResults = groupedResults.SingleOrDefault(group => group.Key == semesterIndex);
+
+                if (semesterResults != null)
+                {
+                    dividedResults.Add(semesterResults.ToList());
+                }
+                else
+                {
+                    dividedResults.Add(new List<DepartmentSemesterSession>());
+                }
+            }
+
+            // Construct the result DTO
+            var result = new FacultyDetailsDTO
+            {
+                Faculty = facultyDetails,
+                DepartmentSemesterSessionsGrouped = dividedResults
+            };
+
+            return result;
         }
+
     }
 }

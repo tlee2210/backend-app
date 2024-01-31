@@ -47,7 +47,6 @@ builder.Services.AddScoped<IDepartment, DepartmentServices>();
 builder.Services.AddScoped<IFacilitie, FacilitieService>();
 builder.Services.AddScoped<IStaff, StaffServices>();
 builder.Services.AddScoped<IAdmission, AdmissionServices>();
-builder.Services.AddScoped<IAdmissionHome, AdmissionServicesHome>();
 builder.Services.AddScoped<IStudent, StudentServices>();
 builder.Services.AddScoped<ISessions, SessionServices>();
 builder.Services.AddScoped<IStaffLogin, StaffLoginServices>();
@@ -55,6 +54,7 @@ builder.Services.AddScoped<IStudentLogin, StudentLoginServices>();
 builder.Services.AddScoped<ISemester, SemesterServices>();
 
 //home
+builder.Services.AddScoped<IAdmissionHome, AdmissionServicesHome>();
 builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
 builder.Services.AddScoped<IHome, HomeServices>();
 builder.Services.AddScoped<ICoursesHome, CoursesHomeServices>();

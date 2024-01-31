@@ -10,7 +10,7 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime DOB { get; set; }
-        public bool Gender { get; set; }
+        public Gender Gender { get; set; }
         public string Address { get; set; }
         public string HighSchool { get; set; }
         public double GPA { get; set; }

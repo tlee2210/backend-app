@@ -51,7 +51,7 @@ namespace backend_app.Controllers.home
 
                 if (facultyDetails != null)
                 {
-                    return Ok(facultyDetails);
+                        return Ok(facultyDetails);
                 }
                 else
                 {
