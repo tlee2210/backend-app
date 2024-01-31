@@ -109,9 +109,9 @@ namespace backend_app.Services.dashboard
                 dss.DepartmentId == departmentId
                 );
         }
-        public async Task<IQueryable<DepartmentSemesterSession>> Search(SearchParameters searchParameters)
+        public async Task<List<List<DepartmentSemesterSession>>> DivideInto8Semesters(SearchParameters searchParameters)
         {
-            IQueryable<DepartmentSemesterSession> query = db.departmentSemesterSessions.Include(d => d.Department);
+            IQueryable<DepartmentSemesterSession> query = db.departmentSemesterSessions.Include(d => d.Department).Include(s => s.Semester).Include(a => a.session);
 
             if (searchParameters.DepartmentId.HasValue)
             {
@@ -132,9 +132,27 @@ namespace backend_app.Services.dashboard
             {
                 query = query.Where(dss => dss.FacultyId == searchParameters.FacultyId.Value);
             }
-            return query;
-        }
 
+            var groupedResults = await query.GroupBy(dss => dss.SemesterId).ToListAsync();
+
+            var dividedResults = new List<List<DepartmentSemesterSession>>();
+
+            for (int semesterIndex = 1; semesterIndex <= 8; semesterIndex++)
+            {
+                var semesterResults = groupedResults.SingleOrDefault(group => group.Key == semesterIndex);
+
+                if (semesterResults != null)
+                {
+                    dividedResults.Add(semesterResults.ToList());
+                }
+                else
+                {
+                    dividedResults.Add(new List<DepartmentSemesterSession>());
+                }
+            }
+
+            return dividedResults;
+        }
 
     }
 }

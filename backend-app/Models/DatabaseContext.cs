@@ -261,7 +261,7 @@ namespace backend_app.Models
                         Id = 1, 
                         Code = "3400234640", 
                         Title = "Bachelor of Business Analytics and Analysis", 
-                        Slug="Bachelor-of-Aviation-Management/Bachelor of Applied Innovation", 
+                        Slug="Bachelor-of-Aviation-Management/Bachelor-of-Applied-Innovation", 
                         Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
                         EntryScore=65, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
@@ -474,15 +474,72 @@ namespace backend_app.Models
                 s.HasKey(k => k.Id);
                 s.HasData(new Semester[]
                 {
-                    new Semester{Id = 1, AcademicYear = 1, SemesterNumber = 1},
-                    new Semester{Id = 2, AcademicYear = 1, SemesterNumber = 2},
-                    new Semester{Id = 3, AcademicYear = 2, SemesterNumber = 1},
-                    new Semester{Id = 4, AcademicYear = 2, SemesterNumber = 2},
-                    new Semester{Id = 5, AcademicYear = 3, SemesterNumber = 1},
-                    new Semester{Id = 6, AcademicYear = 3, SemesterNumber = 2},
-                    new Semester{Id = 7, AcademicYear = 4, SemesterNumber = 1},
-                    new Semester{Id = 8, AcademicYear = 4, SemesterNumber = 2},
+                    new Semester
+                    {
+                        Id = 1,
+                        AcademicYear = 1,
+                        SemesterNumber = 1,
+                        StartDate = new DateTime(DateTime.Now.Year, 8, 1), // Ngày bắt đầu học kỳ 1, năm hiện tại, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year, 12, 31) // Ngày kết thúc học kỳ 1, năm hiện tại, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 2,
+                        AcademicYear = 1,
+                        SemesterNumber = 2,
+                        StartDate = new DateTime(DateTime.Now.Year, 1, 1), // Ngày bắt đầu học kỳ 2, năm hiện tại, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year, 5, 31) // Ngày kết thúc học kỳ 2, năm hiện tại, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 3,
+                        AcademicYear = 2,
+                        SemesterNumber = 1,
+                        StartDate = new DateTime(DateTime.Now.Year + 1, 8, 1), // Ngày bắt đầu học kỳ 1, năm sau, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 1, 12, 31) // Ngày kết thúc học kỳ 1, năm sau, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 4,
+                        AcademicYear = 2,
+                        SemesterNumber = 2,
+                        StartDate = new DateTime(DateTime.Now.Year + 1, 1, 1), // Ngày bắt đầu học kỳ 2, năm sau, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 1, 5, 31) // Ngày kết thúc học kỳ 2, năm sau, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 5,
+                        AcademicYear = 3,
+                        SemesterNumber = 1,
+                        StartDate = new DateTime(DateTime.Now.Year + 2, 8, 1), // Ngày bắt đầu học kỳ 1, năm sau nữa, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 2, 12, 31) // Ngày kết thúc học kỳ 1, năm sau nữa, chỉ lưu ngày và tháng
+                    },
+                        new Semester
+                    {
+                        Id = 6,
+                        AcademicYear = 3,
+                        SemesterNumber = 2,
+                        StartDate = new DateTime(DateTime.Now.Year + 2, 1, 1), // Ngày bắt đầu học kỳ 2, năm sau nữa, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 2, 5, 31) // Ngày kết thúc học kỳ 2, năm sau nữa, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 7,
+                        AcademicYear = 4,
+                        SemesterNumber = 1,
+                        StartDate = new DateTime(DateTime.Now.Year + 3, 8, 1), // Ngày bắt đầu học kỳ 1, 3 năm sau, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 3, 12, 31) // Ngày kết thúc học kỳ 1, 3 năm sau, chỉ lưu ngày và tháng
+                    },
+                    new Semester
+                    {
+                        Id = 8,
+                        AcademicYear = 4,
+                        SemesterNumber = 2,
+                        StartDate = new DateTime(DateTime.Now.Year + 3, 1, 1), // Ngày bắt đầu học kỳ 2, 3 năm sau, chỉ lưu ngày và tháng
+                        EndDate = new DateTime(DateTime.Now.Year + 3, 5, 31) // Ngày kết thúc học kỳ 2, 3 năm sau, chỉ lưu ngày và tháng
+                    },
                 });
+
             });
             modelBuilder.Entity<Students>(entity =>
             {
@@ -547,7 +604,7 @@ namespace backend_app.Models
                 dss.HasOne(d => d.Faculty).WithMany().HasForeignKey(dss => dss.FacultyId);
                 dss.HasOne(d => d.Department).WithMany().HasForeignKey(dss => dss.DepartmentId);
                 dss.HasOne(d => d.Semester).WithMany().HasForeignKey(dss => dss.SemesterId);
-                dss.HasOne(d => d.Session).WithMany().HasForeignKey(dss => dss.SessionId);
+                dss.HasOne(d => d.session).WithMany().HasForeignKey(dss => dss.SessionId);
             });
         }
     }

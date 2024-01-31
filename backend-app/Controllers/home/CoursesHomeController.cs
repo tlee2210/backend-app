@@ -42,5 +42,27 @@ namespace backend_app.Controllers.home
 
             return Ok(faculties);
         }
+        [HttpGet("GetFacultyDetails/{facultySlug}")]
+        public async Task<IActionResult> GetFacultyDetails(string facultySlug)
+        {
+            try
+            {
+                var facultyDetails = await service.GetFacultyDetails(facultySlug);
+
+                if (facultyDetails != null)
+                {
+                    return Ok(facultyDetails);
+                }
+                else
+                {
+                    return NotFound($"Faculty details not found for the slug: {facultySlug}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving faculty details");
+            }
+        }
+
     }
 }

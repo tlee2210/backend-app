@@ -34,8 +34,8 @@ namespace backend_app.Controllers.dashboard
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] SearchParameters searchParameters)
         {
-            var result = await service.Search(searchParameters);
-            return Ok(result);
+            var dividedResults = await service.DivideInto8Semesters(searchParameters);
+            return Ok(dividedResults);
         }
         [HttpPost]
         public async Task<ActionResult<DepartmentSemesterSession>> Store(DepartmentSemesterSession departmentSemesterSession)

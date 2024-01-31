@@ -12,7 +12,7 @@ namespace backend_app.Models
         public int FacultyId { get; set; }
         public Department? Department { get; set; }
         public Semester? Semester { get; set; }
-        public Session? Session { get; set; }
+        public Session? session { get; set; }
         public Faculty? Faculty { get; set; }
     }
 }
