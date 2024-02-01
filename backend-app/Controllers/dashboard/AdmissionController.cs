@@ -1,5 +1,6 @@
 ﻿using backend_app.IRepository.dashboard;
 using backend_app.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,8 +8,10 @@ namespace backend_app.Controllers.dashboard
 {
     [Route("api/dashboard/admission")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class AdmissionController : ControllerBase
     {
+     
         private readonly IAdmission service;
         public AdmissionController(IAdmission service)
         {

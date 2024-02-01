@@ -2,6 +2,7 @@
 using backend_app.IRepository.dashboard;
 using backend_app.Models;
 using backend_app.Services.dashboard;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,10 @@ namespace backend_app.Controllers.dashboard
 {
     [Route("api/dashboard/Article")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ArticleController : ControllerBase
     {
+ 
         private readonly IArticle article;
         public ArticleController(IArticle article)
         {

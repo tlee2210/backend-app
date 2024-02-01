@@ -76,7 +76,7 @@ namespace backend_app.Services.dashboard
                 Phone = a.Phone,
                 Qualification = a.Qualification,
                 FileAvatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, a.FileAvatar)
-            }).ToListAsync();
+            }).Where(c =>c.Id !=1).ToListAsync();
         }
 
         public async Task<Staff> UpdateStaff(StaffImage staffImage)
