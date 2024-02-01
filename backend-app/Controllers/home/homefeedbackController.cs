@@ -2,6 +2,7 @@
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace backend_app.Controllers.home
 {
@@ -16,14 +17,18 @@ namespace backend_app.Controllers.home
         }
         //nguoi dung gui feedback
         [HttpPost]
-        public async Task<ActionResult<Feedback>> SendFeedback(Feedback feedback)
+        public async Task<ActionResult> SendFeedback(string Description)
         {
-            var result = await services.SendFeedback(feedback);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+
+            var result = await services.SendFeedback(User, Description);
+
             if (result != null)
             {
                 return Ok(new { message = "Feedback submitted successfully", data = result });
             }
             return BadRequest("Feedback submission failed");
         }
+
     }
 }

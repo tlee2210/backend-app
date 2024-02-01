@@ -55,11 +55,11 @@ builder.Services.AddScoped<ISemester, SemesterServices>();
 
 //home
 builder.Services.AddScoped<IAdmissionHome, AdmissionServicesHome>();
-builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
 builder.Services.AddScoped<IHome, HomeServices>();
 builder.Services.AddScoped<ICoursesHome, CoursesHomeServices>();
 builder.Services.AddScoped<IHomeArtical, HomeArticalService>();
 builder.Services.AddScoped<IHomeFacilities, HomeFacilitieService>();
+builder.Services.AddScoped<IHomeFeedbackServices, HomeFeedbackService>();
 
 var allowOrigin = builder.Configuration.GetSection("AllowOrigin").Get<string[]>();
 

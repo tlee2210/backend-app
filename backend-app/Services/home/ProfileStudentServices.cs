@@ -17,7 +17,7 @@ namespace backend_app.Services.home
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Students> GetAuth(ClaimsPrincipal user)
+        public async Task<StudentprofileDTO> GetAuth(ClaimsPrincipal user)
         {
             var identity = user.Identity as ClaimsIdentity;
             if (identity != null)
@@ -42,9 +42,42 @@ namespace backend_app.Services.home
                         .ThenInclude(sfs => sfs.Semester)
                     .FirstOrDefaultAsync();
 
+                var facultyId = studentWithDetails.StudentFacultySemesters.FacultyId;
+                var SessionId = studentWithDetails.StudentFacultySemesters.SessionId;
+
+                IQueryable<DepartmentSemesterSession> query = db.departmentSemesterSessions
+                .Include(d => d.Department)
+                .Include(s => s.Semester)
+                .Include(a => a.session)
+                .Where(dss => dss.FacultyId == facultyId && dss.SessionId == SessionId);
+
+                var groupedResults = await query.GroupBy(dss => dss.SemesterId).ToListAsync();
+
+                var dividedResults = new List<List<DepartmentSemesterSession>>();
+
+                for (int semesterIndex = 1; semesterIndex <= 8; semesterIndex++)
+                {
+                    var semesterResults = groupedResults.SingleOrDefault(group => group.Key == semesterIndex);
+
+                    if (semesterResults != null)
+                    {
+                        dividedResults.Add(semesterResults.ToList());
+                    }
+                    else
+                    {
+                        dividedResults.Add(new List<DepartmentSemesterSession>());
+                    }
+                }
 
                 studentWithDetails.Avatar = string.Format("{0}://{1}{2}/{3}", request.Scheme, request.Host, request.PathBase, studentWithDetails.Avatar);
-                return studentWithDetails;
+
+                var result = new StudentprofileDTO
+                {
+                    students = studentWithDetails,
+                    DepartmentSemesterSessionsGrouped = dividedResults
+                };
+                return result;
+
             }
             return null;
         }
