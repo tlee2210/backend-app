@@ -117,7 +117,17 @@ namespace backend_app.Services.dashboard
 
             var builder = new BodyBuilder
             {
-                HtmlBody = "Congratulations on your outstanding achievement in passing the university entrance exam! This is a significant milestone and a remarkable accomplishment in your life, and we are truly proud of the effort and skill you have invested in your academic journey.\r\n\r\nAdmission to university is not just a personal success but also the result of dedication, perseverance, and passion. You have done exceptionally well, and we believe that your innovation and eagerness to learn will continue to flourish in the future.\r\n\r\nRemember, this educational journey is just the beginning, and there are many challenges and opportunities awaiting you. Don't hesitate to set new goals and constantly enrich your knowledge.\r\n\r\nWe hope that you will continue your journey with enthusiasm and confidence in yourself. Congratulations, and may you succeed in all your future endeavors!\r\n\r\nIf you have any plans or dreams for the future, please share them with us. We are here to support and celebrate your joys.\r\n\r\nCongratulations once again, and soar to new heights!"
+                HtmlBody = "<div >" +
+                   "<h1 style='color: #007BFF;text-align: center;'>Congratulations on Your University Admission!</h1>" +
+                   "<p>Congratulations on your outstanding achievement in passing the university entrance exam! This is a significant milestone and a remarkable accomplishment in your life, and we are truly proud of the effort and skill you have invested in your academic journey.</p>" +
+                   "<p>Admission to university is not just a personal success but also the result of dedication, perseverance, and passion. You have done exceptionally well, and we believe that your innovation and eagerness to learn will continue to flourish in the future.</p>" +
+                   "<div>"+
+                   "<p>Remember, this educational journey is just the beginning, and there are many challenges and opportunities awaiting you. Don't hesitate to set new goals and constantly enrich your knowledge.</p>" +
+                   "<p>We hope that you will continue your journey with enthusiasm and confidence in yourself. Congratulations, and may you succeed in all your future endeavors!</p>" +
+                   "</div>"+
+                   "<p>If you have any plans or dreams for the future, please share them with us. We are here to support and celebrate your joys.</p>" +
+                   "<p>Congratulations once again, and soar to new heights!</p>" +
+               "</div>"
             };
             email.Body = builder.ToMessageBody();
 

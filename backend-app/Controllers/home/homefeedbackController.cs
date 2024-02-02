@@ -18,7 +18,7 @@ namespace backend_app.Controllers.home
         }
         //nguoi dung gui feedback
         [HttpPost]
-        [EnableRateLimiting("fixed")]
+        [EnableRateLimiting("Feedback")]
         public async Task<ActionResult> SendFeedback(string Description)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 

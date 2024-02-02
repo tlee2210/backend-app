@@ -24,6 +24,12 @@ builder.Services.AddRateLimiter(RateLimiterOptions =>
         op.Window = TimeSpan.FromDays(1);
         op.QueueLimit = 0;
     });
+    RateLimiterOptions.AddFixedWindowLimiter("Feedback", op =>
+    {
+        op.PermitLimit = 1;
+        op.Window = TimeSpan.FromDays(1);
+        op.QueueLimit = 0;
+    });
     RateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
 
