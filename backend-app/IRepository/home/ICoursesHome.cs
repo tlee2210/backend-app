@@ -9,5 +9,6 @@ namespace backend_app.IRepository.home
         Task<DetailsWithRelatedDTO<Courses, homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug);
         Task<FacultyDetailsDTO> GetFacultyDetails(string facultySlug);
         Task<IEnumerable<homeFacultyDTO>> SearchFacultyByTitle(string Title);
+        Task<Department> GetDepartmentDetails(int id);
     }
 }

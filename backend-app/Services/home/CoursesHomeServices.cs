@@ -23,20 +23,20 @@ namespace backend_app.Services.home
             return await db.Courses.ToListAsync();
         }
 
-        public async Task<DetailsWithRelatedDTO<Courses ,homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug)
+        public async Task<DetailsWithRelatedDTO<Courses, homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug)
         {
             var course = await db.Courses
        .FirstOrDefaultAsync(c => c.Slug == courseSlug);
             var facultyOptions = await db.Courses
                 .Where(c => c.Slug == courseSlug)
-                .SelectMany(c => c.Faculty) 
+                .SelectMany(c => c.Faculty)
                 .Select(f => new homeFacultyDTO
                 {
                     Title = f.Title,
                     Code = f.Code,
                     Slug = f.Slug
                 })
-                .Distinct() 
+                .Distinct()
                 .ToListAsync();
             var detailsWithRelated = new DetailsWithRelatedDTO<Courses, homeFacultyDTO>
             {
@@ -62,7 +62,6 @@ namespace backend_app.Services.home
 
             return faculties;
         }
-
         public async Task<FacultyDetailsDTO> GetFacultyDetails(string facultySlug)
         {
             var request = _httpContextAccessor.HttpContext.Request;
@@ -79,7 +78,7 @@ namespace backend_app.Services.home
                     .Where(s => s.IsCurrentYear)
                     .Select(s => s.Id)
                     .FirstOrDefaultAsync();
-            if(currentSessionId == null)
+            if (currentSessionId == null)
             {
                 return null;
             }
@@ -116,6 +115,11 @@ namespace backend_app.Services.home
             };
 
             return result;
+        }
+        public async Task<Department> GetDepartmentDetails(int id)
+        {
+            return await db.Departments
+              .Where(f => f.Id == id).FirstOrDefaultAsync();
         }
 
     }

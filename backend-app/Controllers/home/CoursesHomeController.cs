@@ -64,5 +64,26 @@ namespace backend_app.Controllers.home
             }
         }
 
+        [HttpGet("GetDepartmentDetails/{id}")]
+        public async Task<IActionResult> GetDepartmentDetails(int id)
+        {
+            try
+            {
+                var DepartmentDetails = await service.GetDepartmentDetails(id);
+
+                if (DepartmentDetails != null)
+                {
+                    return Ok(DepartmentDetails);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving faculty details");
+            }
+        }
     }
 }
