@@ -86,5 +86,26 @@ namespace backend_app.Controllers.dashboard
             }
         }
 
+        [HttpPost("CreateSemesters")]
+        public async Task<IActionResult> CreateSemesters([FromBody] CreateSemesterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var createdSemesters = await service.CreateSemesters(request.FacultyId, request.semesterId, request.DepartmentIds);
+                return Ok(new { message = "Semesters created successfully." });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+
+                return StatusCode(500, "An internal server error occurred.");
+            }
+        }
+
     }
 }

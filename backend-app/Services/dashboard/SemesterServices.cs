@@ -165,5 +165,41 @@ namespace backend_app.Services.dashboard
             return false;
         }
 
+        public async Task<List<DepartmentSemesterSession>> CreateSemesters(int facultyId, int semesterNumber, int[] departmentIds)
+        {
+            // List to hold the newly created semesters
+            var newSemesters = new List<DepartmentSemesterSession>();
+            var currentSessionId = await db.Sessions
+                   .Where(c => c.IsCurrentYear)
+                   .Select(s => s.Id)
+                   .FirstOrDefaultAsync();
+            var existingEntries = await db.departmentSemesterSessions
+                .Where(dss => dss.FacultyId == facultyId
+                   && dss.SemesterId == semesterNumber
+                   && dss.SessionId == currentSessionId + 1)
+                .ToListAsync();
+
+            db.departmentSemesterSessions.RemoveRange(existingEntries);
+
+            foreach (int departmentId in departmentIds)
+            {
+                var newSemester = new DepartmentSemesterSession
+                {
+                    FacultyId = facultyId,
+                    SemesterId = semesterNumber,
+                    DepartmentId = departmentId,
+                    SessionId = currentSessionId + 1,
+                };
+
+                db.departmentSemesterSessions.Add(newSemester);
+                newSemesters.Add(newSemester);
+            }
+
+            await db.SaveChangesAsync();
+
+            return newSemesters;
+        }
+
+
     }
 }
