@@ -20,7 +20,7 @@
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid status value");
+                        throw new ArgumentException("Invalid status value");
                 }
             }
         }

@@ -1,9 +1,10 @@
-﻿using backend_app.Models;
+﻿using backend_app.DTO;
+using backend_app.Models;
 
 namespace backend_app.IRepository.home
 {
     public interface IAdmissionHome
     {
-        Task<Admission> AddAdmission(Admission admission);
+        Task<Admission> AddAdmission(AdmissionDTO admission);
     }
 }

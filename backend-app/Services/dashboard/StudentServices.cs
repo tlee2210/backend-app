@@ -26,6 +26,8 @@ namespace backend_app.Services.dashboard
             if (studentOld == null)
             {
                 var studentCode = await GenerateStudentCode();
+                var Image = await SaveImage(student.Avatar);
+
                 var stu = new Students
                 {
                     Address = student.Address,
@@ -236,7 +238,8 @@ namespace backend_app.Services.dashboard
         [NonAction]
         public async Task<string> SaveImage(IFormFile formFile)
         {
-            string imageName = new string(Path.GetFileNameWithoutExtension(formFile.FileName).Take(10).ToArray()).Replace(" ", "_");
+            string imageName = Path.GetFileName(formFile.FileName)?.Replace(" ", "_");
+
             imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(formFile.FileName);
 
             // Thêm tiền tố "Image/Article/" vào imageName

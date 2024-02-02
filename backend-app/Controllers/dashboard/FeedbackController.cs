@@ -34,10 +34,25 @@ namespace backend_app.Controllers.dashboard
             return await service.GetListUnprocess();
         }
 
-        [HttpPut]
-        public async Task<Feedback> UpdateFeedback(Feedback feedback)
+        [HttpPost]
+        public async Task<ActionResult> UpdateFeedback(Feedback feedback)
         {
-            return await service.UpdateFeedback(feedback);
+            try
+            {
+                var result = await service.UpdateFeedback(feedback);
+                if (result != null)
+                {
+                    return Ok(new { message = "seend Feedback successfully!" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Error updating feedback." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = $"Internal server error: {ex.Message}" });
+            }
         }
     }
 }

@@ -45,7 +45,7 @@ namespace backend_app.Services.dashboard
                 var feedOld = await db.Feedbacks.SingleOrDefaultAsync(f => f.Id == feedback.Id);
                 if (feedOld == null)
                 {
-                    return null; // Feedback not found
+                    return null;
                 }
 
                 feedOld.responses = feedback.responses;
@@ -58,8 +58,6 @@ namespace backend_app.Services.dashboard
             }
             catch (Exception ex)
             {
-                // Log the exception (ex)
-                // Handle exception as needed
                 return null;
             }
         }
