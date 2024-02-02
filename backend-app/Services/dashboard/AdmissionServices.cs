@@ -1,4 +1,5 @@
-﻿using backend_app.IRepository.dashboard;
+﻿using backend_app.DTO;
+using backend_app.IRepository.dashboard;
 using backend_app.Models;
 using backend_app.Settings;
 using MailKit.Net.Smtp;
@@ -74,7 +75,29 @@ namespace backend_app.Services.dashboard
             }
             return null;
         }
+        public async Task<GetEditSelectOption<Admission>> AdmissionCreate(int id)
+        {
+            var admission = await db.Admissions.SingleOrDefaultAsync(x => x.Id == id);
+            if (admission == null)
+            {
+                return null;
+            }
+            var options = await db.Faculty
+                .Select(x => new SelectOption
+                {
+                    label = x.Title,
+                    value = x.Id
+                })
+                .ToListAsync();
 
+            var dto = new GetEditSelectOption<Admission>
+            {
+                model = admission,
+                SelectOption = options
+            };
+
+            return dto;
+        }
         public async Task<IEnumerable<Admission>> GetAllReject()
         {
             return await db.Admissions.Where(a => a.Status == "Reject").ToListAsync();

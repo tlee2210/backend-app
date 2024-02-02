@@ -1,4 +1,5 @@
-﻿using backend_app.IRepository.dashboard;
+﻿using backend_app.DTO;
+using backend_app.IRepository.dashboard;
 using backend_app.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,11 @@ namespace backend_app.Controllers.dashboard
         public async Task<Admission> GetOneAdmission(int id)
         {
             return await service.GetEdit(id);
+        }
+        [HttpGet("{id}/AdmissionCreate")]
+        public async Task<GetEditSelectOption<Admission>> AdmissionCreate(int id)
+        {
+            return await service.AdmissionCreate(id);
         }
 
         [HttpGet("GetAllProccess")]

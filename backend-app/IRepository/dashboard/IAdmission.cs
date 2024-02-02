@@ -1,4 +1,5 @@
-﻿using backend_app.Models;
+﻿using backend_app.DTO;
+using backend_app.Models;
 using System.Threading.Tasks;
 
 namespace backend_app.IRepository.dashboard
@@ -10,6 +11,7 @@ namespace backend_app.IRepository.dashboard
         Task<IEnumerable<Admission>> GetAllReject();
         Task<Admission> GetOneAdmission(int id);
         Task<Admission> GetEdit(int id);
+        Task<GetEditSelectOption<Admission>> AdmissionCreate(int id);
         Task<Admission> AcceptAdmission(int id);
         Task<Admission> RejectAdmission(int id);
         Task<Admission> DeleteAdmission(int id);
