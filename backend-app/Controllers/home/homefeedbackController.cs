@@ -2,6 +2,7 @@
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 
 namespace backend_app.Controllers.home
@@ -17,6 +18,7 @@ namespace backend_app.Controllers.home
         }
         //nguoi dung gui feedback
         [HttpPost]
+        [EnableRateLimiting("fixed")]
         public async Task<ActionResult> SendFeedback(string Description)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 

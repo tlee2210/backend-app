@@ -23,8 +23,10 @@ namespace backend_app.Services.home
             return await db.Courses.ToListAsync();
         }
 
-        public async Task<List<homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug)
+        public async Task<DetailsWithRelatedDTO<Courses ,homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug)
         {
+            var course = await db.Courses
+       .FirstOrDefaultAsync(c => c.Slug == courseSlug);
             var facultyOptions = await db.Courses
                 .Where(c => c.Slug == courseSlug)
                 .SelectMany(c => c.Faculty) 
@@ -36,10 +38,15 @@ namespace backend_app.Services.home
                 })
                 .Distinct() 
                 .ToListAsync();
+            var detailsWithRelated = new DetailsWithRelatedDTO<Courses, homeFacultyDTO>
+            {
+                data = course,
+                listData = facultyOptions
+            };
 
-            return facultyOptions;
+            return detailsWithRelated;
+
         }
-
         public async Task<IEnumerable<homeFacultyDTO>> SearchFacultyByTitle(string Title)
         {
             var faculties = await db.Faculty

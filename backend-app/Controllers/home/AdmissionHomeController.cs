@@ -3,6 +3,7 @@ using backend_app.IRepository.home;
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend_app.Controllers.home
 {
@@ -18,6 +19,7 @@ namespace backend_app.Controllers.home
 
         [HttpPost]
         [Route("register")]
+        [EnableRateLimiting("fixed")]
         public async Task<ActionResult<AdmissionDTO>> PostAdmission([FromForm]AdmissionDTO admission)
         {
             //return BadRequest( new {message = "register Admission false"});

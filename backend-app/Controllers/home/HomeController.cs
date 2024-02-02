@@ -4,6 +4,7 @@ using backend_app.IRepository.home;
 using backend_app.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace backend_app.Controllers.home
 {

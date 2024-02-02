@@ -11,7 +11,7 @@ namespace backend_app.DTO
         public string? Slug { get; set; }
         public string Skill_learn { get; set; }
         public string Opportunities { get; set; }
-        public int EntryScore { get; set; }
+        public double EntryScore { get; set; }
         public string Image{ get; set; }
         public int Course_id { get; set; }
         public string CoursesName { get; set; }

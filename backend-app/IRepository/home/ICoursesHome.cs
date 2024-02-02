@@ -6,7 +6,7 @@ namespace backend_app.IRepository.home
     public interface ICoursesHome
     {
         Task<IEnumerable<Courses>> GetAllCourses();
-        Task<List<homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug);
+        Task<DetailsWithRelatedDTO<Courses, homeFacultyDTO>> GetFacultyByCourseSlug(string courseSlug);
         Task<FacultyDetailsDTO> GetFacultyDetails(string facultySlug);
         Task<IEnumerable<homeFacultyDTO>> SearchFacultyByTitle(string Title);
     }

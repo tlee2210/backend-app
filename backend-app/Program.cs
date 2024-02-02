@@ -1,4 +1,4 @@
-//using
+﻿//using
 using backend_app.IRepository;
 using backend_app.IRepository.dashboard;
 using backend_app.IRepository.home;
@@ -8,6 +8,7 @@ using backend_app.Services.dashboard;
 using backend_app.Services.home;
 using backend_app.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,16 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddRateLimiter(RateLimiterOptions =>
+{
+    RateLimiterOptions.AddFixedWindowLimiter("fixed", op =>
+    {
+        op.PermitLimit = 1;
+        op.Window = TimeSpan.FromDays(1);
+        op.QueueLimit = 0;
+    });
+    RateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+});
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -91,6 +102,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRateLimiter();
 
 app.UseHttpsRedirection();
 
