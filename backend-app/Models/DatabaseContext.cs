@@ -261,7 +261,7 @@ namespace backend_app.Models
                         Id = 1, 
                         Code = "3400234640", 
                         Title = "Bachelor of Business Analytics and Analysis", 
-                        Slug="Bachelor-of-Aviation-Management/Bachelor-of-Applied-Innovation", 
+                        Slug="Bachelor-of-Aviation-Management", 
                         Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
                         EntryScore=65, 
                         Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
