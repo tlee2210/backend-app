@@ -57,15 +57,15 @@ namespace backend_app.Models
                 c.HasKey(x => x.Id);
                 c.HasIndex(a => a.Title).IsUnique();
                 c.HasData(new Article[]
-                { 
+                {
                     new Article
-                    { 
-                        Id = 1, 
+                    {
+                        Id = 1,
                         Title = "What does the ‘common good’ actually mean? Our research found common ground across the political divide",
                         Content = "Some topics are hard to define. They are nebulous; their meanings are elusive. Topics relating to morality fit this description. So do those that are subjective, meaning different things to different people in different contexts.\r\n\r\nIn our recently published paper, we targeted the nebulous concept of the “common good”.\r\n\r\nLike moral issues that elicit strong arguments for and against, conceptualisations of the common good can vary according to the different needs of individuals and the different values they hold. One factor that divides people is political orientation. Those on the far left hold very different opinions on moral and social issues than those on the far right.\r\n\r\nHow can we expect people across the political spectrum to agree on a moral topic when they have such different perspectives?\r\n\r\nIf we set aside the specific moral issues and focus instead on the broader aspects of the common good as a concept, we may well find foundational principles – ideas that are shared between people, ideas that are perhaps even universal.\r\n\r\nFolk theory\r\nTo find such underlying commonalities, we used a social psychological folk theory approach. Folk theories are non-academic or lay beliefs that comprise individuals’ informal and subjective understandings of their world.\r\n\r\nThe concept of the common good bleeds into cultural perceptions and worldviews. The currency of such ideas influences how we think and what we talk about with other people. By asking people to write about or define elusive concepts, social psychologists can search for frequently expressed words and phrases and derive a shared cultural understanding from the collection of individual texts.\r\n\r\nWe asked 14,303 people who participated in a larger study for the Australian Leadership Index to provide a definition of the common good, also sometimes called the greater good or the public good.\r\n\r\nThe sample was nationally representative, meaning it reflected the demographics of the Australian population at the time the data was collected. We then used a linguistic analysis tool, called the Linguistic Inquiry and Word Count program, to analyse the responses.\r\n\r\nThe program has a new function called the Meaning Extraction Method, which processes large bodies of text to identify prevalent themes or concepts by analysing words that frequently occur in close proximity.\r\n\r\nUsing this method, we explored Australians’ definitions of the common good. From the word clusters derived from this analysis, we identified nine main themes:\r\n\r\nOutcomes that are in the best interest of the majority\r\nDecisions and actions that benefit the majority\r\nThat which is in the best interest of the general public\r\nThat which serves the general national population rather than individual interests\r\nThat which serves the majority rather than minority interests\r\nThat which serves group rather than individual interests\r\nThat which serves citizens’ interests\r\nConcern for and doing the right thing for all people\r\nMoral principles required to achieve the common good\r\nInterestingly, these broad themes did not differ for the most part between right-leaning and left-leaning participants, meaning they were shared by liberals and conservatives alike. There is indeed common ground in people’s understanding of the common good.\r\n\r\nA working definition\r\nThese nine themes thus reflect a deeper conceptual structure. They can be distilled into three core aspects of the common good. These relate to outcomes, principles and stakeholders.\r\n\r\nThe first describes the objectives and outcomes associated with the common good – for example, the decisions and actions that are seen to be in the best interests of most people.\r\n\r\nThe second refers to the principles associated with the common good and the processes and practices through which the common good is realised.\r\n\r\nThe final aspect relates to the stakeholders who make up the community or communities that are entitled to the common good and its benefits.\r\n\r\nFrom this we arrived at a working definition of the common good:\r\n\r\nThe common good refers to achieving the best possible outcome for the largest number of people, which is underpinned by decision-making that is ethically and morally sound and varies by the context in which the decisions are made.\r\n\r\nIn the definition above, you will detect the nine components, as well as the three broader themes.\r\n\r\nWhile we identified a shared understanding of the common good, it is important to acknowledge that people may share the “big picture” of the common good, but differ when it comes to the social and moral issues they prioritise and the practical ways in which they think the common good should be achieved.\r\n\r\nFor instance, recent research suggests that people care deeply about fairness, but society is divided by how they view fairness concerns.\r\n\r\nOn one side, you have the social order perspective, which focuses on processes or how justice is achieved. On the other side, the social justice worldview is concerned with outcomes and what justice looks like as a result. Both sides share a disdain for inequality, but don’t often see eye to eye about naming or fixing societal inequality.\r\n\r\nIf the two sides were willing to start by finding their common ground, using our working definition to probe for areas of convergence first, then moving on to discuss areas of divergence with an openness to learn from each other’s strengths might become possible. Intractable conflicts could be broken down and systematically addressed. Of course, this requires a willingness from both sides to lower their defences and listen.\r\n\r\nCommunity leaders will encounter challenges when they unite to advance the common good. Leaders from different industries bring different backgrounds, education and priorities to the table. In order to integrate their efforts, it becomes essential to set aside contextual (and often biased or partisan) understandings of the common good to focus on the “big picture”.",
                         image = "Image/Article/1.jpeg",
                         PublishDate = DateTime.Now
-                    }, 
+                    },
                     new Article
                     {
                         Id = 2,
@@ -91,7 +91,7 @@ namespace backend_app.Models
                         PublishDate = DateTime.Now
                     }
                 });
-           });
+            });
             modelBuilder.Entity<ArticleCategory>(c =>
             {
                 c.HasKey(x => x.Id);
@@ -152,71 +152,71 @@ namespace backend_app.Models
                 {
                     new Courses
                     {
-                        Id = 1, 
-                        Name = "Applied Innovation", 
+                        Id = 1,
+                        Name = "Applied Innovation",
                         Slug = "Applied-Innovation",
                         Description = "Don't just graduate, innovate. The Bachelor of Applied Innovation aims to make you think like an innovator, explore bold ideas, and create unprecedented solutions."
                     },
                     new Courses
                     {
-                        Id = 2, 
+                        Id = 2,
                         Name = "Humanities and Social Sciences",
                         Slug = "Arts-Humanities-and-Social-Sciences",
                         Description = "Become the innovative thinker our world needs. Explore the relationships between individuals, societies and cultures and be ready to impact the challenges faced by our rapidly evolving world today and in the future."
                     },
                     new Courses
                     {
-                        Id = 3, 
-                        Name = "Aviation", 
+                        Id = 3,
+                        Name = "Aviation",
                         Slug = "Aviation",
                         Description = "The thrill of taking to the skies is one of humankind’s greatest achievements. A hundred years ago we barely knew how. Now we depend on it every day."
                     },
                     new Courses
                     {
-                        Id = 4, 
-                        Name = "Built Environment and Architecture", 
+                        Id = 4,
+                        Name = "Built Environment and Architecture",
                         Slug = "Built-Environment-and-Architecture",
                         Description = "Learn how to harness your spatial creativity in design and bring together the environment and architecture to create innovative spaces for us all to enjoy.6"
                     },
                     new Courses
                     {
-                        Id = 5, 
-                        Name = "Business", 
+                        Id = 5,
+                        Name = "Business",
                         Slug = "Business",
                         Description = "Plug straight into innovation with our tech-led business courses and degrees. With seamless industry connections, you could follow grads and land a role in a profit or purpose-based business."
                     },
                     new Courses
                     {
-                        Id = 6, 
-                        Name = "Design", 
+                        Id = 6,
+                        Name = "Design",
                         Slug = "Design",
                         Description = "Define the spaces we live in, the products we purchase, and the online and real-life worlds we explore. Bottle your imagination and creativity and pour it into a career in design."
                     },
                     new Courses
                     {
-                        Id = 7, 
-                        Name = "Engineering", 
+                        Id = 7,
+                        Name = "Engineering",
                         Slug = "Engineering",
                         Description = "Engineers have the power to change how we live — and with that power comes great responsibility."
                     },
                     new Courses
                     {
-                        Id = 8, 
-                        Name = "Film and Television", 
+                        Id = 8,
+                        Name = "Film and Television",
                         Slug = "Film-and-Television",
                         Description = "The fundamentals of storytelling through film are evolving, the industry is changing and so are the audiences. "
                     },
                     new Courses
                     {
-                        Id = 9, 
-                        Name = "Games and Animation", 
+                        Id = 9,
+                        Name = "Games and Animation",
                         Slug = "Games-and-Animation",
                         Description = "Open your mind to creating for the digital space and play a role bringing new stories, characters and worlds to life with a course in games and animation."
                     },
                     new Courses
                     {
-                        Id = 10, 
-                        Name = "Information Technology", 
+                        Id = 10,
+                        Name = "Information Technology",
                         Slug = "Information-Technology",
                         Description = "There are two types of people in the world: those who understand binary, and those who don't. In a modern economy, you want to be one that does."
                     },
@@ -229,22 +229,22 @@ namespace backend_app.Models
                     },
                     new Courses
                     {
-                        Id = 12, 
-                        Name = "Psychology", 
+                        Id = 12,
+                        Name = "Psychology",
                         Slug = "Psychology",
                         Description = "We know more about the mind than ever before, yet many of its mysteries remain unsolved and therefore, so too, do many aspects of human behaviour. "
                     },
                     new Courses
                     {
-                        Id = 13, 
-                        Name = "Science", 
+                        Id = 13,
+                        Name = "Science",
                         Slug = "Science",
                         Description = "Science is the pursuit of truth and understanding of our world and beyond. Science never stops evolving and you’ll never stop learning."
                     },
                     new Courses
                     {
                         Id = 14,
-                        Name = "Education", 
+                        Name = "Education",
                         Slug = "Education",
                         Description = "In our lives, we are surrounded by teachers, from parents to friends and neighbours, but few get the opportunity to impart daily wisdom as trained educators do."
                     }
@@ -258,14 +258,14 @@ namespace backend_app.Models
                 {
                     new Faculty
                     {
-                        Id = 1, 
-                        Code = "3400234640", 
-                        Title = "Bachelor of Business Analytics and Analysis", 
-                        Slug="Bachelor-of-Aviation-Management", 
-                        Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ", 
-                        EntryScore=65, 
-                        Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data", 
-                        Opportunities = "Systems analyst or architect, UX analyst, Business analyst, Technical business analyst, Requirements analyst, Process consultant", 
+                        Id = 1,
+                        Code = "3400234640",
+                        Title = "Bachelor of Business Analytics and Analysis",
+                        Slug="Bachelor-of-Aviation-Management",
+                        Description="Become a sought-after agent of change in the breakneck business world. Learn how to interpret and analyse business data, discover patterns and spot opportunity where others see tumult. Up your leadership game and emerge ready to solve people, process, technology and strategy challenges. ",
+                        EntryScore=65,
+                        Skill_learn = "Business operations optimisation skills, Digital literacy, Critical thinking, Evaluate and analyse data",
+                        Opportunities = "Systems analyst or architect, UX analyst, Business analyst, Technical business analyst, Requirements analyst, Process consultant",
                         Course_id = 1,
                         Image = "Image/Faculty/1.jpeg"
                     },
@@ -332,76 +332,180 @@ namespace backend_app.Models
                 c.HasData(new Department[]
                 {
                     new Department{
-                        Id = 1, 
-                        Code = "ICT10013", 
-                        Subject = "Programming Concepts", 
+                        Id = 1,
+                        Code = "ICT10013",
+                        Subject = "Programming Concepts",
                         Description = "Students are introduced to basic structured programming concepts needed for programming development in a variety of environments such as spreadsheets, web, desktop and mobile applications. Students will apply basic design and useability concepts to simple applications."
                     },
                     new Department{
-                        Id = 2, 
-                        Code = "INF10024", 
-                        Subject = "Business Digitalisation", 
+                        Id = 2,
+                        Code = "INF10024",
+                        Subject = "Business Digitalisation",
                         Description = "This unit aims to instill an appreciation of how technology can be used to assist business in the era of digitalization, without the technology becoming an end in itself. In particular, the unit aims to generate an awareness of the importance of digital technologies and information to organisational decision-making. Further, we examine how managers and practitioners can ensure the fitness-for-purpose of digital technologies and information to the decision makers such that business might gain a competitive advantage in digitalized world. Students gain a strong foundation of business systems fundamentals and an appreciation of how digital technologies impact business stakeholders, customers, suppliers, manufacturers, service makers, regulators, managers and employees."},
                     new Department{
-                        Id = 3, 
-                        Code = "INF10025", 
-                        Subject = "Data Management and Analytics", 
+                        Id = 3,
+                        Code = "INF10025",
+                        Subject = "Data Management and Analytics",
                         Description = "This unit will provide a solid foundation for the design, implementation and management of organisational databases. Organisational data and data modelling is introduced, focusing on structured and unstructured data, and entity-relationship (ER) modelling. The skills required to construct ER diagrams will be taught, with a focus on ensuring that the logic of the model reflects the real-world industry case it is representing. Relational databases will be introduced and the functionality they afford organisations will be explored through real world industry cases. The process of designing, building and retrieving information from a database using SQL will be a focus of this unit. The unit also introduces students to the role databases play in data analytics and helping organisations harness the power of and insights from their data.\r\n\r\n"
                     },
                     new Department{
-                        Id = 4, 
-                        Code = "AVA10012", 
-                        Subject = "First Year Industry Project", 
+                        Id = 4,
+                        Code = "AVA10012",
+                        Subject = "First Year Industry Project",
                         Description = "This unit introduces students to the challenges faced by industry professionals as they intervene in problems that require analytical thinking, creativity, interpersonal skills and resourcefulness to solve. This unit challenges students to explore different approaches to analysing and solving real-world problems in an organisational context. Students will develop the ability to apply analysis techniques to unfamiliar business problems and present their investigation through the use of a wide range of innovative Information Communication Technologies [ICT], including prototyping, cloud-based tools, report writing and presentations. In addition, students are encouraged to reflect upon the learning taking place throughout the unit."},
                     new Department{
-                        Id = 5, 
-                        Code = "BUS10012", 
-                        Subject = "Innovative Business Practice", 
+                        Id = 5,
+                        Code = "BUS10012",
+                        Subject = "Innovative Business Practice",
                         Description = "This unit has originated from a desire to give students an inspirational and highly engaging educational experience. It is infused with real-world examples and will provide a connection to industry professionals. The unit is designed to prepare students for their studies and work. Innovative Business Practice focuses on self-awareness, the development of a professional identity, communication and the development of effective teamwork skills. The role of innovation and how it can be leveraged to effectively achieve organisational objectives and positive social impact is a core theme with students encouraged to use curiosity and creativity to explore opportunities and to evaluate these, whilst displaying awareness of organisational and societal needs."},
                     new Department{
-                        Id = 6, 
-                        Code = "INF20029", 
-                        Subject = "Digital Business Analysis and Design", 
-                        Description = "This unit provides students with the systems analysis and design methods, tools and practices to stand out as effective business analysts in digitally enabled organisations. It covers various systems development lifecycles, methodologies, techniques and tools, exploring real-world industry cases in which they succeed and fail. Factors affecting the success of these methods in contemporary organisations are examined, along with comparisons of the values and principles that underlie these methods. After completing this unit, students will be able to understand and analyse real world digitalisation problems using modelling techniques to identify system requirements.\r\n\r\n"},
+                        Id = 6,
+                        Code = "INF20029",
+                        Subject = "Digital Business Analysis and Design",
+                        Description = "This unit provides students with the systems analysis and design methods, tools and practices to stand out as effective business analysts in digitally enabled organisations. It covers various systems development lifecycles, methodologies, techniques and tools, exploring real-world industry cases in which they succeed and fail. Factors affecting the success of these methods in contemporary organisations are examined, along with comparisons of the values and principles that underlie these methods. After completing this unit, students will be able to understand and analyse real world digitalisation problems using modelling techniques to identify system requirements."},
                     new Department{
-                        Id = 7, 
-                        Code = "MGT10009", 
-                        Subject = "Contemporary Management Principles", 
+                        Id = 7,
+                        Code = "MGT10009",
+                        Subject = "Contemporary Management Principles",
                         Description = "This unit provides students with the foundational knowledge and skills concerning the role and functions of management. These frameworks support a critical analysis of individual or organisational operations and performance in the light of business opportunities and pressures, societal expectations and environmental contingencies. These insights enable students to identify their role as future managers, and to map their contribution to creating value at both an individual and organisational level."},
                     new Department{
-                        Id = 8, 
-                        Code = "INF20030", 
-                        Subject = "Cloud Approaches for Enterprise Systems", 
+                        Id = 8,
+                        Code = "INF20030",
+                        Subject = "Cloud Approaches for Enterprise Systems",
                         Description = "This unit introduces students to the critical role cloud-based Enterprise Resource Planning (ERP) platforms play in supporting efficient and agile business processes. Organisations use ERPs for Customer Relationship Management, Supply Chain Management, Financial Management, as well as for bespoke business functions. The design, configuration, integration and operation of these â€˜software ecosystemsâ€™ is complicated by their scale and the complexity. Through real-world cases, this unit provides an overview of the global, social and economic motivations for cloud-based ERPs and addresses the strategic and managerial issues faced by organisations as they manage their virtual value chains. Students will examine the different types of cloud-based ERP service models (SaaS, PaaS) and explore the key challenges surrounding the management of cloud-based ERPs particularly process integration and data analytics enablement."},
+                    new Department{
+                        Id = 9,
+                        Code = "MDA10001",
+                        Subject = "Introduction to Media Studies",
+                        Description = "This unit introduces students to the fundamentals of media studies, with a focus on texts, contexts, and the history of media and media studies. This enables students to understand the significant contribution that the media make to the formation of society and culture. Students will also be introduced to competing frameworks for understanding media and their merits"},
+                    new Department{
+                        Id = 10,
+                        Code = "MDA10008",
+                        Subject = "Global Media Industries",
+                        Description = "Global Media Industries explores worldwide trends in a range of media industries, and provides you with the skills and knowledge to work internationally in fields such as design, marketing, media regulation, content creation and management, telecommunications and journalism. You will refine your skills in intercultural communication in media-specific contexts, and gain an understanding of how globalisation has impacted on the media industries. Case studies will provide you with insights into how media organisations balance global operations with local market conditions, as well as the impact media is having on global issues" },
+                    new Department{
+                        Id = 11,
+                        Code = "COM10007",
+                        Subject = "Professional Communication Practice",
+                        Description = "This unit introduces students to the vital part communication plays in professional life. In covering ideas and skills fundamental to professional communication success, it aims to build not only competence but also studentsâ€™ confidence in functioning as ethical communicators, able to use a range of techniques to achieve desired communication outcomes." },
+                     new Department{
+                        Id = 12,
+                        Code = "JOU10007",
+                        Subject = "Media Content Creation",
+                        Description = "This unit aims to provide a practical introduction to using selected innovation tools and methods in different contexts. Through hands-on learning, students will acquire familiarity with concepts, terms and processes that are part of a meaningful toolkit for implementing creativity and innovation in many different business and industry sectors and/or discipline areas. This unit emphasises learning-by-doing for knowledge and skills development, with students engaging in interdisciplinary projects to gain competency in working collaboratively as part of contemporary innovation practice." },
+                     new Department{
+                        Id = 13,
+                        Code = "INV10001",
+                        Subject = "Exploring Creativity and Innovation",
+                        Description = "This unit aims to provide a practical introduction to using selected innovation tools and methods in different contexts. Through hands-on learning, students will acquire familiarity with concepts, terms and processes that are part of a meaningful toolkit for implementing creativity and innovation in many different business and industry sectors and/or discipline areas. This unit emphasises learning-by-doing for knowledge and skills development, with students engaging in interdisciplinary projects to gain competency in working collaboratively as part of contemporary innovation practice."},
+                     new Department{
+                        Id = 14,
+                        Code = "INV10002",
+                        Subject = "Fundamentals of Innovation Practice",
+                        Description = "The unit aims to introduce students to the key models, frameworks and concepts relevant to innovation and creative problem solving in an interdisciplinary environment. It provides the fundamental knowledge base and skills for students to implement innovation. Students will be introduced to principles that relate to innovation, including; opportunity discovery, value creation, creativity and ideation, as well as the mindset, culture and interdisciplinarity required for innovation to succeed. Students will be prompted to reflect on the role on innovation in their disciplinary domain and critically evaluate the appropriateness of different innovation approaches." },
+                       new Department{
+                        Id = 15,
+                        Code = "INV10003",
+                        Subject = "Innovation Sandpit",
+                        Description = "This unit provides students with the opportunity to collaborate across fundamentally different disciplines to apply a range of innovation methodologies, as they work on a real-world industry project. Students will engage in a series of creative, collaborative and practice-based studios. In teams, students will apply various innovation tools, research methods, prototyping activities and creative approaches to problem solving to unpack challenges, identify opportunities, and generate and develop solutions. They will propose innovative solutions to a complex challenge that considers technical, human, and economic implications." },
+                     new Department{
+                        Id = 16,
+                        Code = "INV10004",
+                        Subject = "Responsible Innovation Futures",
+                        Description = "This unit aims to explore the relationship between innovation, culture and sustainability, and the longer-term impact â€“ both positive and negative â€“ of innovation on future generations. Emphasising equity, diversity, and both individual and collective empowerment, it integrates a futures-focus to support more sustainable and responsible innovation. The unit introduces futures literacy and systems thinking, providing students with knowledge of contemporary concepts, tools and methods for envisioning alternative future scenarios. The unit includes both the theoretical and practical aspects of futures-focused innovation, and identifies how systems thinking and futures literacy are fundamental to sustainable innovation." },
+                     new Department{
+                        Id = 17,
+                        Code = "INV10005",
+                        Subject = "Innovation for Challenges of Today",
+                        Description = "This unit aims to develop students' capability to identify new innovation opportunities appropriate for market adoption in the next 5 years. These new innovations may be objects, systems, services, experiences, built environments, practices or business ideas. Techniques for opportunity exploration will draw on human-centred research methods, analysis of available data sets and social innovation. New innovation ideas will consider societal and environmentally responsible impacts, user needs, digital technology and value creation. Students will develop a portfolio of innovation opportunities that may relate to their passions, disciplinary interests or other industry sectors in preparation for the capstone units." },
+                     new Department{
+                        Id = 18,
+                        Code = "INV20002",
+                        Subject = "Innovation for the Future",
+                        Description = "This unit aims to develop students' capability to identify opportunities for new innovations appropriate for market adoption five+ years into the future. These new innovations may be objects, systems, services, experiences, built environments, practices or business ideas. Techniques for opportunity exploration will feature global megatrends, big science, deep-technology and strategic foresight tools. New innovation ideas will consider technology needs, timeframes, market transformation, roadmaps, societal impacts, stakeholder needs and value creation. Students will develop a portfolio of innovation opportunities that may relate to their passions, disciplinary interests or other industry sector needs in preparation for the capstone units." },
+                     new Department{
+                        Id = 19,
+                        Code = "INV20003",
+                        Subject = "Applied Innovation Internship",
+                        Description = "This unit provides students with an opportunity to apply and build upon interdisciplinary knowledge and innovation skills developed during their studies in a workplace setting. It focuses on interdisciplinary and innovation practices, distinct from discipline specific practices. The unit prepares students for transition to professional practice and careers in the current and future world of work. Students will engage in and recognise professional, collaborative, ethical, sustainable, and inclusive workplace practices. This unit will support the development of students' professional knowledge, capabilities and career management through observation, participation, and reflection in a range of work integrated learning tasks and assessments." },
+                     new Department{
+                        Id = 20,
+                        Code = "INV30001",
+                        Subject = "Applied Innovation Studio A",
+                        Description = "The Applied Innovation Studio A and B run concurrently. Studio A aims to develop studentsâ€™ strategic thinking for the development of innovation projects. This includes tools for evaluating and prioritising opportunities for implementing new products, services or practices in a broad range of contexts, not necessarily within the boundaries of their own discipline. Students consider complexity, uncertainty, timeframes, stakeholder engagement, industry trends, intellectual property, legal aspects, funding, societal and environmental impact and value propositions in developing approaches to implementation. Communication of strategic vision will be supported via roadmapping and visualisation methods to communicate clearly the opportunity and value created." },
+                     new Department{
+                        Id = 21,
+                        Code = "INV30002",
+                        Subject = "Applied Innovation Studio b",
+                        Description = "The Applied Innovation Studio A and B run concurrently. Studio A aims to develop studentsâ€™ strategic thinking for the development of innovation projects. This includes tools for evaluating and prioritising opportunities for implementing new products, services or practices in a broad range of contexts, not necessarily within the boundaries of their own discipline. Students consider complexity, uncertainty, timeframes, stakeholder engagement, industry trends, intellectual property, legal aspects, funding, societal and environmental impact and value propositions in developing approaches to implementation. Communication of strategic vision will be supported via roadmapping and visualisation methods to communicate clearly the opportunity and value created." },
+                     new Department{
+                        Id = 22,
+                        Code = "INV30003",
+                        Subject = "Leadership and Facilitation of Innovation",
+                        Description = "This unit aims to develop studentsâ€™ capability to lead and facilitate innovation practices that can be applied to various industry and project contexts. Leadership styles and approaches that empower others to realise their potential will be covered, emphasizing that the demonstration of leadership is not reliant on an official leadership role and/or title. Facilitation techniques for innovation activities will explore and identify new opportunities for innovation, as well as develop and demonstrate new ideas and their value. Students gain experience facilitating, designing, delivering and documenting a short workshop and/or sprint project for an industry project brief." },
+                      new Department{
+                        Id = 23,
+                        Code = "INV30004",
+                        Subject = "Advanced Manufacturing Technology",
+                        Description = "This unit introduces students to the fundamentals of media studies, with a focus on texts, contexts, and the history of media and media studies. This enables students to understand the significant contribution that the media make to the formation of society and culture. Students will also be introduced to competing frameworks for understanding media and their merits " },
+                      new Department{
+                        Id = 24,
+                        Code = "INV30005",
+                        Subject = "Computer Systems Technology",
+                        Description = "This unit introduces students to the fundamentals of media studies, with a focus on texts, contexts, and the history of media and media studies. This enables students to understand the significant contribution that the media make to the formation of society and culture. Students will also be introduced to competing frameworks for understanding media and their merits" },
+                      new Department{
+                        Id = 25,
+                        Code = "INV30006",
+                        Subject = "Advanced Manufacturing Technology",
+                        Description = "The Digital Narratives unit aims to build knowledge around the Screen Production Industry and creative practices that are influencing the production of contemporary media-based narratives. Students will learn a range of strategies around the development, implementation and delivery of documentary based media content to fit within the varied parameters of convergent, portable and social media. They will gain an understanding of written communication conventions, social media and narrative strategies, and knowledge of digital video and audio production skills" },
+                      new Department{
+                        Id = 26,
+                        Code = "INV30007",
+                        Subject = "Biomedical Engineering",
+                        Description = "The Digital Narratives unit aims to build knowledge around the Screen Production Industry and creative practices that are influencing the production of contemporary media-based narratives. Students will learn a range of strategies around the development, implementation and delivery of documentary based media content to fit within the varied parameters of convergent, portable and social media. They will gain an understanding of written communication conventions, social media and narrative strategies, and knowledge of digital video and audio production skills" },
+                      new Department{
+                        Id = 27,
+                        Code = "INV30008",
+                        Subject = "Electrical and Electronic Engineering",
+                        Description = "The Digital Narratives unit aims to build knowledge around the Screen Production Industry and creative practices that are influencing the production of contemporary media-based narratives. Students will learn a range of strategies around the development, implementation and delivery of documentary based media content to fit within the varied parameters of convergent, portable and social media. They will gain an understanding of written communication conventions, social media and narrative strategies, and knowledge of digital video and audio production skills." },
+                      new Department{
+                        Id = 28,
+                        Code = "INV30009",
+                        Subject = "Advanced Diploma of Engineering Technology - Electrical",
+                        Description = "The Digital Narratives unit aims to build knowledge around the Screen Production Industry and creative practices that are influencing the production of contemporary media-based narratives. Students will learn a range of strategies around the development, implementation and delivery of documentary based media content to fit within the varied parameters of convergent, portable and social media. They will gain an understanding of written communication conventions, social media and narrative strategies, and knowledge of digital video and audio production skills." },
+                      new Department{
+                        Id = 29,
+                        Code = "INV30010",
+                        Subject = "Bachelor of Engineering (Honours)",
+                        Description = "The Digital Narratives unit aims to build knowledge around the Screen Production Industry and creative practices that are influencing the production of contemporary media-based narratives. Students will learn a range of strategies around the development, implementation and delivery of documentary based media content to fit within the varied parameters of convergent, portable and social media. They will gain an understanding of written communication conventions, social media and narrative strategies, and knowledge of digital video and audio production skills." },
                 });
-            });
-            modelBuilder.Entity<Facilities>(f =>
-            {
-                f.HasKey(f => f.Id);
-                f.HasData(new Facilities[]
+                modelBuilder.Entity<Facilities>(f =>
                 {
-                    new Facilities 
+                    f.HasKey(f => f.Id);
+                    f.HasData(new Facilities[]
+                    {
+                    new Facilities
                     {
                         Id=1,
                         Title="Canteen",
                         Description="The canteen serves as a vibrant social hub and offers a variety of healthy and nutritious meal options. Equipped with modern amenities and a comfortable seating arrangement, it provides a relaxing atmosphere where employees can unwind and interact during their breaks.",
                         Image="Image/facilities/1.jpg"
                     },
-                    new Facilities 
+                    new Facilities
                     {
                         Id=2,
                         Title="Business Operations",
                         Description="The Business Operations facility is the cornerstone of our organizational structure, encompassing finance, human resources, and technical support teams. This department is dedicated to optimizing operational efficiency, driving strategic initiatives, and fostering a culture of continuous improvement. With state-of-the-art technology and a team of seasoned professionals, Business Operations ensures seamless administrative functions and supports the company's overarching goals.",
                         Image="Image/facilities/2.jpg"
                     },
-                    new Facilities 
+                    new Facilities
                     {
                         Id=3,
                         Title="Gym",
                         Description="Our on-site gym facility promotes a healthy work-life balance by offering an array of fitness equipment, personal training sessions, and group workout classes. The gym is designed to cater to all fitness levels, encouraging employees to maintain their health and wellness, reduce stress, and increase productivity.",
                         Image="Image/facilities/3.jpg"
                     },
-                    new Facilities 
+                    new Facilities
                     {
                         Id=4,
                         Title="Conference Room",
@@ -421,59 +525,59 @@ namespace backend_app.Models
                         Description="Our spacious parking lot is designed for the convenience of employees and visitors, providing ample parking space and ensuring vehicle safety. With 24/7 surveillance and dedicated staff, the parking lot offers a secure and well-organized environment for all your parking needs.",
                         Image="Image/facilities/6.jpg"
                     }
+                    });
                 });
-            });
-            modelBuilder.Entity<Staff>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new Staff[]
+                modelBuilder.Entity<Staff>(c =>
                 {
-                    new Staff 
+                    c.HasKey(x => x.Id);
+                    c.HasData(new Staff[]
                     {
-                        Id = 1, 
+                    new Staff
+                    {
+                        Id = 1,
                         FirstName = "Tlee",
-                        LastName = "Tlee", 
+                        LastName = "Tlee",
                         Email = "thienle255@gmail.com",
-                        Address = "391 Nam Ky Khoi Nghia,Quan 3", 
-                        Gender = 0, Phone = "0905028073", 
-                        FileAvatar = "Image/Staff/1.png", 
-                        Qualification = "Admin", 
-                        Experience = "Admin", 
-                        Password = BCrypt.Net.BCrypt.HashPassword("Tlee2210"), 
+                        Address = "391 Nam Ky Khoi Nghia,Quan 3",
+                        Gender = 0, Phone = "0905028073",
+                        FileAvatar = "Image/Staff/1.png",
+                        Qualification = "Admin",
+                        Experience = "Admin",
+                        Password = BCrypt.Net.BCrypt.HashPassword("Tlee2210"),
                         Role="Admin"},
-                    new Staff 
+                    new Staff
                     {
-                        Id = 2, 
-                        FirstName = "Chuong", 
-                        LastName = "Chuong", 
-                        Email = "namechuong19@gmail.com", 
-                        Address = "391 Nam Ky Khoi Nghia,Quan 3", 
-                        Gender = 0, 
-                        Phone = "0974671412", 
-                        FileAvatar = "Image/Staff/1.png", 
-                        Qualification = "Admin", 
-                        Experience = "Admin", 
-                        Password = BCrypt.Net.BCrypt.HashPassword("chuong123"), 
+                        Id = 2,
+                        FirstName = "Chuong",
+                        LastName = "Chuong",
+                        Email = "namechuong19@gmail.com",
+                        Address = "391 Nam Ky Khoi Nghia,Quan 3",
+                        Gender = 0,
+                        Phone = "0974671412",
+                        FileAvatar = "Image/Staff/1.png",
+                        Qualification = "Admin",
+                        Experience = "Admin",
+                        Password = BCrypt.Net.BCrypt.HashPassword("chuong123"),
                         Role="Admin"}
+                    });
                 });
-            });
-            modelBuilder.Entity<Session>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new Session[]
+                modelBuilder.Entity<Session>(c =>
                 {
+                    c.HasKey(x => x.Id);
+                    c.HasData(new Session[]
+                    {
                      new Session{Id = 1, Code = "21UniStu", YearStart = new DateTime(2021, 8, 1), YearEnd = new DateTime(2024, 7, 31), Status = SessionStatus.Completed,IsCurrentYear = true,},
                      new Session{Id = 2, Code = "22UniStu", YearStart = new DateTime(2022, 8, 1), YearEnd = new DateTime(2025, 7, 31), Status = SessionStatus.Active},
                      new Session{Id = 3, Code = "23UniStu", YearStart = new DateTime(2023, 8, 1), YearEnd = new DateTime(2026, 7, 31), Status = SessionStatus.Active},
                      new Session{Id = 4, Code = "24UniStu", YearStart = new DateTime(2024, 8, 1), YearEnd = new DateTime(2027, 7, 31), IsCurrentYear = true, Status = SessionStatus.Active},
                      new Session{Id = 5, Code = "25UniStu", YearStart = new DateTime(2025, 8, 1), YearEnd = new DateTime(2028, 7, 31), Status = SessionStatus.Inactive},
+                    });
                 });
-            });
-            modelBuilder.Entity<Semester>(s =>
-            {
-                s.HasKey(k => k.Id);
-                s.HasData(new Semester[]
+                modelBuilder.Entity<Semester>(s =>
                 {
+                    s.HasKey(k => k.Id);
+                    s.HasData(new Semester[]
+                    {
                     new Semester
                     {
                         Id = 1,
@@ -538,22 +642,22 @@ namespace backend_app.Models
                         StartDate = new DateTime(DateTime.Now.Year + 3, 1, 1), // Ngày bắt đầu học kỳ 2, 3 năm sau, chỉ lưu ngày và tháng
                         EndDate = new DateTime(DateTime.Now.Year + 3, 5, 31) // Ngày kết thúc học kỳ 2, 3 năm sau, chỉ lưu ngày và tháng
                     },
-                });
+                    });
 
-            });
-            modelBuilder.Entity<Students>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.StudentCode).IsRequired();
-                entity.Property(e => e.FirstName).HasMaxLength(50);
-                entity.Property(e => e.LastName).HasMaxLength(50);
-                entity.Property(e => e.Email).IsRequired();
-                entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.DateOfBirth).HasColumnType("date");
-                entity.HasOne(s => s.StudentFacultySemesters).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
-                entity.Property(e => e.Gender).HasConversion<string>();
-                entity.HasData(new Students[]
+                });
+                modelBuilder.Entity<Students>(entity =>
                 {
+                    entity.HasKey(e => e.Id);
+                    entity.Property(e => e.StudentCode).IsRequired();
+                    entity.Property(e => e.FirstName).HasMaxLength(50);
+                    entity.Property(e => e.LastName).HasMaxLength(50);
+                    entity.Property(e => e.Email).IsRequired();
+                    entity.HasIndex(e => e.Email).IsUnique();
+                    entity.Property(e => e.DateOfBirth).HasColumnType("date");
+                    entity.HasOne(s => s.StudentFacultySemesters).WithOne().HasForeignKey<StudentFacultySemesters>(s => s.StudentId);
+                    entity.Property(e => e.Gender).HasConversion<string>();
+                    entity.HasData(new Students[]
+                    {
                     new Students {
                         Id = 1,
                         StudentCode = "Student584199",
@@ -568,57 +672,59 @@ namespace backend_app.Models
                         Avatar = "Image/Staff/1.png",
                         DateOfBirth = new DateTime(2006, 01, 17),
                         Password = BCrypt.Net.BCrypt.HashPassword("T123456") }
+                    });
                 });
-            });
-            modelBuilder.Entity<StudentFacultySemesters>(sfs =>
-            {
-                sfs.HasKey(x => x.Id);
-
-                sfs.HasOne(f => f.Session).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SessionId);
-                sfs.HasOne(f => f.Semester).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SemesterId);
-                sfs.HasOne(f => f.Faculty).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.FacultyId);
-                sfs.HasData(new StudentFacultySemesters[]
+                modelBuilder.Entity<StudentFacultySemesters>(sfs =>
                 {
-                    new StudentFacultySemesters 
-                    { 
+                    sfs.HasKey(x => x.Id);
+
+                    sfs.HasOne(f => f.Session).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SessionId);
+                    sfs.HasOne(f => f.Semester).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.SemesterId);
+                    sfs.HasOne(f => f.Faculty).WithMany(s => s.StudentFacultySemesters).HasForeignKey(sfs => sfs.FacultyId);
+                    sfs.HasData(new StudentFacultySemesters[]
+                    {
+                    new StudentFacultySemesters
+                    {
                         Id = 1,
                         StudentId =  1,
                         FacultyId = 1,
                         SemesterId = 1,
                         SessionId = 1,
                     }
+                    });
                 });
-            });
-            modelBuilder.Entity<Admission>(c =>
-            {
-                c.HasKey(x => x.Id);
-                c.HasData(new Admission[]
+                modelBuilder.Entity<Admission>(c =>
                 {
-                    new Admission{Id = 1, 
-                        FirstName = "Nguyen", 
+                    c.HasKey(x => x.Id);
+                    c.HasData(new Admission[]
+                    {
+                    new Admission{Id = 1,
+                        FirstName = "Nguyen",
                         LastName = "Quan", Email = "thienle255@gmail.com",
                         Phone = "1213123", FatherName = "ABC",
                         MotherName = "DEF",
-                        DOB = new DateTime(2004, 08, 25), 
-                        Address = "HCM", 
-                        Gender = 0, 
-                        HighSchool = "FPT", 
-                        GPA = 5.0, 
-                        Status = "Process", 
+                        DOB = new DateTime(2004, 08, 25),
+                        Address = "HCM",
+                        Gender = 0,
+                        HighSchool = "FPT",
+                        GPA = 5.0,
+                        Status = "Process",
                         FacultyId = 1},
-                    new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345", 
-                        FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2", 
+                    new Admission{Id = 2, FirstName = "ABC", LastName = "XYZ", Email = "abc2@gmail.com", Phone = "345345",
+                        FatherName = "ABC2", MotherName = "DEF2", DOB = new DateTime(2004, 08, 29), Address = "HCM2",
                         Gender = 0, HighSchool = "FPT2", GPA = 4.0, Status = "Process", FacultyId = 2}
+                    });
                 });
-            });
-            modelBuilder.Entity<DepartmentSemesterSession>(dss =>
-            {
-                dss.HasKey(x => x.Id);
-                dss.HasOne(d => d.Faculty).WithMany().HasForeignKey(dss => dss.FacultyId);
-                dss.HasOne(d => d.Department).WithMany().HasForeignKey(dss => dss.DepartmentId);
-                dss.HasOne(d => d.Semester).WithMany().HasForeignKey(dss => dss.SemesterId);
-                dss.HasOne(d => d.session).WithMany().HasForeignKey(dss => dss.SessionId);
+                modelBuilder.Entity<DepartmentSemesterSession>(dss =>
+                {
+                    dss.HasKey(x => x.Id);
+                    dss.HasOne(d => d.Faculty).WithMany().HasForeignKey(dss => dss.FacultyId);
+                    dss.HasOne(d => d.Department).WithMany().HasForeignKey(dss => dss.DepartmentId);
+                    dss.HasOne(d => d.Semester).WithMany().HasForeignKey(dss => dss.SemesterId);
+                    dss.HasOne(d => d.session).WithMany().HasForeignKey(dss => dss.SessionId);
+                });
             });
         }
     }
 }
+    
